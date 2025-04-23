@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Add from=hub parameter to URLs
 function addHubParameter(url) {
-    // Check if URL already has parameters
+    // Check if the URL already has parameters
     if (url.includes('?')) {
         return `${url}&from=hub`;
     } else {
