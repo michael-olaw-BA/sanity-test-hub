@@ -11,81 +11,64 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Format the timestamp in user-friendly way
     if (OVERALL_STATS.lastUpdated) {
-        // Parse the UTC date
-        const updatedDate = new Date(OVERALL_STATS.lastUpdated + 'Z'); // Add Z to ensure UTC parsing
-        
-        // Convert to London time
-        const options = { timeZone: 'Europe/London', hour: '2-digit', minute: '2-digit', hour12: false };
-        const londonTime = updatedDate.toLocaleTimeString('en-GB', options);
-        
-        // Get current date in London
-        const now = new Date();
-        const londonNow = new Date(now.toLocaleString('en-GB', { timeZone: 'Europe/London' }));
-        
-        // Reset hours to compare just the dates
-        const todayDate = new Date(londonNow);
-        todayDate.setHours(0, 0, 0, 0);
-        
-        const yesterdayDate = new Date(todayDate);
-        yesterdayDate.setDate(yesterdayDate.getDate() - 1);
-        
-        const updatedDay = new Date(updatedDate);
-        updatedDay.setHours(0, 0, 0, 0);
-        
-        // Calculate days difference
-        const daysDiff = Math.floor((todayDate - updatedDay) / (1000 * 60 * 60 * 24));
-        
-        // Format based on how recent the update was
-        lastUpdatedValue.innerHTML = '';
-        
-        if (daysDiff === 0) {
-            // Today
-            const todaySpan = document.createElement('div');
-            todaySpan.textContent = 'Today';
-            lastUpdatedValue.appendChild(todaySpan);
+        try {
+            // Parse the date (different approach)
+            const updatedDate = new Date(OVERALL_STATS.lastUpdated);
             
-            const timeSpan = document.createElement('div');
-            timeSpan.textContent = londonTime;
-            timeSpan.style.fontSize = '28px';
-            lastUpdatedValue.appendChild(timeSpan);
-        } 
-        else if (daysDiff === 1) {
-            // Yesterday
-            const yesterdaySpan = document.createElement('div');
-            yesterdaySpan.textContent = 'Yesterday';
-            lastUpdatedValue.appendChild(yesterdaySpan);
+            // Convert to London time
+            const options = { timeZone: 'Europe/London', hour: '2-digit', minute: '2-digit', hour12: false };
+            const londonTime = updatedDate.toLocaleTimeString('en-GB', options);
             
-            const timeSpan = document.createElement('div');
-            timeSpan.textContent = londonTime;
-            timeSpan.style.fontSize = '28px';
-            lastUpdatedValue.appendChild(timeSpan);
-        }
-        else if (daysDiff > 1) {
-            // Within a week
-            const daysSpan = document.createElement('div');
-            daysSpan.textContent = `${daysDiff} Days ago`;
-            lastUpdatedValue.appendChild(daysSpan);
+            // Get current date in London time
+            const now = new Date();
             
-            const timeSpan = document.createElement('div');
-            timeSpan.textContent = londonTime;
-            timeSpan.style.fontSize = '28px';
-            lastUpdatedValue.appendChild(timeSpan);
-        }
-        else {
-            // Older
-            const options = { 
-                timeZone: 'Europe/London',
-                day: 'numeric', 
-                month: 'short', 
-                year: 'numeric' 
-            };
-            const dateStr = updatedDate.toLocaleDateString('en-GB', options);
-            lastUpdatedValue.textContent = dateStr;
+            // Format the date portions for comparison (YYYY-MM-DD)
+            const todayString = now.toLocaleDateString('en-GB');
+            const updatedString = updatedDate.toLocaleDateString('en-GB');
             
-            const timeSpan = document.createElement('div');
-            timeSpan.textContent = londonTime;
-            timeSpan.style.fontSize = '28px';
-            lastUpdatedValue.appendChild(timeSpan);
+            // Reset time parts for day comparison
+            const todayParts = todayString.split('/');
+            const updatedParts = updatedString.split('/');
+            
+            // If formatted dates match, it's today
+            if (todayString === updatedString) {
+                // Today
+                lastUpdatedValue.innerHTML = '';
+                const todaySpan = document.createElement('div');
+                todaySpan.textContent = 'Today';
+                lastUpdatedValue.appendChild(todaySpan);
+                
+                const timeSpan = document.createElement('div');
+                timeSpan.textContent = londonTime;
+                timeSpan.style.fontSize = '28px';
+                lastUpdatedValue.appendChild(timeSpan);
+            }
+            else {
+                // Create a simpler date format
+                const dateOptions = {
+                    timeZone: 'Europe/London',
+                    day: 'numeric',
+                    month: 'short',
+                    year: 'numeric'
+                };
+                const formattedDate = updatedDate.toLocaleDateString('en-GB', dateOptions);
+                
+                lastUpdatedValue.innerHTML = '';
+                
+                // Add date
+                const dateSpan = document.createElement('div');
+                dateSpan.textContent = formattedDate;
+                lastUpdatedValue.appendChild(dateSpan);
+                
+                // Add time
+                const timeSpan = document.createElement('div');
+                timeSpan.textContent = londonTime;
+                timeSpan.style.fontSize = '28px';
+                lastUpdatedValue.appendChild(timeSpan);
+            }
+        } catch (e) {
+            console.error("Error formatting date:", e);
+            lastUpdatedValue.textContent = OVERALL_STATS.lastUpdated || "Unknown";
         }
     } else {
         lastUpdatedValue.textContent = "Unknown";
