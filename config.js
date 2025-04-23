@@ -1,18 +1,21 @@
 // Configuration for the Sanity Test Reports Hub
-// Automatically updated by GitHub Actions on 2025-04-23 09:45:44
+// Automatically updated by GitHub Actions on 2025-04-23 11:47:02
+
+// Extract current repository owner for dynamic URLs
+const REPO_OWNER = window.location.hostname.split('.')[0];
 
 const REPOSITORIES = [
     {
         "name": "sample-sanity-pipeline",
         "description": null,
-        "url": "https://mik3ola.github.io/sample-sanity-pipeline/",
+        "url": "https://michael-iag.github.io/sample-sanity-pipeline/",
         "stats": {
             "total": 3,
             "passed": 2,
             "failed": 1,
             "critical": 1
         },
-        "lastUpdate": "1 days ago",
+        "lastUpdate": "50 minutes ago",
         "status": "success"
     }
 ];
@@ -25,7 +28,8 @@ function calculateOverallStats() {
         passed: 2,
         failed: 1,
         critical: 1,
-        passRate: 67
+        passRate: 67,
+        lastUpdated: "2025-04-23 11:47:02"
     };
 }
 
