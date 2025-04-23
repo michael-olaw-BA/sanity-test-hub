@@ -5,79 +5,70 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelector('.stat-card:nth-child(2) .stat-value').textContent = OVERALL_STATS.passRate + '%';
     document.querySelector('.stat-card:nth-child(3) .stat-value').textContent = OVERALL_STATS.critical;
     
-    // Update the Last Updated card with a user-friendly format
+    // Update the Last Updated card with a simpler, more reliable format
     const lastUpdatedCard = document.querySelector('.stat-card:nth-child(4)');
     const lastUpdatedValue = lastUpdatedCard.querySelector('.stat-value');
     
-    // Format the timestamp in user-friendly way
+    // Format the timestamp in a simple, robust way
     if (OVERALL_STATS.lastUpdated) {
         try {
-            // Parse the date (parse as UTC first)
-            const timestamp = OVERALL_STATS.lastUpdated;
+            // Simple date parsing
+            const updatedDate = new Date(OVERALL_STATS.lastUpdated);
             
-            // Create a date object directly from timestamp
-            const updatedDate = new Date(timestamp);
-            
-            // Force conversion to London time using explicit offset calculation
-            // Get London's offset in minutes
-            const londonDate = new Date(updatedDate.toLocaleString('en-GB', {timeZone: 'Europe/London'}));
-            
-            // Format just the time portion in 24h format
-            const londonHours = londonDate.getHours().toString().padStart(2, '0');
-            const londonMinutes = londonDate.getMinutes().toString().padStart(2, '0');
-            const londonTime = `${londonHours}:${londonMinutes}`;
-            
-            // Format the date portions for comparison
-            const now = new Date();
-            const todayDate = new Date(now.toLocaleString('en-GB', {timeZone: 'Europe/London'}));
-            
-            // Compare just the dates (ignore time)
-            const isSameDay = 
-                todayDate.getDate() === londonDate.getDate() && 
-                todayDate.getMonth() === londonDate.getMonth() && 
-                todayDate.getFullYear() === londonDate.getFullYear();
-            
-            lastUpdatedValue.innerHTML = '';
-            
-            if (isSameDay) {
-                // Today
-                const todaySpan = document.createElement('div');
-                todaySpan.textContent = 'Today';
-                todaySpan.style.fontWeight = 'bold';
-                lastUpdatedValue.appendChild(todaySpan);
-                
-                const timeSpan = document.createElement('div');
-                timeSpan.textContent = londonTime;
-                timeSpan.style.fontSize = '28px';
-                timeSpan.style.fontWeight = 'bold'; // Make time bold to match "Today"
-                lastUpdatedValue.appendChild(timeSpan);
-            } else {
-                // Other date
-                const dateOptions = {
-                    timeZone: 'Europe/London',
-                    day: 'numeric',
-                    month: 'short',
-                    year: 'numeric'
-                };
-                const formattedDate = londonDate.toLocaleDateString('en-GB', dateOptions);
-                
+            // Check if we got a valid date
+            if (isNaN(updatedDate.getTime())) {
+                // Fall back to just showing the raw string if parsing failed
+                lastUpdatedValue.innerHTML = '';
                 const dateSpan = document.createElement('div');
-                dateSpan.textContent = formattedDate;
+                dateSpan.textContent = OVERALL_STATS.lastUpdated;
                 dateSpan.style.fontWeight = 'bold';
                 lastUpdatedValue.appendChild(dateSpan);
+            } else {
+                // Format the date and time simply
+                const today = new Date();
+                const isToday = today.toDateString() === updatedDate.toDateString();
                 
+                // Clear the previous content
+                lastUpdatedValue.innerHTML = '';
+                
+                // Add main text (Today or the date)
+                const mainSpan = document.createElement('div');
+                mainSpan.style.fontWeight = 'bold';
+                
+                if (isToday) {
+                    mainSpan.textContent = 'Today';
+                } else {
+                    // Simple date format: DD MMM YYYY
+                    mainSpan.textContent = updatedDate.toLocaleDateString('en-GB', {
+                        day: 'numeric',
+                        month: 'short',
+                        year: 'numeric'
+                    });
+                }
+                lastUpdatedValue.appendChild(mainSpan);
+                
+                // Add time (always show in 24-hour format)
                 const timeSpan = document.createElement('div');
-                timeSpan.textContent = londonTime;
+                timeSpan.textContent = updatedDate.toLocaleTimeString('en-GB', {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: false
+                });
                 timeSpan.style.fontSize = '28px';
-                timeSpan.style.fontWeight = 'bold'; // Make time bold to match date
+                timeSpan.style.fontWeight = 'bold';
                 lastUpdatedValue.appendChild(timeSpan);
             }
         } catch (e) {
+            // If anything goes wrong, just show a basic message
             console.error("Error formatting date:", e);
-            lastUpdatedValue.textContent = OVERALL_STATS.lastUpdated || "Unknown";
+            lastUpdatedValue.innerHTML = '';
+            const errorSpan = document.createElement('div');
+            errorSpan.textContent = 'Recently Updated';
+            errorSpan.style.fontWeight = 'bold';
+            lastUpdatedValue.appendChild(errorSpan);
         }
     } else {
-        lastUpdatedValue.textContent = "Unknown";
+        lastUpdatedValue.textContent = "Not Available";
     }
     
     // Clear existing repositories
