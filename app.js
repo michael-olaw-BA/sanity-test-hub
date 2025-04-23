@@ -5,9 +5,91 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelector('.stat-card:nth-child(2) .stat-value').textContent = OVERALL_STATS.passRate + '%';
     document.querySelector('.stat-card:nth-child(3) .stat-value').textContent = OVERALL_STATS.critical;
     
-    // Update the Last Updated card with the dashboard update timestamp
-    document.querySelector('.stat-card:nth-child(4) .stat-value').textContent = 
-        OVERALL_STATS.lastUpdated || "Unknown";
+    // Update the Last Updated card with a user-friendly format
+    const lastUpdatedCard = document.querySelector('.stat-card:nth-child(4)');
+    const lastUpdatedValue = lastUpdatedCard.querySelector('.stat-value');
+    
+    // Format the timestamp in user-friendly way
+    if (OVERALL_STATS.lastUpdated) {
+        // Parse the UTC date
+        const updatedDate = new Date(OVERALL_STATS.lastUpdated + 'Z'); // Add Z to ensure UTC parsing
+        
+        // Convert to London time
+        const options = { timeZone: 'Europe/London', hour: '2-digit', minute: '2-digit', hour12: false };
+        const londonTime = updatedDate.toLocaleTimeString('en-GB', options);
+        
+        // Get current date in London
+        const now = new Date();
+        const londonNow = new Date(now.toLocaleString('en-GB', { timeZone: 'Europe/London' }));
+        
+        // Reset hours to compare just the dates
+        const todayDate = new Date(londonNow);
+        todayDate.setHours(0, 0, 0, 0);
+        
+        const yesterdayDate = new Date(todayDate);
+        yesterdayDate.setDate(yesterdayDate.getDate() - 1);
+        
+        const updatedDay = new Date(updatedDate);
+        updatedDay.setHours(0, 0, 0, 0);
+        
+        // Calculate days difference
+        const daysDiff = Math.floor((todayDate - updatedDay) / (1000 * 60 * 60 * 24));
+        
+        // Format based on how recent the update was
+        lastUpdatedValue.innerHTML = '';
+        
+        if (daysDiff === 0) {
+            // Today
+            const todaySpan = document.createElement('div');
+            todaySpan.textContent = 'Today';
+            lastUpdatedValue.appendChild(todaySpan);
+            
+            const timeSpan = document.createElement('div');
+            timeSpan.textContent = londonTime;
+            timeSpan.style.fontSize = '28px';
+            lastUpdatedValue.appendChild(timeSpan);
+        } 
+        else if (daysDiff === 1) {
+            // Yesterday
+            const yesterdaySpan = document.createElement('div');
+            yesterdaySpan.textContent = 'Yesterday';
+            lastUpdatedValue.appendChild(yesterdaySpan);
+            
+            const timeSpan = document.createElement('div');
+            timeSpan.textContent = londonTime;
+            timeSpan.style.fontSize = '28px';
+            lastUpdatedValue.appendChild(timeSpan);
+        }
+        else if (daysDiff > 1) {
+            // Within a week
+            const daysSpan = document.createElement('div');
+            daysSpan.textContent = `${daysDiff} Days ago`;
+            lastUpdatedValue.appendChild(daysSpan);
+            
+            const timeSpan = document.createElement('div');
+            timeSpan.textContent = londonTime;
+            timeSpan.style.fontSize = '28px';
+            lastUpdatedValue.appendChild(timeSpan);
+        }
+        else {
+            // Older
+            const options = { 
+                timeZone: 'Europe/London',
+                day: 'numeric', 
+                month: 'short', 
+                year: 'numeric' 
+            };
+            const dateStr = updatedDate.toLocaleDateString('en-GB', options);
+            lastUpdatedValue.textContent = dateStr;
+            
+            const timeSpan = document.createElement('div');
+            timeSpan.textContent = londonTime;
+            timeSpan.style.fontSize = '28px';
+            lastUpdatedValue.appendChild(timeSpan);
+        }
+    } else {
+        lastUpdatedValue.textContent = "Unknown";
+    }
     
     // Clear existing repositories
     const gridView = document.getElementById('gridView');
