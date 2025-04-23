@@ -165,16 +165,20 @@ total_failed = sum(repo["stats"]["failed"] for repo in repo_data)
 total_critical = sum(repo["stats"]["critical"] for repo in repo_data)
 pass_rate = 0 if total_tests == 0 else round((total_passed / total_tests) * 100)
 
-# Get current time in London timezone
+# Get current time in London timezone with ISO format for JavaScript compatibility
 london_tz = pytz.timezone('Europe/London')
-current_time = datetime.datetime.now(london_tz).strftime('%Y-%m-%d %H:%M:%S %Z')
+now = datetime.datetime.now(london_tz)
+# ISO format for JS parsing
+current_time_iso = now.strftime('%Y-%m-%dT%H:%M:%S%z')
+# Human readable format for display
+current_time_display = now.strftime('%Y-%m-%d %H:%M:%S')
 
 # Update config.js
 print("Updating config.js...")
 
 # Create new config.js content
 config_content = f"""// Configuration for the Sanity Test Reports Hub
-// Automatically updated by GitHub Actions on {current_time}
+// Automatically updated by GitHub Actions on {current_time_display}
 
 const REPOSITORIES = {json.dumps(repo_data, indent=4)};
 
@@ -187,7 +191,7 @@ function calculateOverallStats() {{
         failed: {total_failed},
         critical: {total_critical},
         passRate: {pass_rate},
-        lastUpdated: "{current_time}"
+        lastUpdated: "{current_time_iso}"
     }};
 }}
 
