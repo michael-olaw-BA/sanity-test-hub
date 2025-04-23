@@ -12,58 +12,64 @@ document.addEventListener('DOMContentLoaded', function() {
     // Format the timestamp in user-friendly way
     if (OVERALL_STATS.lastUpdated) {
         try {
-            // Parse the date (different approach)
-            const updatedDate = new Date(OVERALL_STATS.lastUpdated);
+            // Parse the date (parse as UTC first)
+            const timestamp = OVERALL_STATS.lastUpdated;
             
-            // Convert to London time
-            const options = { timeZone: 'Europe/London', hour: '2-digit', minute: '2-digit', hour12: false };
-            const londonTime = updatedDate.toLocaleTimeString('en-GB', options);
+            // Create a date object directly from timestamp
+            const updatedDate = new Date(timestamp);
             
-            // Get current date in London time
+            // Force conversion to London time using explicit offset calculation
+            // Get London's offset in minutes
+            const londonDate = new Date(updatedDate.toLocaleString('en-GB', {timeZone: 'Europe/London'}));
+            
+            // Format just the time portion in 24h format
+            const londonHours = londonDate.getHours().toString().padStart(2, '0');
+            const londonMinutes = londonDate.getMinutes().toString().padStart(2, '0');
+            const londonTime = `${londonHours}:${londonMinutes}`;
+            
+            // Format the date portions for comparison
             const now = new Date();
+            const todayDate = new Date(now.toLocaleString('en-GB', {timeZone: 'Europe/London'}));
             
-            // Format the date portions for comparison (YYYY-MM-DD)
-            const todayString = now.toLocaleDateString('en-GB');
-            const updatedString = updatedDate.toLocaleDateString('en-GB');
+            // Compare just the dates (ignore time)
+            const isSameDay = 
+                todayDate.getDate() === londonDate.getDate() && 
+                todayDate.getMonth() === londonDate.getMonth() && 
+                todayDate.getFullYear() === londonDate.getFullYear();
             
-            // Reset time parts for day comparison
-            const todayParts = todayString.split('/');
-            const updatedParts = updatedString.split('/');
+            lastUpdatedValue.innerHTML = '';
             
-            // If formatted dates match, it's today
-            if (todayString === updatedString) {
+            if (isSameDay) {
                 // Today
-                lastUpdatedValue.innerHTML = '';
                 const todaySpan = document.createElement('div');
                 todaySpan.textContent = 'Today';
+                todaySpan.style.fontWeight = 'bold';
                 lastUpdatedValue.appendChild(todaySpan);
                 
                 const timeSpan = document.createElement('div');
                 timeSpan.textContent = londonTime;
                 timeSpan.style.fontSize = '28px';
+                timeSpan.style.fontWeight = 'bold'; // Make time bold to match "Today"
                 lastUpdatedValue.appendChild(timeSpan);
-            }
-            else {
-                // Create a simpler date format
+            } else {
+                // Other date
                 const dateOptions = {
                     timeZone: 'Europe/London',
                     day: 'numeric',
                     month: 'short',
                     year: 'numeric'
                 };
-                const formattedDate = updatedDate.toLocaleDateString('en-GB', dateOptions);
+                const formattedDate = londonDate.toLocaleDateString('en-GB', dateOptions);
                 
-                lastUpdatedValue.innerHTML = '';
-                
-                // Add date
                 const dateSpan = document.createElement('div');
                 dateSpan.textContent = formattedDate;
+                dateSpan.style.fontWeight = 'bold';
                 lastUpdatedValue.appendChild(dateSpan);
                 
-                // Add time
                 const timeSpan = document.createElement('div');
                 timeSpan.textContent = londonTime;
                 timeSpan.style.fontSize = '28px';
+                timeSpan.style.fontWeight = 'bold'; // Make time bold to match date
                 lastUpdatedValue.appendChild(timeSpan);
             }
         } catch (e) {
