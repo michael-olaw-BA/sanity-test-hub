@@ -27,10 +27,17 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
+        html, body {
+            height: 100%;
+        }
+        
         body {
             background-color: #f5f7fa;
             color: var(--text-color);
             line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
         
         .container {
@@ -60,6 +67,10 @@
         .logo i {
             margin-right: 10px;
             color: var(--primary-color);
+        }
+        
+        .main-content {
+            flex: 1 0 auto;
         }
         
         .dashboard-stats {
@@ -364,6 +375,7 @@
             color: white;
             padding: 20px 0;
             margin-top: 50px;
+            flex-shrink: 0;
         }
         
         footer .container {
@@ -451,51 +463,53 @@
         </div>
     </header>
     
-    <div class="container">
-        <div class="dashboard-stats">
-            <div class="stat-card">
-                <div class="stat-label">Total Repositories</div>
-                <div class="stat-value">5</div>
-                <div>Monitored repositories</div>
+    <div class="main-content">
+        <div class="container">
+            <div class="dashboard-stats">
+                <div class="stat-card">
+                    <div class="stat-label">Total Repositories</div>
+                    <div class="stat-value">5</div>
+                    <div>Monitored repositories</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Overall Pass Rate</div>
+                    <div class="stat-value">80%</div>
+                    <div>Across all repositories</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Critical Tests</div>
+                    <div class="stat-value">12</div>
+                    <div>High priority tests</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Last Updated</div>
+                    <div class="stat-value">Today, 14:30</div>
+                    <div>Automatic daily updates</div>
+                </div>
             </div>
-            <div class="stat-card">
-                <div class="stat-label">Overall Pass Rate</div>
-                <div class="stat-value">80%</div>
-                <div>Across all repositories</div>
+            
+            <div class="dashboard-controls">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Search repositories...">
+                </div>
+                <div class="view-controls">
+                    <button id="gridViewBtn" class="view-btn">
+                        <i class="fas fa-th-large"></i> Grid View
+                    </button>
+                    <button id="listViewBtn" class="view-btn">
+                        <i class="fas fa-list"></i> List View
+                    </button>
+                </div>
             </div>
-            <div class="stat-card">
-                <div class="stat-label">Critical Tests</div>
-                <div class="stat-value">12</div>
-                <div>High priority tests</div>
+            
+            <div id="gridView" class="repositories-grid">
+                <!-- Repository cards will be dynamically added here -->
             </div>
-            <div class="stat-card">
-                <div class="stat-label">Last Updated</div>
-                <div class="stat-value">Today, 14:30</div>
-                <div>Automatic daily updates</div>
+            
+            <div id="listView" class="repositories-list">
+                <!-- Repository list items will be dynamically added here -->
             </div>
-        </div>
-        
-        <div class="dashboard-controls">
-            <div class="search-box">
-                <i class="fas fa-search"></i>
-                <input type="text" id="searchInput" placeholder="Search repositories...">
-            </div>
-            <div class="view-controls">
-                <button id="gridViewBtn" class="view-btn">
-                    <i class="fas fa-th-large"></i> Grid View
-                </button>
-                <button id="listViewBtn" class="view-btn">
-                    <i class="fas fa-list"></i> List View
-                </button>
-            </div>
-        </div>
-        
-        <div id="gridView" class="repositories-grid">
-            <!-- Repository cards will be dynamically added here -->
-        </div>
-        
-        <div id="listView" class="repositories-list">
-            <!-- Repository list items will be dynamically added here -->
         </div>
     </div>
     
@@ -504,7 +518,7 @@
             <div>&copy; 2025 Sanity Test Reports Hub</div>
             <div class="footer-links">
                 <a href="#">Documentation</a>
-                <a href="#">GitHub</a>
+                <a href="#">Feedback</a>
                 <a href="#">Support</a>
             </div>
         </div>
