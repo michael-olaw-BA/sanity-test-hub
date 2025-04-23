@@ -6,14 +6,69 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelector('.stat-card:nth-child(3) .stat-value').textContent = OVERALL_STATS.critical;
     
     // Set the last update time from pipeline execution data
-    // Assuming OVERALL_STATS.lastUpdated contains the pipeline timestamp
-    const lastUpdate = OVERALL_STATS.lastUpdated || new Date();
-    const day = lastUpdate.getDate ? lastUpdate.getDate() : new Date(lastUpdate).getDate();
-    const month = lastUpdate.toLocaleString ? lastUpdate.toLocaleString('default', { month: 'short' }) : new Date(lastUpdate).toLocaleString('default', { month: 'short' });
-    const year = lastUpdate.getFullYear ? lastUpdate.getFullYear() : new Date(lastUpdate).getFullYear();
-    const hours = (lastUpdate.getHours ? lastUpdate.getHours() : new Date(lastUpdate).getHours()).toString().padStart(2, '0');
-    const minutes = (lastUpdate.getMinutes ? lastUpdate.getMinutes() : new Date(lastUpdate).getMinutes()).toString().padStart(2, '0');
-    document.querySelector('.stat-card:nth-child(4) .stat-value').textContent = `${day} ${month} ${year}\n@ ${hours}:${minutes}`;
+    if (OVERALL_STATS.lastUpdated) {
+        try {
+            // Parse the timestamp
+            const lastUpdateDate = new Date(OVERALL_STATS.lastUpdated);
+            
+            // Get today's date for comparison
+            const today = new Date();
+            const isToday = today.toDateString() === lastUpdateDate.toDateString();
+            
+            // Get the last updated card
+            const lastUpdatedCard = document.querySelector('.stat-card:nth-child(4) .stat-value');
+            
+            // Clear existing content
+            lastUpdatedCard.innerHTML = '';
+            
+            if (isToday) {
+                // If update was today, show "Today" and time
+                const todayElem = document.createElement('div');
+                todayElem.textContent = 'Today';
+                todayElem.style.fontWeight = 'bold';
+                
+                const timeElem = document.createElement('div');
+                timeElem.textContent = lastUpdateDate.toLocaleTimeString('en-GB', {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: false
+                });
+                timeElem.style.fontSize = '28px';
+                timeElem.style.fontWeight = 'bold';
+                
+                lastUpdatedCard.appendChild(todayElem);
+                lastUpdatedCard.appendChild(timeElem);
+            } else {
+                // Otherwise show formatted date
+                const dateElem = document.createElement('div');
+                dateElem.textContent = lastUpdateDate.toLocaleDateString('en-GB', {
+                    day: 'numeric',
+                    month: 'short',
+                    year: 'numeric'
+                });
+                dateElem.style.fontWeight = 'bold';
+                
+                const timeElem = document.createElement('div');
+                timeElem.textContent = lastUpdateDate.toLocaleTimeString('en-GB', {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: false
+                });
+                timeElem.style.fontSize = '28px';
+                timeElem.style.fontWeight = 'bold';
+                
+                lastUpdatedCard.appendChild(dateElem);
+                lastUpdatedCard.appendChild(timeElem);
+            }
+        } catch (error) {
+            // If date parsing fails, just show the string
+            document.querySelector('.stat-card:nth-child(4) .stat-value').textContent = 
+                'Updated: ' + OVERALL_STATS.lastUpdated;
+        }
+    } else {
+        // Fallback if no lastUpdated value exists
+        document.querySelector('.stat-card:nth-child(4) .stat-value').textContent = 'Recently Updated';
+    }
 
     // Clear existing repositories
     const gridView = document.getElementById('gridView');
