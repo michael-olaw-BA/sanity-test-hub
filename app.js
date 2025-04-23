@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 todayElem.style.fontWeight = 'bold';
                 
                 const timeElem = document.createElement('div');
-                timeElem.textContent = lastUpdateDate.toLocaleTimeString('en-GB', {
+                timeElem.textContent = '@ ' + lastUpdateDate.toLocaleTimeString('en-GB', {
                     hour: '2-digit',
                     minute: '2-digit',
                     hour12: false
@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 dateElem.style.fontWeight = 'bold';
                 
                 const timeElem = document.createElement('div');
-                timeElem.textContent = lastUpdateDate.toLocaleTimeString('en-GB', {
+                timeElem.textContent = '@ ' + lastUpdateDate.toLocaleTimeString('en-GB', {
                     hour: '2-digit',
                     minute: '2-digit',
                     hour12: false
