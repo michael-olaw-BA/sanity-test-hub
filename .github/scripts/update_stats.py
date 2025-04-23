@@ -6,11 +6,11 @@ import os
 
 # List of repositories to monitor
 repositories = [
-    {"owner": "mik3ola", "repo": "sample-sanity-pipeline"},
-    #{"owner": "mik3ola", "repo": "api-sanity-tests"},
-    #{"owner": "mik3ola", "repo": "frontend-sanity-checks"},
-    #{"owner": "mik3ola", "repo": "database-sanity-tests"},
-    #{"owner": "mik3ola", "repo": "integration-sanity-suite"}
+    {"owner": "michael-iag", "repo": "sample-sanity-pipeline"},
+    #{"owner": "michael-iag", "repo": "api-sanity-tests"},
+    #{"owner": "michael-iag", "repo": "frontend-sanity-checks"},
+    #{"owner": "michael-iag", "repo": "database-sanity-tests"},
+    #{"owner": "michael-iag", "repo": "integration-sanity-suite"}
     # Add other repositories as needed
 ]
 
@@ -42,10 +42,10 @@ for repo_info in repositories:
                 "description": f"{repo} sanity tests",
                 "url": f"https://{owner}.github.io/{repo}/",
                 "stats": {
-                    "total": 3,
-                    "passed": 2,
-                    "failed": 1,
-                    "critical": 1
+                    "total": 0,
+                    "passed": 0,
+                    "failed": 0,
+                    "critical": 0
                 },
                 "lastUpdate": "Unknown",
                 "status": "warning"
@@ -80,33 +80,6 @@ for repo_info in repositories:
             passed_tests = 0
             failed_tests = 0
             critical_tests = 0
-            
-            # Try to infer from repository name
-            if "api" in repo.lower():
-                total_tests = 12
-                passed_tests = 10
-                failed_tests = 2
-                critical_tests = 3
-            elif "frontend" in repo.lower():
-                total_tests = 8
-                passed_tests = 8
-                failed_tests = 0
-                critical_tests = 2
-            elif "database" in repo.lower():
-                total_tests = 5
-                passed_tests = 3
-                failed_tests = 2
-                critical_tests = 2
-            elif "integration" in repo.lower():
-                total_tests = 15
-                passed_tests = 12
-                failed_tests = 3
-                critical_tests = 4
-            else:
-                total_tests = 3
-                passed_tests = 2
-                failed_tests = 1
-                critical_tests = 1
         
         # Get latest workflow run
         runs_url = f"https://api.github.com/repos/{owner}/{repo}/actions/runs"
@@ -145,22 +118,9 @@ for repo_info in repositories:
             else:
                 status = "warning"
         else:
-            # Default values if no workflow runs found
-            if "frontend" in repo.lower():
-                last_update = "3 days ago"
-                status = "success"
-            elif "database" in repo.lower():
-                last_update = "5 days ago"
-                status = "danger"
-            elif "integration" in repo.lower():
-                last_update = "1 week ago"
-                status = "warning"
-            elif "api" in repo.lower():
-                last_update = "1 day ago"
-                status = "warning"
-            else:
-                last_update = "2 hours ago"
-                status = "warning"
+            # Default values when no workflow runs found
+            last_update = "Unknown"
+            status = "warning"
         
         # Add repository data
         repo_data.append({
@@ -204,12 +164,15 @@ total_failed = sum(repo["stats"]["failed"] for repo in repo_data)
 total_critical = sum(repo["stats"]["critical"] for repo in repo_data)
 pass_rate = 0 if total_tests == 0 else round((total_passed / total_tests) * 100)
 
+# Get current time (when the script runs, which is when the workflow runs)
+current_time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+
 # Update config.js
 print("Updating config.js...")
 
 # Create new config.js content
 config_content = f"""// Configuration for the Sanity Test Reports Hub
-// Automatically updated by GitHub Actions on {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
+// Automatically updated by GitHub Actions on {current_time}
 
 const REPOSITORIES = {json.dumps(repo_data, indent=4)};
 
@@ -221,7 +184,8 @@ function calculateOverallStats() {{
         passed: {total_passed},
         failed: {total_failed},
         critical: {total_critical},
-        passRate: {pass_rate}
+        passRate: {pass_rate},
+        lastUpdated: "{current_time}"
     }};
 }}
 
