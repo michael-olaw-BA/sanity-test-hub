@@ -1,6 +1,7 @@
 import requests
 import json
 import datetime
+import pytz  # Add this import for timezone support
 import re
 import os
 
@@ -164,8 +165,9 @@ total_failed = sum(repo["stats"]["failed"] for repo in repo_data)
 total_critical = sum(repo["stats"]["critical"] for repo in repo_data)
 pass_rate = 0 if total_tests == 0 else round((total_passed / total_tests) * 100)
 
-# Get current time (when the script runs, which is when the workflow runs)
-current_time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+# Get current time in London timezone
+london_tz = pytz.timezone('Europe/London')
+current_time = datetime.datetime.now(london_tz).strftime('%Y-%m-%d %H:%M:%S %Z')
 
 # Update config.js
 print("Updating config.js...")
