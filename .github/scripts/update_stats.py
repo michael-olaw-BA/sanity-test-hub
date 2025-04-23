@@ -6,11 +6,11 @@ import os
 
 # List of repositories to monitor
 repositories = [
-    {"owner": "mik3ola", "repo": "sample-sanity-pipeline"},
-    #{"owner": "mik3ola", "repo": "api-sanity-tests"},
-    #{"owner": "mik3ola", "repo": "frontend-sanity-checks"},
-    #{"owner": "mik3ola", "repo": "database-sanity-tests"},
-    #{"owner": "mik3ola", "repo": "integration-sanity-suite"}
+    {"owner": "michael-iag", "repo": "sample-sanity-pipeline"},
+    #{"owner": "michael-iag", "repo": "api-sanity-tests"},
+    #{"owner": "michael-iag", "repo": "frontend-sanity-checks"},
+    #{"owner": "michael-iag", "repo": "database-sanity-tests"},
+    #{"owner": "michael-iag", "repo": "integration-sanity-suite"}
     # Add other repositories as needed
 ]
 
@@ -211,6 +211,9 @@ print("Updating config.js...")
 config_content = f"""// Configuration for the Sanity Test Reports Hub
 // Automatically updated by GitHub Actions on {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
 
+// Extract current repository owner for dynamic URLs
+const REPO_OWNER = window.location.hostname.split('.')[0];
+
 const REPOSITORIES = {json.dumps(repo_data, indent=4)};
 
 // Calculate overall statistics
@@ -221,7 +224,8 @@ function calculateOverallStats() {{
         passed: {total_passed},
         failed: {total_failed},
         critical: {total_critical},
-        passRate: {pass_rate}
+        passRate: {pass_rate},
+        lastUpdated: "{datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
     }};
 }}
 

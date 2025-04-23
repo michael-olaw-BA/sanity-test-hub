@@ -5,11 +5,9 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelector('.stat-card:nth-child(2) .stat-value').textContent = OVERALL_STATS.passRate + '%';
     document.querySelector('.stat-card:nth-child(3) .stat-value').textContent = OVERALL_STATS.critical;
     
-    // Get current date and time for the last update
-    const now = new Date();
-    const hours = now.getHours().toString().padStart(2, '0');
-    const minutes = now.getMinutes().toString().padStart(2, '0');
-    document.querySelector('.stat-card:nth-child(4) .stat-value').textContent = `Today, ${hours}:${minutes}`;
+    // Update the Last Updated card with the dashboard update timestamp
+    document.querySelector('.stat-card:nth-child(4) .stat-value').textContent = 
+        OVERALL_STATS.lastUpdated || "Unknown";
     
     // Clear existing repositories
     const gridView = document.getElementById('gridView');
