@@ -1,5 +1,5 @@
 // Configuration for the Sanity Test Reports Hub
-// Automatically updated by GitHub Actions on 2025-04-23 12:38:01
+// Automatically updated by GitHub Actions on 2025-04-23 12:42:50
 
 // Extract current repository owner for dynamic URLs
 const REPO_OWNER = window.location.hostname.split('.')[0];
@@ -29,7 +29,7 @@ function calculateOverallStats() {
         failed: 1,
         critical: 1,
         passRate: 67,
-        lastUpdated: "2025-04-23 12:38:01"
+        lastUpdated: "2025-04-23 12:42:50"
     };
 }
 
