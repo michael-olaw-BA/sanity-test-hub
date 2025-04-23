@@ -1,4 +1,4 @@
-name: Update Repository Statistics
+name: Update Statistics and Deploy
 
 on:
   schedule:
@@ -8,20 +8,13 @@ on:
     branches:
       - main  # Run on pushes to main branch
     paths-ignore:
-      - 'dynamic-implementation-guide'  # Ignore pushes that only change config.js to avoid infinite loops
+      - 'config.js'  # Ignore pushes that only change config.js to avoid infinite loops
 
 jobs:
-  update-stats-and-deploy:
+  update-stats:
     runs-on: ubuntu-latest
-    # Grant GITHUB_TOKEN the permissions required
     permissions:
-      pages: write
-      id-token: write
       contents: write
-    # Deploy to the github-pages environment
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
       
@@ -39,8 +32,8 @@ jobs:
         run: |
           python .github/scripts/update_stats.py
           
-      - name: Commit changes
-        id: commit
+      - name: Commit and push changes
+        id: push
         run: |
           git config --global user.name 'GitHub Actions'
           git config --global user.email 'actions@github.com'
@@ -48,58 +41,73 @@ jobs:
           # Stage changes
           git add config.js
           
-          # Check if there are changes
+          # Only commit if there are changes
           if git diff --staged --quiet; then
             echo "No changes to commit"
-            echo "has_changes=false" >> $GITHUB_OUTPUT
+            echo "changes_pushed=false" >> $GITHUB_OUTPUT
           else
             # Pull latest changes with strategy to handle conflicts
             git pull --rebase origin main || git pull origin main
             
             # Commit changes
-            git commit -m "Update repository statistics [skip ci]"
-            echo "has_changes=true" >> $GITHUB_OUTPUT
-          fi
-      
-      - name: Push changes
-        if: steps.commit.outputs.has_changes == 'true'
-        run: |
-          # Push with retry logic
-          MAX_RETRIES=3
-          RETRY_COUNT=0
-          
-          while [ $RETRY_COUNT -lt $MAX_RETRIES ]; do
-            if git push; then
-              echo "Successfully pushed changes"
-              break
-            else
-              RETRY_COUNT=$((RETRY_COUNT+1))
-              echo "Push failed, retry $RETRY_COUNT of $MAX_RETRIES"
-              
-              if [ $RETRY_COUNT -lt $MAX_RETRIES ]; then
-                echo "Pulling latest changes before retrying..."
-                git pull --rebase origin main || git pull origin main
-                sleep 5
+            git commit -m "Update repository statistics"
+            
+            # Push with retry logic
+            MAX_RETRIES=3
+            RETRY_COUNT=0
+            
+            while [ $RETRY_COUNT -lt $MAX_RETRIES ]; do
+              if git push; then
+                echo "Successfully pushed changes"
+                echo "changes_pushed=true" >> $GITHUB_OUTPUT
+                break
+              else
+                RETRY_COUNT=$((RETRY_COUNT+1))
+                echo "Push failed, retry $RETRY_COUNT of $MAX_RETRIES"
+                
+                if [ $RETRY_COUNT -lt $MAX_RETRIES ]; then
+                  echo "Pulling latest changes before retrying..."
+                  git pull --rebase origin main || git pull origin main
+                  sleep 5
+                fi
               fi
+            done
+            
+            if [ $RETRY_COUNT -eq $MAX_RETRIES ]; then
+              echo "Failed to push after $MAX_RETRIES attempts"
+              exit 1
             fi
-          done
-          
-          if [ $RETRY_COUNT -eq $MAX_RETRIES ]; then
-            echo "Failed to push after $MAX_RETRIES attempts"
-            exit 1
           fi
+
+    outputs:
+      changes_pushed: ${{ steps.push.outputs.changes_pushed }}
+
+  # This job runs if changes were pushed OR if workflow was manually triggered
+  deploy-pages:
+    needs: update-stats
+    if: needs.update-stats.outputs.changes_pushed == 'true' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+      contents: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
       
-      # Setup and deploy Pages directly
       - name: Setup Pages
         uses: actions/configure-pages@v4
       
-      - name: Deploy directly to gh-pages branch
+      - name: Deploy to GitHub Pages
         run: |
-          # Verify files exist
+          # Display the content about to be deployed
           echo "Files to be deployed:"
           ls -la
           
-          # Setup git for gh-pages
+          # Setup git
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
           
@@ -108,15 +116,6 @@ jobs:
           
           # Copy necessary files from main branch
           git checkout main -- index.html config.js app.js styles.css || echo "Failed to checkout some files"
-          
-          # Add any files that might not exist yet but should be part of the site
-          for file in index.html config.js app.js styles.css; do
-            if [ ! -f "$file" ]; then
-              echo "Creating placeholder for $file"
-              echo "// Placeholder for $file - this file should be properly populated" > $file
-              git add $file
-            fi
-          done
           
           # Commit and push to gh-pages branch
           git add .
