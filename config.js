@@ -1,5 +1,5 @@
 // Configuration for the Sanity Test Reports Hub
-// Automatically updated by GitHub Actions on 2025-04-28 02:14:24
+// Automatically updated by GitHub Actions on 2025-04-28 19:19:19
 
 const REPOSITORIES = [
     {
@@ -7,12 +7,12 @@ const REPOSITORIES = [
         "description": null,
         "url": "https://michael-iag.github.io/sample-sanity-pipeline/",
         "stats": {
-            "total": 3,
-            "passed": 1,
-            "failed": 2,
-            "critical": 1
+            "total": 0,
+            "passed": 0,
+            "failed": 0,
+            "critical": 0
         },
-        "lastUpdate": "4 days ago",
+        "lastUpdate": "0 minutes ago",
         "status": "success"
     }
 ];
@@ -21,12 +21,12 @@ const REPOSITORIES = [
 function calculateOverallStats() {
     return {
         repositories: 1,
-        tests: 3,
-        passed: 1,
-        failed: 2,
-        critical: 1,
-        passRate: 33,
-        lastUpdated: "2025-04-28T02:14:24+0100"
+        tests: 0,
+        passed: 0,
+        failed: 0,
+        critical: 0,
+        passRate: 0,
+        lastUpdated: "2025-04-28T19:19:19+0100"
     };
 }
 
