@@ -111,14 +111,18 @@ jobs:
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
           
-          # Create or checkout gh-pages branch
-          git checkout gh-pages 2>/dev/null || git checkout -b gh-pages
+          # Start fresh - delete and recreate gh-pages branch
+          git checkout --orphan gh-pages
+          git rm -rf .
           
           # Copy necessary files from main branch
           git checkout main -- index.html config.js app.js styles.css || echo "Failed to checkout some files"
           
+          # Create a simple .nojekyll file to bypass Jekyll processing
+          touch .nojekyll
+          
           # Commit and push to gh-pages branch
-          git add .
+          git add --all
           git commit -m "Update GitHub Pages content" || echo "No changes to commit"
           git push -f origin gh-pages
 
