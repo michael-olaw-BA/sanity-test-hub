@@ -8,10 +8,11 @@ import os
 # List of repositories to monitor
 repositories = [
     {"owner": "michael-iag", "repo": "sample-sanity-pipeline"},
+    {"owner": "michael-iag", "repo": "flight-search"},
+    #{"owner": "michael-iag", "repo": "booking-manager"},
+    #{"owner": "michael-iag", "repo": "loyalty-program"},
     #{"owner": "michael-iag", "repo": "api-sanity-tests"},
-    #{"owner": "michael-iag", "repo": "frontend-sanity-checks"},
-    #{"owner": "michael-iag", "repo": "database-sanity-tests"},
-    #{"owner": "michael-iag", "repo": "integration-sanity-suite"}
+
     # Add other repositories as needed
 ]
 
