@@ -64,17 +64,28 @@ for repo_info in repositories:
         print(f"Fetching metrics from: {metrics_url}")
         
         try:
-            metrics_response = requests.get(metrics_url)
-            # Check if request was successful
-            if metrics_response.status_code != 200:
-                raise Exception(f"HTTP Error: {metrics_response.status_code}")
-                
-            metrics = metrics_response.json()
-            
-            total_tests = metrics.get("total_tests", 0)
-            passed_tests = metrics.get("passed_tests", 0)
-            failed_tests = metrics.get("failed_tests", 0)
-            critical_tests = metrics.get("critical_tests_count", 0)
+            metrics_response = requests.get(metrics_url, timeout=10)
+            if metrics_response.status_code == 200:
+                print(f"  Successfully fetched metrics.json")
+                try:
+                    # Print the raw response for debugging
+                    print(f"  Raw metrics data: {metrics_response.text}")
+                    metrics_data = metrics_response.json()
+                    print(f"  Parsed metrics data successfully")
+                    total_tests = metrics_data.get("total_tests", 0)
+                    passed_tests = metrics_data.get("passed_tests", 0)
+                    failed_tests = metrics_data.get("failed_tests", 0)
+                    critical_tests = metrics_data.get("critical_tests_count", 0)
+                except json.JSONDecodeError as e:
+                    print(f"  Error parsing metrics.json: {e}")
+                    print(f"  Raw data: {metrics_response.text}")
+                    # Set default values...
+                    total_tests = 0
+                    passed_tests = 0
+                    failed_tests = 0
+                    critical_tests = 0
+            else:
+                print(f"  Failed to fetch metrics.json: HTTP {metrics_response.status_code}")
         except Exception as e:
             print(f"  Error fetching metrics, using default values: {e}")
             # Default values if metrics.json is not available
