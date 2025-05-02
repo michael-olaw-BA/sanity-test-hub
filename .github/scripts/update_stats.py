@@ -4,6 +4,7 @@ import datetime
 import pytz  # Add this import for timezone support
 import re
 import os
+import time
 
 # List of repositories to monitor
 repositories = [
@@ -60,7 +61,7 @@ for repo_info in repositories:
         description = repo_data_api.get('description', f"{repo} sanity tests")
         
         # Try to fetch metrics.json from GitHub Pages
-        metrics_url = f"https://{owner}.github.io/{repo}/metrics.json"
+        metrics_url = f"https://{owner}.github.io/{repo}/metrics.json?t={int(time.time())}"
         print(f"Fetching metrics from: {metrics_url}")
         
         try:
