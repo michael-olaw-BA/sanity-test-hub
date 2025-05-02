@@ -82,7 +82,7 @@ jobs:
     outputs:
       changes_pushed: ${{ steps.push.outputs.changes_pushed }}
 
-  # This job runs if changes were pushed OR if workflow was manually triggered
+  # This job runs if changes were pushed OR if workflow was manually triggered.
   deploy-pages:
     needs: update-stats
     if: needs.update-stats.outputs.changes_pushed == 'true' || github.event_name == 'workflow_dispatch'
