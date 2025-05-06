@@ -10,7 +10,7 @@ import time
 repositories = [
     {"owner": "michael-iag", "repo": "sample-sanity-pipeline"},
     {"owner": "michael-iag", "repo": "flight-search"},
-    #{"owner": "michael-iag", "repo": "booking-manager"},
+    {"owner": "michael-iag", "repo": "booking-manager"},
     {"owner": "michael-iag", "repo": "loyalty-program"},
 
     # Add other repositories as needed
