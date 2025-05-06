@@ -1,5 +1,9 @@
 // Configuration for the Sanity Test Reports Hub
+<<<<<<< HEAD
 // Automatically updated by GitHub Actions on 2025-05-06 19:55:17
+=======
+// Automatically updated by GitHub Actions on 2025-05-06 19:57:58
+>>>>>>> 4752a8cf8882c47c44a5f24d6390eeab68259e49
 
 const REPOSITORIES = [
     {
@@ -26,9 +30,14 @@ const REPOSITORIES = [
             "failed": 0,
             "critical": 3
         },
+<<<<<<< HEAD
         "lastUpdate": "2 hours ago",
         "lastUpdateTimestamp": "2025-05-06T16:17:06Z",
         "status": "success"
+=======
+        "lastUpdate": "0 minutes ago",
+        "status": "warning"
+>>>>>>> 4752a8cf8882c47c44a5f24d6390eeab68259e49
     },
     {
         "name": "booking-manager",
@@ -40,9 +49,14 @@ const REPOSITORIES = [
             "failed": 0,
             "critical": 2
         },
+<<<<<<< HEAD
         "lastUpdate": "2 hours ago",
         "lastUpdateTimestamp": "2025-05-06T16:38:23Z",
         "status": "success"
+=======
+        "lastUpdate": "0 minutes ago",
+        "status": "warning"
+>>>>>>> 4752a8cf8882c47c44a5f24d6390eeab68259e49
     },
     {
         "name": "loyalty-program",
@@ -54,9 +68,14 @@ const REPOSITORIES = [
             "failed": 0,
             "critical": 2
         },
+<<<<<<< HEAD
         "lastUpdate": "2 hours ago",
         "lastUpdateTimestamp": "2025-05-06T16:17:58Z",
         "status": "success"
+=======
+        "lastUpdate": "0 minutes ago",
+        "status": "warning"
+>>>>>>> 4752a8cf8882c47c44a5f24d6390eeab68259e49
     }
 ];
 
@@ -69,7 +88,11 @@ function calculateOverallStats() {
         failed: 2,
         critical: 8,
         passRate: 91,
+<<<<<<< HEAD
         lastUpdated: "2025-05-06T19:55:17+0100"
+=======
+        lastUpdated: "2025-05-06T19:57:58+0100"
+>>>>>>> 4752a8cf8882c47c44a5f24d6390eeab68259e49
     };
 }
 
