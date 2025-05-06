@@ -17,6 +17,15 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      
+      - name: Ensure clean working directory
+        run: |
+          git config --global user.name 'GitHub Actions'
+          git config --global user.email 'github-actions@github.com'
+          git reset --hard origin/main
       
       - name: Set up Python
         uses: actions/setup-python@v5
