@@ -1,5 +1,5 @@
 // Configuration for the Sanity Test Reports Hub
-// Automatically updated by GitHub Actions on 2025-05-06 16:59:47
+// Automatically updated by GitHub Actions on 2025-05-06 17:00:57
 
 const REPOSITORIES = [
     {
@@ -20,13 +20,13 @@ const REPOSITORIES = [
         "description": "Flight search",
         "url": "https://michael-iag.github.io/flight-search/",
         "stats": {
-            "total": 7,
-            "passed": 7,
+            "total": 0,
+            "passed": 0,
             "failed": 0,
-            "critical": 3
+            "critical": 0
         },
         "lastUpdate": "0 minutes ago",
-        "status": "warning"
+        "status": "success"
     }
 ];
 
@@ -34,12 +34,12 @@ const REPOSITORIES = [
 function calculateOverallStats() {
     return {
         repositories: 2,
-        tests: 10,
-        passed: 8,
+        tests: 3,
+        passed: 1,
         failed: 2,
-        critical: 4,
-        passRate: 80,
-        lastUpdated: "2025-05-06T16:59:47+0100"
+        critical: 1,
+        passRate: 33,
+        lastUpdated: "2025-05-06T17:00:57+0100"
     };
 }
 
