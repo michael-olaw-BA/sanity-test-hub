@@ -3,8 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sanity Test Reports Hub</title>
+    <title>Test Report Hub</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary-color: #3498db;
@@ -49,7 +52,7 @@
         header {
             background-color: var(--secondary-color);
             color: white;
-            padding: 20px 0;
+            padding: 10px 0;
             margin-bottom: 30px;
         }
         
@@ -60,13 +63,15 @@
         }
         
         .logo {
-            font-size: 24px;
-            font-weight: bold;
+            font-size: 25px;
         }
         
-        .logo i {
-            margin-right: 10px;
-            color: var(--primary-color);
+        .logo-text {
+            display: block;
+            font-weight: bold;
+            font-family: 'DM Serif Display', serif;
+            letter-spacing: 0.5px;
+            margin-top: 5px;
         }
         
         .main-content {
@@ -119,6 +124,8 @@
         .stat-label {
             color: #777;
             font-size: 14px;
+            font-family: 'DM Serif Display', serif;
+            margin-bottom: 8px;
         }
         
         .dashboard-controls {
@@ -164,6 +171,7 @@
         }
         
         .view-btn {
+            font-family: 'DM Serif Display', serif;
             background-color: white;
             border: 1px solid #ddd;
             border-radius: var(--border-radius);
@@ -214,6 +222,7 @@
             font-size: 18px;
             font-weight: bold;
             margin-bottom: 5px;
+            font-family: 'DM Serif Display', serif;
         }
         
         .repository-description {
@@ -277,6 +286,7 @@
         }
         
         .view-report {
+            font-family: 'DM Serif Display', serif;
             background-color: var(--primary-color);
             color: white;
             padding: 8px 15px;
@@ -452,13 +462,46 @@
                 grid-template-columns: 1fr;
             }
         }
+        
+        /* More specific targeting for repository names everywhere */
+        .repository-name,
+        .repositories-list .repository-name,
+        .repository-list-item .repository-name,
+        .repository-info .repository-name,
+        .repository-details .repository-name,
+        div[class*="repository"] .repository-name,
+        *[class*="repository"] h3,
+        *[class*="repository"] h4,
+        *[class*="repository"] strong {
+            font-family: 'DM Serif Display', serif !important;
+            font-size: 20px;
+        }
+        
+        /* Make sure the title in the card is using our font */
+        .repository-card h3,
+        .repository-list-item h3,
+        .repository-list-item strong,
+        .repository-info strong {
+            font-family: 'DM Serif Display', serif !important;
+        }
     </style>
 </head>
 <body>
     <header>
-        <div class="container">
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center;">
+            <!-- Left side: BA ribbon logo and title text -->
             <div class="logo">
-                <i class="fas fa-vial"></i> Sanity Test Reports Hub
+                <div style="margin-bottom: 5px;">
+                    <img src="images/ba-ribbon.png" alt="British Airways Logo" 
+                         style="height: 20px; width: auto; display: block;">
+                </div>
+                <span class="logo-text">Test Report Hub</span>
+            </div>
+            
+            <!-- Right side: BA logo -->
+            <div style="display: flex; align-items: center;">
+                <img src="images/ba-tailFinn.png" alt="British Airways Tail Fin" 
+                     style="height: 50px; width: auto;">
             </div>
         </div>
     </header>
@@ -696,6 +739,64 @@
             
             // Execute the script injection
             injectBackButtonScript();
+        });
+    </script>
+    <script>
+        // Add this function to format relative time (you already have this)
+        function getRelativeTimeString(timestamp) {
+            if (!timestamp) return "Unknown";
+            
+            const now = new Date();
+            const past = new Date(timestamp);
+            const diffInSeconds = Math.floor((now - past) / 1000);
+            
+            if (diffInSeconds < 60) {
+                return diffInSeconds + ' seconds ago';
+            } else if (diffInSeconds < 3600) {
+                const minutes = Math.floor(diffInSeconds / 60);
+                return minutes + (minutes === 1 ? ' minute ago' : ' minutes ago');
+            } else if (diffInSeconds < 86400) {
+                const hours = Math.floor(diffInSeconds / 3600);
+                return hours + (hours === 1 ? ' hour ago' : ' hours ago');
+            } else {
+                const days = Math.floor(diffInSeconds / 86400);
+                if (days < 7) {
+                    return days + (days === 1 ? ' day ago' : ' days ago');
+                } else {
+                    const weeks = Math.floor(days / 7);
+                    return weeks + (weeks === 1 ? ' week ago' : ' weeks ago');
+                }
+            }
+        }
+        
+        // Add this to update all timestamps on the page
+        function updateAllTimestamps() {
+            // Loop through repositories and update timestamps
+            REPOSITORIES.forEach((repo, index) => {
+                // Skip repositories without a timestamp
+                if (!repo.lastUpdateTimestamp) return;
+                
+                // Find all elements showing this repository's timestamp
+                const timeElements = document.querySelectorAll(`.timestamp-repo-${index}`);
+                timeElements.forEach(element => {
+                    element.textContent = getRelativeTimeString(repo.lastUpdateTimestamp);
+                });
+            });
+            
+            // Also update the overall stats last updated time
+            const lastUpdatedElem = document.querySelector('.last-updated-time');
+            if (lastUpdatedElem && OVERALL_STATS.lastUpdated) {
+                lastUpdatedElem.textContent = getRelativeTimeString(OVERALL_STATS.lastUpdated);
+            }
+        }
+        
+        // Call on page load and periodically
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initial update
+            updateAllTimestamps();
+            
+            // Update every minute
+            setInterval(updateAllTimestamps, 60000);
         });
     </script>
 </body>

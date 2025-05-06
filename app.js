@@ -106,6 +106,17 @@ function createGridCard(repo) {
     // Add from=hub parameter to URL
     const reportUrl = addHubParameter(repo.url);
     
+    // Find repo index for timestamp class
+    const repoIndex = REPOSITORIES.findIndex(r => r.name === repo.name);
+    
+    // Create timestamp element with proper class for dynamic updates
+    let timeDisplay;
+    if (repo.lastUpdateTimestamp) {
+        timeDisplay = `<span class="timestamp-repo-${repoIndex}">${getRelativeTimeString(repo.lastUpdateTimestamp)}</span>`;
+    } else {
+        timeDisplay = repo.lastUpdate;
+    }
+    
     card.innerHTML = `
         <div class="repository-header">
             <div class="repository-name">${repo.name}</div>
@@ -128,7 +139,7 @@ function createGridCard(repo) {
         <div class="repository-footer">
             <div class="last-update">
                 <span class="status-indicator status-${repo.status}"></span>
-                Updated ${repo.lastUpdate}
+                ${timeDisplay}
             </div>
             <a href="${reportUrl}" class="view-report">View Report</a>
         </div>
@@ -144,6 +155,17 @@ function createListItem(repo) {
     
     // Add from=hub parameter to URL
     const reportUrl = addHubParameter(repo.url);
+    
+    // Find repo index for timestamp class
+    const repoIndex = REPOSITORIES.findIndex(r => r.name === repo.name);
+    
+    // Create timestamp element with proper class for dynamic updates
+    let timeDisplay;
+    if (repo.lastUpdateTimestamp) {
+        timeDisplay = `<span class="timestamp-repo-${repoIndex}">${getRelativeTimeString(repo.lastUpdateTimestamp)}</span>`;
+    } else {
+        timeDisplay = repo.lastUpdate;
+    }
     
     item.innerHTML = `
         <div class="repository-info">
@@ -172,7 +194,7 @@ function createListItem(repo) {
         <div class="repository-actions">
             <div class="last-update">
                 <span class="status-indicator status-${repo.status}"></span>
-                ${repo.lastUpdate}
+                ${timeDisplay}
             </div>
             <a href="${reportUrl}" class="view-report">View Report</a>
         </div>

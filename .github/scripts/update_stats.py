@@ -108,7 +108,10 @@ for repo_info in repositories:
             updated_at = latest_run.get("updated_at")
             
             if updated_at:
-                # Calculate time since update
+                # Store the ISO timestamp for JavaScript
+                iso_timestamp = updated_at
+                
+                # Calculate time since update (keep this for backward compatibility)
                 updated_date = datetime.datetime.fromisoformat(updated_at.replace("Z", "+00:00"))
                 now = datetime.datetime.now(datetime.timezone.utc)
                 diff = now - updated_date
@@ -132,6 +135,7 @@ for repo_info in repositories:
                 status = "warning"
         else:
             # Default values when no workflow runs found
+            iso_timestamp = None
             last_update = "Unknown"
             status = "warning"
         
@@ -147,6 +151,7 @@ for repo_info in repositories:
                 "critical": critical_tests
             },
             "lastUpdate": last_update,
+            "lastUpdateTimestamp": iso_timestamp,
             "status": status
         })
         
