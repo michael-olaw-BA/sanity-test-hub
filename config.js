@@ -1,5 +1,5 @@
 // Configuration for the Sanity Test Reports Hub
-// Automatically updated by GitHub Actions on 2025-05-06 16:12:18
+// Automatically updated by GitHub Actions on 2025-05-06 16:59:47
 
 const REPOSITORIES = [
     {
@@ -39,7 +39,7 @@ function calculateOverallStats() {
         failed: 2,
         critical: 4,
         passRate: 80,
-        lastUpdated: "2025-05-06T16:12:18+0100"
+        lastUpdated: "2025-05-06T16:59:47+0100"
     };
 }
 
