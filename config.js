@@ -1,9 +1,5 @@
 // Configuration for the Sanity Test Reports Hub
-<<<<<<< HEAD
-// Automatically updated by GitHub Actions on 2025-05-07 14:16:14
-=======
-// Automatically updated by GitHub Actions on 2025-05-07 02:14:07
->>>>>>> 11cf4ad5b81151e9262e178f425a6a42b4e56872
+// Automatically updated by GitHub Actions on 2025-05-07 14:33:10
 
 const REPOSITORIES = [
     {
@@ -30,11 +26,7 @@ const REPOSITORIES = [
             "failed": 0,
             "critical": 3
         },
-<<<<<<< HEAD
         "lastUpdate": "18 hours ago",
-=======
-        "lastUpdate": "6 hours ago",
->>>>>>> 11cf4ad5b81151e9262e178f425a6a42b4e56872
         "lastUpdateTimestamp": "2025-05-06T18:58:05Z",
         "status": "success"
     },
@@ -48,11 +40,7 @@ const REPOSITORIES = [
             "failed": 0,
             "critical": 2
         },
-<<<<<<< HEAD
         "lastUpdate": "18 hours ago",
-=======
-        "lastUpdate": "6 hours ago",
->>>>>>> 11cf4ad5b81151e9262e178f425a6a42b4e56872
         "lastUpdateTimestamp": "2025-05-06T18:58:15Z",
         "status": "success"
     },
@@ -66,11 +54,7 @@ const REPOSITORIES = [
             "failed": 0,
             "critical": 2
         },
-<<<<<<< HEAD
         "lastUpdate": "18 hours ago",
-=======
-        "lastUpdate": "6 hours ago",
->>>>>>> 11cf4ad5b81151e9262e178f425a6a42b4e56872
         "lastUpdateTimestamp": "2025-05-06T18:58:13Z",
         "status": "success"
     }
@@ -85,11 +69,7 @@ function calculateOverallStats() {
         failed: 2,
         critical: 8,
         passRate: 91,
-<<<<<<< HEAD
-        lastUpdated: "2025-05-07T14:16:14+0100"
-=======
-        lastUpdated: "2025-05-07T02:14:07+0100"
->>>>>>> 11cf4ad5b81151e9262e178f425a6a42b4e56872
+        lastUpdated: "2025-05-07T14:33:10+0100"
     };
 }
 
