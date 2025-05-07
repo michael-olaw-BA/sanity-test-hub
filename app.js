@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     year: 'numeric'
                 });
                 dateElem.style.fontWeight = 'bold';
-                
+
                 const timeElem = document.createElement('div');
                 timeElem.textContent = '@ ' + lastUpdateDate.toLocaleTimeString('en-GB', {
                     hour: '2-digit',
@@ -98,6 +98,33 @@ function addHubParameter(url) {
     }
 }
 
+// Function to determine status based on time elapsed
+function getStatusFromTimestamp(timestamp) {
+    if (!timestamp) return "danger"; // No timestamp = danger
+    
+    const now = new Date();
+    const updated = new Date(timestamp);
+    const diffInDays = Math.floor((now - updated) / (1000 * 60 * 60 * 24));
+    
+    if (diffInDays < 1) {
+        return "success"; // Less than 1 day = success (green)
+    } else if (diffInDays < 3) {
+        return "warning"; // Between 1-5 days = warning (yellow)
+    } else {
+        return "danger";  // 5+ days = danger (red)
+    }
+}
+
+// Function to determine the appropriate status icon based on test results
+function getStatusIcon(repo) {
+    // If there are failed tests, show a failure icon
+    if (repo.stats.failed > 0) {
+        return '<i class="fas fa-times-circle" style="color: #e74c3c; margin-right: 8px; font-size: 1.1em;"></i>';
+    } else {
+        return '<i class="fas fa-check-circle" style="color: #2ecc71; margin-right: 8px; font-size: 1.1em;"></i>';
+    }
+}
+
 // Create a repository card for grid view
 function createGridCard(repo) {
     const card = document.createElement('div');
@@ -117,9 +144,15 @@ function createGridCard(repo) {
         timeDisplay = repo.lastUpdate;
     }
     
+    // Get status based on timestamp rather than pass rate
+    const status = getStatusFromTimestamp(repo.lastUpdateTimestamp);
+    
+    // Get the status icon
+    const statusIcon = getStatusIcon(repo);
+    
     card.innerHTML = `
         <div class="repository-header">
-            <div class="repository-name">${repo.name}</div>
+            <div class="repository-name">${statusIcon}${repo.name}</div>
             <div class="repository-description">${repo.description}</div>
         </div>
         <div class="repository-stats">
@@ -138,7 +171,7 @@ function createGridCard(repo) {
         </div>
         <div class="repository-footer">
             <div class="last-update">
-                <span class="status-indicator status-${repo.status}"></span>
+                <span class="status-indicator status-${status}"></span>
                 ${timeDisplay}
             </div>
             <a href="${reportUrl}" class="view-report">View Report</a>
@@ -167,13 +200,19 @@ function createListItem(repo) {
         timeDisplay = repo.lastUpdate;
     }
     
+    // Get status based on timestamp rather than pass rate
+    const status = getStatusFromTimestamp(repo.lastUpdateTimestamp);
+    
+    // Get the status icon
+    const statusIcon = getStatusIcon(repo);
+    
     item.innerHTML = `
         <div class="repository-info">
             <div class="repository-icon">
                 <i class="fas fa-code-branch"></i>
             </div>
             <div class="repository-details">
-                <h3>${repo.name}</h3>
+                <h3>${statusIcon}${repo.name}</h3>
                 <p>${repo.description}</p>
             </div>
         </div>
@@ -193,7 +232,7 @@ function createListItem(repo) {
         </div>
         <div class="repository-actions">
             <div class="last-update">
-                <span class="status-indicator status-${repo.status}"></span>
+                <span class="status-indicator status-${status}"></span>
                 ${timeDisplay}
             </div>
             <a href="${reportUrl}" class="view-report">View Report</a>

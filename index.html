@@ -8,6 +8,17 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Tenor+Sans&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Spectral:wght@500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&display=swap" rel="stylesheet">
+
+
     <style>
         :root {
             --primary-color: #3498db;
@@ -52,14 +63,19 @@
         header {
             background-color: var(--secondary-color);
             color: white;
-            padding: 10px 0;
+            padding: 0;
             margin-bottom: 30px;
+            height: 80px;
+            overflow: visible;
         }
         
         header .container {
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            align-items: flex-end;
+            height: 100%;
+            padding-top: 10px;
+            padding-bottom: 10px;
         }
         
         .logo {
@@ -113,6 +129,11 @@
         
         .stat-card:nth-child(4) {
             border-top: 4px solid var(--danger-color);
+        }
+        
+        .stat-value,
+        .stat-value * {
+            font-family: 'Raleway', sans-serif;
         }
         
         .stat-value {
@@ -218,13 +239,6 @@
             border-bottom: 1px solid #eee;
         }
         
-        .repository-name {
-            font-size: 18px;
-            font-weight: bold;
-            margin-bottom: 5px;
-            font-family: 'DM Serif Display', serif;
-        }
-        
         .repository-description {
             color: #777;
             font-size: 14px;
@@ -240,6 +254,7 @@
         }
         
         .repo-stat-value {
+            font-family: 'Quicksand', sans-serif;
             font-size: 24px;
             font-weight: bold;
             margin-bottom: 5px;
@@ -463,46 +478,98 @@
             }
         }
         
-        /* More specific targeting for repository names everywhere */
-        .repository-name,
-        .repositories-list .repository-name,
-        .repository-list-item .repository-name,
-        .repository-info .repository-name,
-        .repository-details .repository-name,
-        div[class*="repository"] .repository-name,
-        *[class*="repository"] h3,
-        *[class*="repository"] h4,
-        *[class*="repository"] strong {
-            font-family: 'DM Serif Display', serif !important;
-            font-size: 20px;
+        /* Add these specific selectors for grid and list views */
+        /* Grid view repository name */
+        .repository-card .repository-name {
+            font-family: 'Raleway', sans-serif;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 5px;
         }
         
-        /* Make sure the title in the card is using our font */
-        .repository-card h3,
-        .repository-list-item h3,
-        .repository-list-item strong,
-        .repository-info strong {
-            font-family: 'DM Serif Display', serif !important;
+        /* List view repository name */
+        .repository-list-item .repository-info h3,
+        .repository-list-item .repository-details h3 {
+            font-family: 'Raleway', sans-serif;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        /* Grid view repository metric values */
+        .repo-stat-value {
+            font-family: 'Quicksand', sans-serif;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        /* List view repository metric values - add this */
+        .repository-metric-value {
+            font-family: 'Quicksand', sans-serif;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        footer, 
+        footer * {
+            font-family: 'Raleway', sans-serif;
+        }
+        
+        @keyframes slideInFromRight {
+            0% {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            100% {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        .tail-fin-animation {
+            animation: slideInFromRight 3.5s ease-out;
+        }
+        
+        /* Add this to your CSS animations */
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+        
+        /* Add this class for the text animation */
+        .text-fade-in {
+            opacity: 0; /* Start invisible */
+            animation: fadeIn 1.5s ease-in forwards;
+            animation-delay: 3s; /* Start after tail fin animation completes */
+        }
+        
+        /* Create a separate animation class for the subtitle */
+        .subtitle-fade-in {
+            opacity: 0; /* Start invisible */
+            animation: fadeIn 1.5s ease-in forwards;
+            animation-delay: 4s; /* Start after the main title completes its fade-in */
         }
     </style>
 </head>
 <body>
-    <header>
-        <div class="container" style="display: flex; justify-content: space-between; align-items: center;">
-            <!-- Left side: BA ribbon logo and title text -->
-            <div class="logo">
-                <div style="margin-bottom: 5px;">
-                    <img src="images/ba-ribbon.png" alt="British Airways Logo" 
-                         style="height: 20px; width: auto; display: block;">
+    <header style="height: 100px; padding: 0; overflow: visible;">
+        <div class="container" style="height: 100%; padding-top: 20px; padding-bottom: 10px; display: flex; justify-content: space-between; align-items: flex-end;">
+            <!-- Logo section with fixed sizes -->
+            <div class="logo" style="height: 60px; display: flex; align-items: flex-end; position: relative;">
+                <div style="display: flex; flex-direction: column; margin-bottom: 0;">
+                    <span class="logo-text text-fade-in" style="margin: 0; line-height: 1.2;">Test Report Hub</span>
+                    <span class="subtitle-fade-in" style="font-size: 12px; font-weight: normal; font-family: 'Raleway', sans-serif; margin-top: -2px; margin-bottom: 0; letter-spacing: 0.5px;">by COE</span>
                 </div>
-                <span class="logo-text">Test Report Hub</span>
-            </div>
-            
-            <!-- Right side: BA logo -->
-            <div style="display: flex; align-items: center;">
                 <img src="images/ba-tailFinn.png" alt="British Airways Tail Fin" 
-                     style="height: 50px; width: auto;">
+                     class="tail-fin-animation"
+                     style="height: 65px; width: auto; display: block; position: absolute; bottom: -10px; left: 220px;">
             </div>
+            <!-- Empty div for right side -->
+            <div></div>
         </div>
     </header>
     
@@ -558,7 +625,11 @@
     
     <footer>
         <div class="container">
-            <div>&copy; 2025 Sanity Test Reports Hub</div>
+            <div style="display: flex; flex-direction: column; align-items: center;">
+                <img src="images/ba-ribbon.png" alt="British Airways Logo" 
+                     style="height: 18px; width: auto; margin-bottom: 10px;">
+                <div>&copy; 2025 COE</div>
+            </div>
             <div class="footer-links">
                 <a href="#">Documentation</a>
                 <a href="#">Feedback</a>
@@ -797,6 +868,30 @@
             
             // Update every minute
             setInterval(updateAllTimestamps, 60000);
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get the tail fin image
+            const tailFin = document.querySelector('.tail-fin-animation');
+            // Get the text element
+            const titleText = document.querySelector('.text-fade-in');
+            
+            // Function to reset animations
+            function resetAnimations() {
+                // Remove the animation classes
+                tailFin.classList.remove('tail-fin-animation');
+                titleText.classList.remove('text-fade-in');
+                
+                // Force a reflow to make the removal take effect immediately
+                void tailFin.offsetWidth;
+                void titleText.offsetWidth;
+                
+                // Add the classes back to restart the animations
+                tailFin.classList.add('tail-fin-animation');
+                titleText.classList.add('text-fade-in');
+            }
+
         });
     </script>
 </body>
