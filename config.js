@@ -1,5 +1,5 @@
 // Configuration for the Sanity Test Reports Hub
-// Automatically updated by GitHub Actions on 2025-05-09 15:28:26
+// Automatically updated by GitHub Actions on 2025-05-09 18:25:09
 
 const REPOSITORIES = [
     {
@@ -7,10 +7,10 @@ const REPOSITORIES = [
         "description": null,
         "url": "https://michael-iag.github.io/sample-sanity-pipeline/",
         "stats": {
-            "total": 3,
-            "passed": 1,
-            "failed": 2,
-            "critical": 1
+            "total": 0,
+            "passed": 0,
+            "failed": 0,
+            "critical": 0
         },
         "lastUpdate": "7 days ago",
         "lastUpdateTimestamp": "2025-05-02T11:00:18Z",
@@ -21,10 +21,10 @@ const REPOSITORIES = [
         "description": "Flight search",
         "url": "https://michael-iag.github.io/flight-search/",
         "stats": {
-            "total": 7,
-            "passed": 7,
+            "total": 0,
+            "passed": 0,
             "failed": 0,
-            "critical": 3
+            "critical": 0
         },
         "lastUpdate": "2 days ago",
         "lastUpdateTimestamp": "2025-05-06T18:58:05Z",
@@ -35,24 +35,24 @@ const REPOSITORIES = [
         "description": "Booking Manager Suite",
         "url": "https://michael-iag.github.io/booking-manager/",
         "stats": {
-            "total": 6,
-            "passed": 6,
+            "total": 0,
+            "passed": 0,
             "failed": 0,
-            "critical": 2
+            "critical": 0
         },
-        "lastUpdate": "2 days ago",
-        "lastUpdateTimestamp": "2025-05-06T18:58:15Z",
-        "status": "success"
+        "lastUpdate": "0 minutes ago",
+        "lastUpdateTimestamp": "2025-05-09T17:24:33Z",
+        "status": "warning"
     },
     {
         "name": "loyalty-program",
         "description": "Loyal Program Suite",
         "url": "https://michael-iag.github.io/loyalty-program/",
         "stats": {
-            "total": 7,
-            "passed": 7,
+            "total": 0,
+            "passed": 0,
             "failed": 0,
-            "critical": 2
+            "critical": 0
         },
         "lastUpdate": "2 days ago",
         "lastUpdateTimestamp": "2025-05-06T18:58:13Z",
@@ -64,12 +64,12 @@ const REPOSITORIES = [
 function calculateOverallStats() {
     return {
         repositories: 4,
-        tests: 23,
-        passed: 21,
-        failed: 2,
-        critical: 8,
-        passRate: 91,
-        lastUpdated: "2025-05-09T15:28:26+0100"
+        tests: 0,
+        passed: 0,
+        failed: 0,
+        critical: 0,
+        passRate: 0,
+        lastUpdated: "2025-05-09T18:25:09+0100"
     };
 }
 
