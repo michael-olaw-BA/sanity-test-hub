@@ -1,5 +1,5 @@
 // Configuration for the Sanity Test Reports Hub
-// Automatically updated by GitHub Actions on 2025-05-09 18:43:14
+// Automatically updated by GitHub Actions on 2025-05-09 18:54:08
 
 const REPOSITORIES = [
     {
@@ -35,12 +35,12 @@ const REPOSITORIES = [
         "description": "Booking Manager Suite",
         "url": "https://michael-iag.github.io/booking-manager/",
         "stats": {
-            "total": 0,
-            "passed": 0,
+            "total": 6,
+            "passed": 6,
             "failed": 0,
-            "critical": 0
+            "critical": 2
         },
-        "lastUpdate": "17 minutes ago",
+        "lastUpdate": "28 minutes ago",
         "lastUpdateTimestamp": "2025-05-09T17:25:43Z",
         "status": "success"
     },
@@ -64,12 +64,12 @@ const REPOSITORIES = [
 function calculateOverallStats() {
     return {
         repositories: 4,
-        tests: 0,
-        passed: 0,
+        tests: 6,
+        passed: 6,
         failed: 0,
-        critical: 0,
-        passRate: 0,
-        lastUpdated: "2025-05-09T18:43:14+0100"
+        critical: 2,
+        passRate: 100,
+        lastUpdated: "2025-05-09T18:54:08+0100"
     };
 }
 
