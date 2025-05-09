@@ -1,5 +1,5 @@
 // Configuration for the Sanity Test Reports Hub
-// Automatically updated by GitHub Actions on 2025-05-09 19:05:27
+// Automatically updated by GitHub Actions on 2025-05-09 19:12:29
 
 const REPOSITORIES = [
     {
@@ -21,14 +21,14 @@ const REPOSITORIES = [
         "description": "Flight search",
         "url": "https://michael-iag.github.io/flight-search/",
         "stats": {
-            "total": 0,
-            "passed": 0,
+            "total": 7,
+            "passed": 7,
             "failed": 0,
-            "critical": 0
+            "critical": 3
         },
-        "lastUpdate": "0 minutes ago",
-        "lastUpdateTimestamp": "2025-05-09T18:05:23Z",
-        "status": "warning"
+        "lastUpdate": "6 minutes ago",
+        "lastUpdateTimestamp": "2025-05-09T18:05:32Z",
+        "status": "success"
     },
     {
         "name": "booking-manager",
@@ -40,7 +40,7 @@ const REPOSITORIES = [
             "failed": 0,
             "critical": 2
         },
-        "lastUpdate": "39 minutes ago",
+        "lastUpdate": "46 minutes ago",
         "lastUpdateTimestamp": "2025-05-09T17:25:43Z",
         "status": "success"
     },
@@ -54,7 +54,7 @@ const REPOSITORIES = [
             "failed": 0,
             "critical": 2
         },
-        "lastUpdate": "0 minutes ago",
+        "lastUpdate": "7 minutes ago",
         "lastUpdateTimestamp": "2025-05-09T18:05:07Z",
         "status": "success"
     }
@@ -64,12 +64,12 @@ const REPOSITORIES = [
 function calculateOverallStats() {
     return {
         repositories: 4,
-        tests: 13,
-        passed: 13,
+        tests: 20,
+        passed: 20,
         failed: 0,
-        critical: 4,
+        critical: 7,
         passRate: 100,
-        lastUpdated: "2025-05-09T19:05:27+0100"
+        lastUpdated: "2025-05-09T19:12:29+0100"
     };
 }
 
