@@ -39,7 +39,7 @@ jobs:
           
       - name: Update repository statistics
         run: |
-          python .github/scripts/update_stats.py
+          python .github/scripts/extract_metrics_from_xml.py
           
       - name: Commit and push changes
         id: push
