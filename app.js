@@ -73,19 +73,57 @@ document.addEventListener('DOMContentLoaded', function() {
     // Clear existing repositories
     const gridView = document.getElementById('gridView');
     const listView = document.getElementById('listView');
+    
+    if (!gridView || !listView) {
+        console.error('Repository view containers not found');
+        return;
+    }
+    
     gridView.innerHTML = '';
     listView.innerHTML = '';
     
     // Render repositories from config
-    REPOSITORIES.forEach(repo => {
-        // Create grid view card
-        const gridCard = createGridCard(repo);
-        gridView.appendChild(gridCard);
+    if (typeof REPOSITORIES !== 'undefined' && Array.isArray(REPOSITORIES)) {
+        REPOSITORIES.forEach(repo => {
+            // Create grid view card
+            const gridCard = createGridCard(repo);
+            gridView.appendChild(gridCard);
+            
+            // Create list view item
+            const listItem = createListItem(repo);
+            listView.appendChild(listItem);
+        });
         
-        // Create list view item
-        const listItem = createListItem(repo);
-        listView.appendChild(listItem);
-    });
+        // Set initial view (grid is default)
+        gridView.style.display = 'grid';
+        listView.style.display = 'none';
+    } else {
+        console.error('REPOSITORIES is not defined or is not an array');
+    }
+    
+    // Ensure the view buttons work
+    const gridViewBtn = document.getElementById('gridViewBtn');
+    const listViewBtn = document.getElementById('listViewBtn');
+    
+    if (gridViewBtn) {
+        gridViewBtn.addEventListener('click', function() {
+            gridView.style.display = 'grid';
+            listView.style.display = 'none';
+            
+            gridViewBtn.classList.add('active');
+            listViewBtn.classList.remove('active');
+        });
+    }
+    
+    if (listViewBtn) {
+        listViewBtn.addEventListener('click', function() {
+            gridView.style.display = 'none';
+            listView.style.display = 'block';
+            
+            gridViewBtn.classList.remove('active');
+            listViewBtn.classList.add('active');
+        });
+    }
 });
 
 // Add from=hub parameter to URLs
@@ -174,7 +212,7 @@ function createGridCard(repo) {
                 <span class="status-indicator status-${status}"></span>
                 ${timeDisplay}
             </div>
-            <a href="${reportUrl}" class="view-report">View Report</a>
+            <a href="${reportUrl}" class="view-report" target="_blank">View Allure Report</a>
         </div>
     `;
     
@@ -235,7 +273,7 @@ function createListItem(repo) {
                 <span class="status-indicator status-${status}"></span>
                 ${timeDisplay}
             </div>
-            <a href="${reportUrl}" class="view-report">View Report</a>
+            <a href="${reportUrl}" class="view-report" target="_blank">View Allure Report</a>
         </div>
     `;
     

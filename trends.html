@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Report Hub - Trends</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Chart.js for the trends page -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* Apply Raleway font to content elements but NOT header elements */
+        .container:not(header .container),
+        .main-content,
+        h1:not(header h1), h2:not(header h2), h3:not(header h3), 
+        h4:not(header h4), h5:not(header h5), h6:not(header h6),
+        p, span:not(header span), div:not(header div), 
+        table, th, td,
+        input, select, button,
+        .chart-container *:not(i),
+        .chart-row *:not(i) {
+            font-family: 'Raleway', sans-serif !important;
+        }
+        
+        /* Preserve original header styling */
+        header .logo-text {
+            font-family: 'DM Serif Display', serif !important;
+        }
+        
+        header .subtitle-fade-in {
+            font-family: 'Raleway', sans-serif !important;
+        }
+        
+        /* Preserve FontAwesome for icons */
+        i.fas, i.far, i.fa, i.fab {
+            font-family: 'Font Awesome 5 Free' !important;
+        }
+        
+        /* Reduce top spacing for main content */
+        .container {
+            padding-top: 0px;
+            margin: 0 auto;
+        }
+        
+        /* Style for the header section with filters */
+        .header-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            margin-top: 15px;
+        }
+        
+        /* Style for the time range selector */
+        .time-filter {
+            display: flex;
+            align-items: center;
+        }
+        
+        .time-filter label {
+            margin-right: 10px;
+            font-weight: 500;
+        }
+        
+        .time-filter select {
+            padding: 5px 10px;
+            border-radius: 4px;
+            border: 1px solid #e0e0e0;
+            font-size: 14px;
+            font-family: 'Raleway', sans-serif !important;
+            background-color: white;
+            cursor: pointer;
+            outline: none;
+        }
+        
+        .time-filter select:focus {
+            border-color: #3498db;
+        }
+        
+        /* Update heading styles to match repository selector style */
+        h2 {
+            font-weight: 600;
+            font-size: 15px;
+            color: #333;
+            font-family: 'Raleway', sans-serif !important;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+        
+        /* Make the h2 in the header section match repository selector label */
+        .header-section h2 {
+            margin-top: 0;
+            margin-bottom: 0;
+            font-weight: 600;
+            font-size: 15px;
+            color: #333;
+        }
+        
+        /* Add section wrappers for consistent spacing */
+        .chart-section {
+            margin-bottom: 30px;
+        }
+        
+        /* Ensure chart containers scale properly with the wider container */
+        .chart-container {
+            width: 100%;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        /* Maintain proper spacing in chart rows */
+        .chart-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .chart-container.half {
+            flex: 1 1 calc(50% - 20px);
+            min-width: 300px;
+        }
+        
+        .chart-container.third {
+            flex: 1 1 calc(33.333% - 20px);
+            min-width: 250px;
+        }
+        
+        /* Add any other trends.html specific styling here */
+    </style>
+</head>
+<body>
+    <header style="height: 100px; padding: 0; overflow: visible;">
+        <div class="container" style="height: 100%; padding-top: 20px; padding-bottom: 10px; display: flex; justify-content: space-between; align-items: flex-end;">
+            <!-- Logo section with fixed sizes -->
+            <div class="logo" style="height: 60px; display: flex; align-items: flex-end; position: relative;">
+                <div style="display: flex; flex-direction: column; margin-bottom: 0;">
+                    <span class="logo-text text-fade-in" style="margin: 0; line-height: 1.2;">Test Report Hub</span>
+                    <span class="subtitle-fade-in" style="font-size: 12px; font-weight: normal; font-family: 'Raleway', sans-serif; margin-top: -2px; margin-bottom: 0; letter-spacing: 0.5px;">by COE</span>
+                </div>
+                <img src="images/ba-tailFinn.png" alt="British Airways Tail Fin" 
+                     class="tail-fin-animation"
+                     style="height: 65px; width: auto; display: block; position: absolute; bottom: -10px; left: 220px;">
+            </div>
+            
+            <!-- Add navigation menu -->
+            <div class="nav-links" style="position: absolute; top: 10px; right: 20px; font-family: 'Raleway', sans-serif; font-size: 14px;">
+                <a href="index.html" class="nav-link" style="color: white; text-decoration: none; margin: 0 5px;">Dashboard</a> |
+                <a href="trends.html" class="nav-link active" style="color: white; text-decoration: none; margin: 0 5px;">Trends</a> |
+                <a href="repository-analytics.html" class="nav-link" style="color: white; text-decoration: none; margin: 0 5px;">Repository Analytics</a>
+            </div>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="header-section">
+            <h2>Test Metrics Trends</h2>
+            <div class="time-filter">
+                <label for="time-range">Time Range:</label>
+                <select id="time-range">
+                    <option value="day">Last 24 Hours</option>
+                    <option value="week">Last 7 Days</option>
+                    <option value="month" selected>Last 30 Days</option>
+                    <option value="quarter">Last 90 Days</option>
+                    <option value="year">Last 365 Days</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="chart-container">
+            <canvas id="passRateChart"></canvas>
+        </div>
+        
+        <div class="chart-row">
+            <div class="chart-container half">
+                <canvas id="testDurationChart"></canvas>
+            </div>
+            <div class="chart-container half">
+                <canvas id="testCountChart"></canvas>
+            </div>
+        </div>
+        
+        <div class="chart-section">
+            <h2>Test Reliability</h2>
+            <div class="chart-container">
+                <canvas id="reliabilityChart"></canvas>
+            </div>
+        </div>
+        
+        <div class="chart-section">
+            <h2>Coverage Analysis</h2>
+            <div class="chart-row">
+                <div class="chart-container third">
+                    <canvas id="criticalCoverageChart"></canvas>
+                </div>
+                <div class="chart-container third">
+                    <canvas id="featureCoverageChart"></canvas>
+                </div>
+                <div class="chart-container third">
+                    <canvas id="codeCoverageChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="compact-footer">
+        <div class="container">
+            <div style="display: flex; flex-direction: column; align-items: center;">
+                <img src="images/ba-ribbon.png" alt="British Airways Logo">
+                <div>&copy; 2025 COE</div>
+            </div>
+            <div class="footer-links">
+                <a href="#">Documentation</a>
+                <a href="#">Feedback</a>
+                <a href="#">Support</a>
+            </div>
+        </div>
+    </footer>
+    
+    <script src="trends.js"></script>
+    <script>
+        // Add functionality for the time range selector
+        document.getElementById('time-range').addEventListener('change', function() {
+            const timeRange = this.value;
+            console.log('Selected time range:', timeRange);
+            
+            // In a real implementation, you would update the charts here
+            // For example:
+            // updateCharts(timeRange);
+        });
+    </script>
+</body>
+</html> 
