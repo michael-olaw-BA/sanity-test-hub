@@ -60,6 +60,37 @@ def extract_metrics_from_xml(xml_content):
         print(f"  Error parsing XML: {e}")
         return None
 
+def fetch_junit_xml(repo_name, owner):
+    """Fetch JUnit XML files from GitHub Pages for the given repository"""
+    base_url = f"https://{owner}.github.io/{repo_name}/"
+    
+    # Common patterns for JUnit XML files
+    xml_patterns = [
+        f"TESTS-{repo_name}.xml",
+        f"TEST-{repo_name}.xml",
+        "junit.xml",
+        # Add more patterns as needed
+    ]
+    
+    xml_contents = []
+    
+    # Try each pattern directly
+    for pattern in xml_patterns:
+        xml_url = f"{base_url}{pattern}?t={int(time.time())}"
+        print(f"  Trying XML URL: {xml_url}")
+        
+        try:
+            xml_response = requests.get(xml_url, timeout=10)
+            if xml_response.status_code == 200:
+                print(f"  Successfully fetched {pattern}")
+                xml_contents.append(xml_response.text)
+            else:
+                print(f"  Failed to fetch {pattern}: HTTP {xml_response.status_code}")
+        except Exception as e:
+            print(f"  Error fetching {pattern}: {e}")
+    
+    return xml_contents
+
 for repo_info in repositories:
     owner = repo_info["owner"]
     repo = repo_info["repo"]
@@ -96,59 +127,29 @@ for repo_info in repositories:
         description = repo_data_api.get('description', f"{repo} sanity tests")
         
         # Try to fetch JUnit XML files from GitHub Pages
-        base_url = f"https://{owner}.github.io/{repo}/"
-        print(f"Checking for JUnit XML files at: {base_url}")
+        xml_contents = fetch_junit_xml(repo, owner)
         
-        try:
-            # First, fetch the index page to look for XML files
-            index_response = requests.get(base_url, timeout=10)
+        total_tests = 0
+        passed_tests = 0
+        failed_tests = 0
+        critical_tests = 0
+        
+        if xml_contents:
+            print(f"  Found {len(xml_contents)} XML files")
             
-            total_tests = 0
-            passed_tests = 0
-            failed_tests = 0
-            critical_tests = 0
-            
-            if index_response.status_code == 200:
-                # Look for XML files in the HTML
-                xml_files = re.findall(r'href="([^"]+\.xml)"', index_response.text)
+            # Process each XML file
+            for xml_content in xml_contents:
+                # Extract metrics from the XML
+                metrics = extract_metrics_from_xml(xml_content)
                 
-                if xml_files:
-                    print(f"  Found {len(xml_files)} XML files")
-                    
-                    # Process each XML file
-                    for xml_file in xml_files:
-                        xml_url = f"{base_url}{xml_file}?t={int(time.time())}"
-                        print(f"  Fetching XML from: {xml_url}")
-                        
-                        xml_response = requests.get(xml_url, timeout=10)
-                        if xml_response.status_code == 200:
-                            print(f"  Successfully fetched {xml_file}")
-                            
-                            # Extract metrics from the XML
-                            metrics = extract_metrics_from_xml(xml_response.text)
-                            
-                            if metrics:
-                                print(f"  Parsed XML successfully: {metrics}")
-                                total_tests += metrics["total_tests"]
-                                passed_tests += metrics["passed_tests"]
-                                failed_tests += metrics["failed_tests"]
-                                critical_tests += metrics["critical_tests_count"]
-                        else:
-                            print(f"  Failed to fetch {xml_file}: HTTP {xml_response.status_code}")
-                else:
-                    print(f"  No XML files found in the index page")
-            else:
-                print(f"  Failed to fetch index page: HTTP {index_response.status_code}")
-                
-            # If no metrics were found, we'll use the default values (already initialized to 0)
-            
-        except Exception as e:
-            print(f"  Error fetching XML, using default values: {e}")
-            # Default values if XML is not available
-            total_tests = 0
-            passed_tests = 0
-            failed_tests = 0
-            critical_tests = 0
+                if metrics:
+                    print(f"  Parsed XML successfully: {metrics}")
+                    total_tests += metrics["total_tests"]
+                    passed_tests += metrics["passed_tests"]
+                    failed_tests += metrics["failed_tests"]
+                    critical_tests += metrics["critical_tests_count"]
+        else:
+            print(f"  No XML files found")
         
         # Get latest workflow run
         runs_url = f"https://api.github.com/repos/{owner}/{repo}/actions/runs"
