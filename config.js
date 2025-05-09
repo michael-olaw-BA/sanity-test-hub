@@ -1,5 +1,5 @@
 // Configuration for the Sanity Test Reports Hub
-// Automatically updated by GitHub Actions on 2025-05-09 19:04:48
+// Automatically updated by GitHub Actions on 2025-05-09 19:05:04
 
 const REPOSITORIES = [
     {
@@ -27,7 +27,7 @@ const REPOSITORIES = [
             "critical": 0
         },
         "lastUpdate": "0 minutes ago",
-        "lastUpdateTimestamp": "2025-05-09T18:04:12Z",
+        "lastUpdateTimestamp": "2025-05-09T18:04:56Z",
         "status": "warning"
     },
     {
@@ -49,13 +49,13 @@ const REPOSITORIES = [
         "description": "Loyal Program Suite",
         "url": "https://michael-iag.github.io/loyalty-program/",
         "stats": {
-            "total": 0,
-            "passed": 0,
+            "total": 7,
+            "passed": 7,
             "failed": 0,
-            "critical": 0
+            "critical": 2
         },
         "lastUpdate": "0 minutes ago",
-        "lastUpdateTimestamp": "2025-05-09T18:04:46Z",
+        "lastUpdateTimestamp": "2025-05-09T18:04:59Z",
         "status": "warning"
     }
 ];
@@ -64,12 +64,12 @@ const REPOSITORIES = [
 function calculateOverallStats() {
     return {
         repositories: 4,
-        tests: 6,
-        passed: 6,
+        tests: 13,
+        passed: 13,
         failed: 0,
-        critical: 2,
+        critical: 4,
         passRate: 100,
-        lastUpdated: "2025-05-09T19:04:48+0100"
+        lastUpdated: "2025-05-09T19:05:04+0100"
     };
 }
 
