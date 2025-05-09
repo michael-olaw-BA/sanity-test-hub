@@ -70,9 +70,6 @@ def fetch_junit_xml(repo_name, owner):
     # Common patterns for JUnit XML files
     xml_patterns = [
         f"TESTS-{repo_name_underscore}.xml",
-        f"TEST-{repo_name_underscore}.xml",
-        f"junit-{repo_name_underscore}.xml",
-        "junit.xml",
         # Add more patterns as needed
     ]
     
