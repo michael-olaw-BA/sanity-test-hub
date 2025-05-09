@@ -1,5 +1,5 @@
 // Configuration for the Sanity Test Reports Hub
-// Automatically updated by GitHub Actions on 2025-05-09 18:25:39
+// Automatically updated by GitHub Actions on 2025-05-09 18:43:14
 
 const REPOSITORIES = [
     {
@@ -40,9 +40,9 @@ const REPOSITORIES = [
             "failed": 0,
             "critical": 0
         },
-        "lastUpdate": "0 minutes ago",
-        "lastUpdateTimestamp": "2025-05-09T17:25:35Z",
-        "status": "warning"
+        "lastUpdate": "17 minutes ago",
+        "lastUpdateTimestamp": "2025-05-09T17:25:43Z",
+        "status": "success"
     },
     {
         "name": "loyalty-program",
@@ -69,7 +69,7 @@ function calculateOverallStats() {
         failed: 0,
         critical: 0,
         passRate: 0,
-        lastUpdated: "2025-05-09T18:25:39+0100"
+        lastUpdated: "2025-05-09T18:43:14+0100"
     };
 }
 
