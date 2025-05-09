@@ -64,10 +64,14 @@ def fetch_junit_xml(repo_name, owner):
     """Fetch JUnit XML files from GitHub Pages for the given repository"""
     base_url = f"https://{owner}.github.io/{repo_name}/"
     
+    # Convert hyphens to underscores for XML filename patterns
+    repo_name_underscore = repo_name.replace('-', '_')
+    
     # Common patterns for JUnit XML files
     xml_patterns = [
-        f"TESTS-{repo_name}.xml",
-        f"TEST-{repo_name}.xml",
+        f"TESTS-{repo_name_underscore}.xml",
+        f"TEST-{repo_name_underscore}.xml",
+        f"junit-{repo_name_underscore}.xml",
         "junit.xml",
         # Add more patterns as needed
     ]
