@@ -239,8 +239,7 @@ header .container {
 }
 
 .view-controls {
-    display: flex;
-    gap: 10px;
+    display: none;
 }
 
 .view-btn {
@@ -297,9 +296,26 @@ header .container {
 }
 
 .repository-description {
-    color: #777;
-    font-size: 14px;
+    margin-top: 5px;
     line-height: 1.4;
+    color: #444;
+    padding-left: 0;
+}
+
+.commit-info {
+    font-size: 0.75em;
+    color: #555;
+    line-height: 1.1;
+    display: block;
+    margin-bottom: 0;
+}
+
+.commit-author {
+    font-size: 0.75em;
+    color: #555;
+    margin-top: 3px;
+    display: block;
+    line-height: 1.1;
 }
 
 .repository-stats {
@@ -415,11 +431,25 @@ header .container {
 .repository-details h3 {
     font-size: 18px;
     margin-bottom: 5px;
+    display: grid;
+    grid-template-columns: minmax(0, 300px) auto;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    font-family: 'Raleway', sans-serif;
+    font-weight: bold;
 }
 
-.repository-details p {
-    color: #777;
-    font-size: 14px;
+.repository-details h3 .repo-name {
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    color: inherit;
+}
+
+.repository-details h3 .status-badge {
+    margin-left: 0;
+    justify-self: start;
 }
 
 .repository-metrics {
@@ -496,6 +526,10 @@ footer .container {
         width: 100%;
         justify-content: space-between;
     }
+
+    .repository-details h3 {
+        grid-template-columns: 1fr auto; /* Simplify grid columns on smaller screens */
+    }
 }
 
 @media (max-width: 768px) {
@@ -525,6 +559,10 @@ footer .container {
     
     .footer-links a {
         margin: 0;
+    }
+
+    .status-badge {
+        min-width: 60px; /* Smaller badges on mobile */
     }
 }
 
@@ -628,7 +666,44 @@ footer * {
     border-radius: 0 20px 20px 0; /* Round right side */
 }
 
-/* Hide the original view buttons */
-.view-controls {
-    display: none;
+/* Add new badge styles */
+.status-badge {
+    display: inline-block;
+    padding: 4px 8px;
+    min-width: 70px;
+    text-align: center;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: white;
+    letter-spacing: 0.5px;
+}
+
+.badge-passed {
+    background-color: #27ae60; /* Green */
+}
+
+.badge-failed {
+    background-color: #e74c3c; /* Red */
+}
+
+.badge-neutral {
+    background-color: #7f8c8d; /* Gray */
+}
+
+/* Make repo name container flex for positioning */
+.repository-name {
+    display: flex !important;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    font-family: 'Raleway', sans-serif;
+    font-size: 18px; 
+    font-weight: bold;
+}
+
+/* Remove padding from list view repository description */
+.repository-details .repository-description {
+    padding-left: 0;
 }

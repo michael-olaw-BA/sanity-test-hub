@@ -138,6 +138,31 @@ for repo_info in repositories:
         # Get repository description
         description = repo_data_api.get('description', f"{repo} sanity tests")
         
+        # Fetch latest commit information
+        latest_commit_msg = "No commits found"
+        latest_commit_author = ""
+        try:
+            # Get commits from GitHub API
+            commits_url = f"https://api.github.com/repos/{owner}/{repo}/commits?per_page=10"
+            commits_response = requests.get(commits_url, headers=headers)
+            
+            if commits_response.status_code == 200:
+                commits_data = commits_response.json()
+                
+                # Find first commit not from GitHub Pages bot
+                for commit in commits_data:
+                    # Skip commits from github-pages[bot]
+                    if "github-pages[bot]" not in commit.get("commit", {}).get("author", {}).get("name", ""):
+                        latest_commit_msg = commit.get("commit", {}).get("message", "No message")
+                        # Get first line of commit message
+                        latest_commit_msg = latest_commit_msg.split('\n')[0]
+                        latest_commit_author = commit.get("commit", {}).get("author", {}).get("name", "Unknown")
+                        break
+        except Exception as e:
+            logger.error(f"Error fetching commit data: {e}")
+            latest_commit_msg = "Commit data unavailable"
+            latest_commit_author = ""
+        
         # Fetch JUnit XML files from GitHub Pages
         xml_contents = fetch_junit_xml(repo, owner)
         
@@ -221,7 +246,11 @@ for repo_info in repositories:
             },
             "lastUpdate": last_update,
             "lastUpdateTimestamp": iso_timestamp,
-            "workflowStatus": workflow_status  # Keep workflow status but remove status field
+            "workflowStatus": workflow_status,
+            "lastCommit": {
+                "message": latest_commit_msg,
+                "author": latest_commit_author
+            }
         })
         
         logger.info(f"Successfully processed {repo}")
@@ -241,7 +270,11 @@ for repo_info in repositories:
             },
             "lastUpdate": "Unknown",
             "lastUpdateTimestamp": null,
-            "workflowStatus": "unknown"  # Only include workflow status here too
+            "workflowStatus": "unknown",
+            "lastCommit": {
+                "message": "Commit data unavailable",
+                "author": "Unknown"
+            }
         })
 
 # Calculate overall statistics

@@ -163,13 +163,29 @@ function getStatusFromRepository(repo) {
 }
 
 // Function to determine the appropriate status icon based on test results
-function getStatusIcon(repo) {
-    // If there are failed tests, show a failure icon
-    if (repo.stats.failed > 0) {
-        return '<i class="fas fa-times-circle" style="color: #e74c3c; margin-right: 8px; font-size: 1.1em;"></i>';
-    } else {
-        return '<i class="fas fa-check-circle" style="color: #2ecc71; margin-right: 8px; font-size: 1.1em;"></i>';
+function getStatusBadge(repo) {
+    // If no tests were run (total is 0), show NO TESTS badge
+    if (repo.stats.total === 0) {
+        return '<span class="status-badge badge-neutral">NO TESTS</span>';
     }
+    // If there are failed tests, show a failure badge
+    else if (repo.stats.failed > 0) {
+        return '<span class="status-badge badge-failed">FAILED</span>';
+    } 
+    // Only show PASSED if there are actual tests that passed
+    else {
+        return '<span class="status-badge badge-passed">PASSED</span>';
+    }
+}
+
+// Add a utility function to truncate text
+function truncateText(text, maxLength = 25) {
+    if (!text) return "";
+    
+    if (text.length <= maxLength) {
+        return text;
+    }
+    return text.substring(0, maxLength) + '..';
 }
 
 // Create a repository card for grid view
@@ -193,10 +209,23 @@ function createGridCard(repo) {
         timeDisplay = repo.lastUpdate;
     }
     
+    // Format commit message - truncate if needed
+    const commitMessage = repo.lastCommit ? truncateText(repo.lastCommit.message) : "No commit data";
+    const commitAuthor = repo.lastCommit && repo.lastCommit.author ? repo.lastCommit.author : "Unknown";
+    
+    // Truncate repo name if needed
+    const truncatedRepoName = truncateText(repo.name, 30);
+    
     card.innerHTML = `
         <div class="repository-header">
-            <div class="repository-name">${getStatusIcon(repo)}${repo.name}</div>
-            <div class="repository-description">${repo.description}</div>
+            <div class="repository-name">
+                ${truncatedRepoName}
+                ${getStatusBadge(repo)}
+            </div>
+            <div class="repository-description">
+                <span class="commit-info">latest commit: ${commitMessage}</span>
+                <span class="commit-author">author: ${commitAuthor}</span>
+            </div>
         </div>
         <div class="repository-stats">
             <div class="repo-stat">
@@ -245,14 +274,27 @@ function createListItem(repo) {
         timeDisplay = repo.lastUpdate;
     }
     
+    // Format commit message - truncate if needed
+    const commitMessage = repo.lastCommit ? truncateText(repo.lastCommit.message) : "No commit data";
+    const commitAuthor = repo.lastCommit && repo.lastCommit.author ? repo.lastCommit.author : "Unknown";
+    
+    // Truncate repo name if needed
+    const truncatedRepoName = truncateText(repo.name, 30);
+    
     item.innerHTML = `
         <div class="repository-info">
             <div class="repository-icon">
                 <i class="fas fa-code-branch"></i>
             </div>
             <div class="repository-details">
-                <h3>${getStatusIcon(repo)}${repo.name}</h3>
-                <p>${repo.description}</p>
+                <h3>
+                    <span class="repo-name">${truncatedRepoName}</span>
+                    ${getStatusBadge(repo)}
+                </h3>
+                <div class="repository-description">
+                    <span class="commit-info">latest commit: ${commitMessage}</span>
+                    <span class="commit-author">author: ${commitAuthor}</span>
+                </div>
             </div>
         </div>
         <div class="repository-metrics">
