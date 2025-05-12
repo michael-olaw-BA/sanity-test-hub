@@ -115,10 +115,16 @@ header .container {
 }
 
 .stat-label {
-    color: #777;
-    font-size: 14px;
+    color: #555;
+    font-size: 19px;
     font-family: 'DM Serif Display', serif;
     margin-bottom: 8px;
+}
+
+.stat-description {
+    color: #555;
+    font-size: 15px;
+    font-family: 'Raleway', sans-serif;
 }
 
 

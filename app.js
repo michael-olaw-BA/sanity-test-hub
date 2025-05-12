@@ -5,6 +5,15 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelector('.stat-card:nth-child(2) .stat-value').textContent = OVERALL_STATS.passRate + '%';
     document.querySelector('.stat-card:nth-child(3) .stat-value').textContent = OVERALL_STATS.critical;
     
+    // Update the pass rate card description only if repositories have tests
+    if (OVERALL_STATS.repositoriesWithTests < OVERALL_STATS.repositories) {
+        // Find the pass rate card (2nd card) and update its description
+        const passRateDescription = document.querySelector('.stat-card:nth-child(2) .stat-description');
+        if (passRateDescription) {
+            passRateDescription.textContent = `Across ${OVERALL_STATS.repositoriesWithTests} of ${OVERALL_STATS.repositories} repositories`;
+        }
+    }
+    
     // Set the last update time from pipeline execution data
     if (OVERALL_STATS.lastUpdated) {
         try {
@@ -84,14 +93,19 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Render repositories from config
     if (typeof REPOSITORIES !== 'undefined' && Array.isArray(REPOSITORIES)) {
-        REPOSITORIES.forEach(repo => {
-            // Create grid view card
-            const gridCard = createGridCard(repo);
-            gridView.appendChild(gridCard);
-            
-            // Create list view item
-            const listItem = createListItem(repo);
-            listView.appendChild(listItem);
+        // Sort repositories by last updated time (newest first)
+        const sortedRepositories = sortRepositoriesByTimestamp(REPOSITORIES);
+        
+        // For grid view
+        sortedRepositories.forEach(repo => {
+            const card = createGridCard(repo);
+            gridView.appendChild(card);
+        });
+        
+        // For list view
+        sortedRepositories.forEach(repo => {
+            const item = createListItem(repo);
+            listView.appendChild(item);
         });
         
         // Set initial view (grid is default)
@@ -321,4 +335,19 @@ function createListItem(repo) {
     `;
     
     return item;
+}
+
+// Add this function to sort repositories by timestamp (newest first)
+function sortRepositoriesByTimestamp(repositories) {
+    // Create a copy to avoid modifying the original array
+    return [...repositories].sort((a, b) => {
+        // If timestamps are missing, put those items at the end
+        if (!a.lastUpdateTimestamp) return 1;
+        if (!b.lastUpdateTimestamp) return -1;
+        
+        // Sort by timestamp (newest first)
+        const timeA = new Date(a.lastUpdateTimestamp).getTime();
+        const timeB = new Date(b.lastUpdateTimestamp).getTime();
+        return timeB - timeA;
+    });
 }

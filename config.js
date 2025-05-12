@@ -62,13 +62,26 @@ const REPOSITORIES = [
 
 // Calculate overall statistics
 function calculateOverallStats() {
+    // Count repositories with tests
+    const reposWithTests = REPOSITORIES.filter(repo => repo.stats.total > 0).length;
+    
+    // Calculate total tests, passed, and failed
+    const totalTests = REPOSITORIES.reduce((sum, repo) => sum + repo.stats.total, 0);
+    const totalPassed = REPOSITORIES.reduce((sum, repo) => sum + repo.stats.passed, 0);
+    const totalFailed = REPOSITORIES.reduce((sum, repo) => sum + repo.stats.failed, 0);
+    const totalCritical = REPOSITORIES.reduce((sum, repo) => sum + repo.stats.critical, 0);
+    
+    // Calculate pass rate only for repositories that have tests
+    const passRate = totalTests > 0 ? Math.round((totalPassed / totalTests) * 100) : 'N/A';
+    
     return {
-        repositories: 4,
-        tests: 20,
-        passed: 20,
-        failed: 0,
-        critical: 7,
-        passRate: 100,
+        repositories: REPOSITORIES.length,
+        repositoriesWithTests: reposWithTests,
+        tests: totalTests,
+        passed: totalPassed,
+        failed: totalFailed,
+        critical: totalCritical,
+        passRate: passRate,
         lastUpdated: "2025-05-12T14:12:42+0100"
     };
 }
