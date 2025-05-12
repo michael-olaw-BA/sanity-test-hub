@@ -1,5 +1,5 @@
 // Configuration for the Sanity Test Reports Hub
-// Automatically updated by GitHub Actions on 2025-05-12 13:40:57
+// Automatically updated by GitHub Actions on 2025-05-12 13:55:09
 
 const REPOSITORIES = [
     {
@@ -26,9 +26,9 @@ const REPOSITORIES = [
             "failed": 0,
             "critical": 3
         },
-        "lastUpdate": "2 days ago",
-        "lastUpdateTimestamp": "2025-05-09T18:05:32Z",
-        "workflowStatus": "success"
+        "lastUpdate": "0 minutes ago",
+        "lastUpdateTimestamp": "2025-05-12T12:55:00Z",
+        "workflowStatus": "cancelled"
     },
     {
         "name": "booking-manager",
@@ -69,7 +69,7 @@ function calculateOverallStats() {
         failed: 0,
         critical: 7,
         passRate: 100,
-        lastUpdated: "2025-05-12T13:40:57+0100"
+        lastUpdated: "2025-05-12T13:55:09+0100"
     };
 }
 
