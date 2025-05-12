@@ -1,5 +1,5 @@
 // Configuration for the Sanity Test Reports Hub
-// Automatically updated by GitHub Actions on 2025-05-12 16:10:48
+// Automatically updated by GitHub Actions on 2025-05-12 18:54:34
 
 const REPOSITORIES = [
     {
@@ -30,7 +30,7 @@ const REPOSITORIES = [
             "failed": 0,
             "critical": 3
         },
-        "lastUpdate": "0 minutes ago",
+        "lastUpdate": "2 hours ago",
         "lastUpdateTimestamp": "2025-05-12T15:10:21Z",
         "workflowStatus": "success",
         "lastCommit": {
@@ -48,7 +48,7 @@ const REPOSITORIES = [
             "failed": 0,
             "critical": 2
         },
-        "lastUpdate": "2 days ago",
+        "lastUpdate": "3 days ago",
         "lastUpdateTimestamp": "2025-05-09T17:25:43Z",
         "workflowStatus": "success",
         "lastCommit": {
@@ -78,27 +78,14 @@ const REPOSITORIES = [
 
 // Calculate overall statistics
 function calculateOverallStats() {
-    // Count repositories with tests
-    const reposWithTests = REPOSITORIES.filter(repo => repo.stats.total > 0).length;
-    
-    // Calculate total tests, passed, and failed
-    const totalTests = REPOSITORIES.reduce((sum, repo) => sum + repo.stats.total, 0);
-    const totalPassed = REPOSITORIES.reduce((sum, repo) => sum + repo.stats.passed, 0);
-    const totalFailed = REPOSITORIES.reduce((sum, repo) => sum + repo.stats.failed, 0);
-    const totalCritical = REPOSITORIES.reduce((sum, repo) => sum + repo.stats.critical, 0);
-    
-    // Calculate pass rate only for repositories that have tests
-    const passRate = totalTests > 0 ? Math.round((totalPassed / totalTests) * 100) : 'N/A';
-    
     return {
-        repositories: REPOSITORIES.length,
-        repositoriesWithTests: reposWithTests,
-        tests: totalTests,
-        passed: totalPassed,
-        failed: totalFailed,
-        critical: totalCritical,
-        passRate: passRate,
-        lastUpdated: "2025-05-12T14:12:42+0100"
+        repositories: 4,
+        tests: 20,
+        passed: 20,
+        failed: 0,
+        critical: 7,
+        passRate: 100,
+        lastUpdated: "2025-05-12T18:54:34+0100"
     };
 }
 
