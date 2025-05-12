@@ -94,14 +94,20 @@
             margin-top: 0;
             margin-bottom: 0;
             font-weight: 600;
-            font-size: 15px;
+            font-size: 17px;
             color: #333;
         }
         
-        /* Add section wrappers for consistent spacing */
-        .chart-section {
-            margin-bottom: 30px;
+        /* Make chart section headers match the header section */
+        .chart-section h2 {
+            margin-top: 55px;
+            margin-bottom: 20px;
+            font-weight: 600;
+            font-size: 17px;
+            color: #333;
         }
+        
+
         
         /* Ensure chart containers scale properly with the wider container */
         .chart-container {
@@ -157,9 +163,9 @@
     
     <div class="container">
         <div class="header-section">
-            <h2>Test Metrics Trends</h2>
+            <h2><i class="fa fa-chart-area"></i> Test Metric Trends</h2>
             <div class="time-filter">
-                <label for="time-range">Time Range:</label>
+                <label for="time-range">Data Timeline:</label>
                 <select id="time-range">
                     <option value="day">Last 24 Hours</option>
                     <option value="week">Last 7 Days</option>
@@ -174,6 +180,13 @@
             <canvas id="passRateChart"></canvas>
         </div>
         
+        <div class="chart-section">
+            <h2><i class="fa fa-tasks"></i> Build Status History</h2>
+            <div class="chart-container">
+                <canvas id="buildStatusChart"></canvas>
+            </div>
+        </div>
+        
         <div class="chart-row">
             <div class="chart-container half">
                 <canvas id="testDurationChart"></canvas>
@@ -184,14 +197,14 @@
         </div>
         
         <div class="chart-section">
-            <h2>Test Reliability</h2>
+            <h2><i class="fa fa-shield"></i> Test Reliability</h2>
             <div class="chart-container">
                 <canvas id="reliabilityChart"></canvas>
             </div>
         </div>
         
         <div class="chart-section">
-            <h2>Coverage Analysis</h2>
+            <h2><i class="fa fa-pie-chart"></i> Coverage Analysis</h2>
             <div class="chart-row">
                 <div class="chart-container third">
                     <canvas id="criticalCoverageChart"></canvas>

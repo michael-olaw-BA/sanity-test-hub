@@ -176,4 +176,160 @@ function initDurationChart(labels, data) {
             }
         }
     });
+}
+
+// Add this function to create the build status chart
+function createBuildStatusChart(historyData, timeRange) {
+    // Filter data by time range
+    const now = new Date();
+    let startDate;
+    
+    switch(timeRange) {
+        case 'day':
+            startDate = new Date(now.setDate(now.getDate() - 1));
+            break;
+        case 'week':
+            startDate = new Date(now.setDate(now.getDate() - 7));
+            break;
+        case 'month':
+            startDate = new Date(now.setMonth(now.getMonth() - 1));
+            break;
+        case 'quarter':
+            startDate = new Date(now.setDate(now.getDate() - 90));
+            break;
+        default:
+            startDate = new Date(now.setDate(now.getDate() - 30)); // Default 30 days
+    }
+    
+    // Filter data
+    const filteredData = historyData.filter(run => new Date(run.timestamp) >= startDate);
+    
+    // Group by day
+    const groupedByDay = {};
+    filteredData.forEach(run => {
+        const day = new Date(run.timestamp).toISOString().split('T')[0];
+        if (!groupedByDay[day]) {
+            groupedByDay[day] = { success: 0, failure: 0, cancelled: 0, total: 0 };
+        }
+        
+        // Increment the appropriate counter
+        if (run.status === 'success') {
+            groupedByDay[day].success++;
+        } else if (run.status === 'failure') {
+            groupedByDay[day].failure++;
+        } else if (run.status === 'cancelled') {
+            groupedByDay[day].cancelled++;
+        }
+        
+        groupedByDay[day].total++;
+    });
+    
+    // Prepare data for the chart
+    const labels = Object.keys(groupedByDay).sort();
+    const successData = labels.map(day => groupedByDay[day].success);
+    const failureData = labels.map(day => groupedByDay[day].failure);
+    const cancelledData = labels.map(day => groupedByDay[day].cancelled);
+    
+    // Create the chart
+    const ctx = document.getElementById('buildStatusChart').getContext('2d');
+    return new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: 'Successful Builds',
+                    data: successData,
+                    backgroundColor: 'rgba(46, 204, 113, 0.2)',
+                    borderColor: 'rgba(46, 204, 113, 1)',
+                    borderWidth: 2,
+                    tension: 0.4
+                },
+                {
+                    label: 'Failed Builds',
+                    data: failureData,
+                    backgroundColor: 'rgba(231, 76, 60, 0.2)',
+                    borderColor: 'rgba(231, 76, 60, 1)',
+                    borderWidth: 2,
+                    tension: 0.4
+                },
+                {
+                    label: 'Cancelled Builds',
+                    data: cancelledData,
+                    backgroundColor: 'rgba(149, 165, 166, 0.2)',
+                    borderColor: 'rgba(149, 165, 166, 1)',
+                    borderWidth: 2,
+                    tension: 0.4
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Build Status Trends'
+                },
+                legend: {
+                    position: 'top',
+                },
+                tooltip: {
+                    mode: 'index',
+                    intersect: false,
+                }
+            },
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Date'
+                    }
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: 'Build Count'
+                    },
+                    beginAtZero: true,
+                    suggestedMin: 0
+                }
+            }
+        }
+    });
+}
+
+// Modify the existing time range event listener
+document.getElementById('time-range').addEventListener('change', function() {
+    const timeRange = this.value;
+    
+    // Update all charts with the new time range
+    updateCharts(timeRange);
+});
+
+// Function to update all charts
+function updateCharts(timeRange) {
+    // Update existing charts
+    updatePassRateChart(timeRange);
+    updateTestDurationChart(timeRange);
+    updateTestCountChart(timeRange);
+    
+    // Update the build status chart
+    updateBuildStatusChart(timeRange);
+}
+
+// Function to fetch and update build status chart
+function updateBuildStatusChart(timeRange) {
+    // Fetch the build history data
+    fetch('data/history/build_history_combined.json')
+        .then(response => response.json())
+        .then(data => {
+            // Create or update the chart
+            if (window.buildStatusChart) {
+                window.buildStatusChart.destroy();
+            }
+            window.buildStatusChart = createBuildStatusChart(data, timeRange);
+        })
+        .catch(error => {
+            console.error('Error fetching build history:', error);
+        });
 } 
