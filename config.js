@@ -1,5 +1,5 @@
 // Configuration for the Sanity Test Reports Hub
-// Automatically updated by GitHub Actions on 2025-05-12 16:10:18
+// Automatically updated by GitHub Actions on 2025-05-12 16:10:48
 
 const REPOSITORIES = [
     {
@@ -14,7 +14,11 @@ const REPOSITORIES = [
         },
         "lastUpdate": "1 weeks ago",
         "lastUpdateTimestamp": "2025-05-02T11:00:18Z",
-        "workflowStatus": "success"
+        "workflowStatus": "success",
+        "lastCommit": {
+            "message": "Update Back to Hub button",
+            "author": "Michael Olawuwo"
+        }
     },
     {
         "name": "flight-search",
@@ -27,8 +31,12 @@ const REPOSITORIES = [
             "critical": 3
         },
         "lastUpdate": "0 minutes ago",
-        "lastUpdateTimestamp": "2025-05-12T15:10:13Z",
-        "workflowStatus": "cancelled"
+        "lastUpdateTimestamp": "2025-05-12T15:10:21Z",
+        "workflowStatus": "success",
+        "lastCommit": {
+            "message": "Add manual triggering to workflow file",
+            "author": "Michael Olawuwo"
+        }
     },
     {
         "name": "booking-manager",
@@ -42,7 +50,11 @@ const REPOSITORIES = [
         },
         "lastUpdate": "2 days ago",
         "lastUpdateTimestamp": "2025-05-09T17:25:43Z",
-        "workflowStatus": "success"
+        "workflowStatus": "success",
+        "lastCommit": {
+            "message": "Update workflow to push xml for hub",
+            "author": "Michael Olawuwo"
+        }
     },
     {
         "name": "loyalty-program",
@@ -56,7 +68,11 @@ const REPOSITORIES = [
         },
         "lastUpdate": "2 days ago",
         "lastUpdateTimestamp": "2025-05-09T18:05:07Z",
-        "workflowStatus": "success"
+        "workflowStatus": "success",
+        "lastCommit": {
+            "message": "Add xml upload to workflow",
+            "author": "Michael Olawuwo"
+        }
     }
 ];
 
@@ -69,7 +85,7 @@ function calculateOverallStats() {
         failed: 0,
         critical: 7,
         passRate: 100,
-        lastUpdated: "2025-05-12T16:10:18+0100"
+        lastUpdated: "2025-05-12T16:10:48+0100"
     };
 }
 
