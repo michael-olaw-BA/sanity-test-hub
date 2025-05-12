@@ -153,6 +153,15 @@ function getStatusFromTimestamp(timestamp) {
     }
 }
 
+// Add this function to calculate status from timestamp
+function getStatusFromRepository(repo) {
+    // If no timestamp is available, return warning
+    if (!repo.lastUpdateTimestamp) {
+        return "warning";
+    }
+    return getStatusFromTimestamp(repo.lastUpdateTimestamp);
+}
+
 // Function to determine the appropriate status icon based on test results
 function getStatusIcon(repo) {
     // If there are failed tests, show a failure icon
@@ -165,8 +174,10 @@ function getStatusIcon(repo) {
 
 // Create a repository card for grid view
 function createGridCard(repo) {
+    const status = getStatusFromRepository(repo);
+    
     const card = document.createElement('div');
-    card.className = 'repository-card';
+    card.className = `repository-card status-${status}`;
     
     // Add from=hub parameter to URL
     const reportUrl = addHubParameter(repo.url);
@@ -182,15 +193,9 @@ function createGridCard(repo) {
         timeDisplay = repo.lastUpdate;
     }
     
-    // Get status based on timestamp rather than pass rate
-    const status = getStatusFromTimestamp(repo.lastUpdateTimestamp);
-    
-    // Get the status icon
-    const statusIcon = getStatusIcon(repo);
-    
     card.innerHTML = `
         <div class="repository-header">
-            <div class="repository-name">${statusIcon}${repo.name}</div>
+            <div class="repository-name">${getStatusIcon(repo)}${repo.name}</div>
             <div class="repository-description">${repo.description}</div>
         </div>
         <div class="repository-stats">
@@ -221,8 +226,10 @@ function createGridCard(repo) {
 
 // Create a repository item for list view
 function createListItem(repo) {
+    const status = getStatusFromRepository(repo);
+    
     const item = document.createElement('div');
-    item.className = 'repository-list-item';
+    item.className = `repository-list-item status-${status}`;
     
     // Add from=hub parameter to URL
     const reportUrl = addHubParameter(repo.url);
@@ -238,19 +245,13 @@ function createListItem(repo) {
         timeDisplay = repo.lastUpdate;
     }
     
-    // Get status based on timestamp rather than pass rate
-    const status = getStatusFromTimestamp(repo.lastUpdateTimestamp);
-    
-    // Get the status icon
-    const statusIcon = getStatusIcon(repo);
-    
     item.innerHTML = `
         <div class="repository-info">
             <div class="repository-icon">
                 <i class="fas fa-code-branch"></i>
             </div>
             <div class="repository-details">
-                <h3>${statusIcon}${repo.name}</h3>
+                <h3>${getStatusIcon(repo)}${repo.name}</h3>
                 <p>${repo.description}</p>
             </div>
         </div>

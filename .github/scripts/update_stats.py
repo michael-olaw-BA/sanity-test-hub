@@ -1,10 +1,19 @@
 import requests
 import json
 import datetime
-import pytz  # Add this import for timezone support
+import pytz
 import re
 import os
 import time
+import logging
+
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    datefmt='%Y-%m-%d %H:%M:%S'
+)
+logger = logging.getLogger('stats_updater')
 
 # List of repositories to monitor
 repositories = [
@@ -12,7 +21,6 @@ repositories = [
     {"owner": "michael-iag", "repo": "flight-search"},
     {"owner": "michael-iag", "repo": "booking-manager"},
     {"owner": "michael-iag", "repo": "loyalty-program"},
-
     # Add other repositories as needed
 ]
 
@@ -28,7 +36,7 @@ for repo_info in repositories:
     owner = repo_info["owner"]
     repo = repo_info["repo"]
     
-    print(f"Processing repository: {owner}/{repo}")
+    logger.info(f"Processing repository: {owner}/{repo}")
     
     try:
         # Fetch repository info from GitHub API
@@ -37,7 +45,7 @@ for repo_info in repositories:
         
         # Check if repository exists
         if response.status_code != 200:
-            print(f"  Repository {owner}/{repo} not found. Using default values.")
+            logger.warning(f"Repository {owner}/{repo} not found. Using default values.")
             # Add default values
             repo_data.append({
                 "name": repo,
@@ -50,7 +58,8 @@ for repo_info in repositories:
                     "critical": 0
                 },
                 "lastUpdate": "Unknown",
-                "status": "warning"
+                "lastUpdateTimestamp": None,
+                "workflowStatus": "unknown"
             })
             continue
             
@@ -61,33 +70,31 @@ for repo_info in repositories:
         
         # Try to fetch metrics.json from GitHub Pages
         metrics_url = f"https://{owner}.github.io/{repo}/metrics.json?t={int(time.time())}"
-        print(f"Fetching metrics from: {metrics_url}")
+        logger.info(f"Fetching metrics from: {metrics_url}")
         
         try:
             metrics_response = requests.get(metrics_url, timeout=10)
             if metrics_response.status_code == 200:
-                print(f"  Successfully fetched metrics.json")
-                try:
-                    # Print the raw response for debugging
-                    print(f"  Raw metrics data: {metrics_response.text}")
-                    metrics_data = metrics_response.json()
-                    print(f"  Parsed metrics data successfully")
-                    total_tests = metrics_data.get("total_tests", 0)
-                    passed_tests = metrics_data.get("passed_tests", 0)
-                    failed_tests = metrics_data.get("failed_tests", 0)
-                    critical_tests = metrics_data.get("critical_tests_count", 0)
-                except json.JSONDecodeError as e:
-                    print(f"  Error parsing metrics.json: {e}")
-                    print(f"  Raw data: {metrics_response.text}")
-                    # Set default values...
-                    total_tests = 0
-                    passed_tests = 0
-                    failed_tests = 0
-                    critical_tests = 0
+                logger.info(f"Successfully fetched metrics.json")
+                
+                # Parse metrics JSON
+                metrics_data = metrics_response.json()
+                
+                total_tests = metrics_data.get('total_tests', 0)
+                passed_tests = metrics_data.get('passed_tests', 0)
+                failed_tests = metrics_data.get('failed_tests', 0)
+                critical_tests = metrics_data.get('critical_tests_count', 0)
+                
+                logger.info(f"Metrics: {total_tests} total, {passed_tests} passed, {failed_tests} failed, {critical_tests} critical")
             else:
-                print(f"  Failed to fetch metrics.json: HTTP {metrics_response.status_code}")
+                logger.warning(f"Failed to fetch metrics.json: HTTP {metrics_response.status_code}")
+                # Default values if metrics.json is not available
+                total_tests = 0
+                passed_tests = 0
+                failed_tests = 0
+                critical_tests = 0
         except Exception as e:
-            print(f"  Error fetching metrics, using default values: {e}")
+            logger.error(f"Error fetching metrics.json, using default values: {e}")
             # Default values if metrics.json is not available
             total_tests = 0
             passed_tests = 0
@@ -101,7 +108,7 @@ for repo_info in repositories:
         
         # Default values
         last_update = "Unknown"
-        status = "warning"
+        workflow_status = "unknown"
         
         if runs_data.get("workflow_runs") and len(runs_data["workflow_runs"]) > 0:
             latest_run = runs_data["workflow_runs"][0]
@@ -124,22 +131,25 @@ for repo_info in repositories:
                     last_update = f"{diff.seconds // 3600} hours ago"
                 else:
                     last_update = f"{diff.seconds // 60} minutes ago"
+                
+                logger.info(f"Last update: {last_update}")
             
-            # Determine status
+            # Determine workflow status
             conclusion = latest_run.get("conclusion")
             if conclusion == "success":
-                status = "success"
+                workflow_status = "success"
             elif conclusion == "failure":
-                status = "danger"
+                workflow_status = "failure"
             else:
-                status = "warning"
+                workflow_status = "unknown"
         else:
             # Default values when no workflow runs found
             iso_timestamp = None
             last_update = "Unknown"
-            status = "warning"
+            workflow_status = "unknown"
+            logger.warning("No workflow runs found")
         
-        # Add repository data
+        # Remove status field and just include workflowStatus
         repo_data.append({
             "name": repo,
             "description": description,
@@ -152,13 +162,13 @@ for repo_info in repositories:
             },
             "lastUpdate": last_update,
             "lastUpdateTimestamp": iso_timestamp,
-            "status": status
+            "workflowStatus": workflow_status  # Only include workflow status
         })
         
-        print(f"  Successfully processed {repo}")
+        logger.info(f"Successfully processed {repo}")
         
     except Exception as e:
-        print(f"Error processing {repo}: {e}")
+        logger.error(f"Error processing {repo}: {e}")
         # Add with default values if there's an error
         repo_data.append({
             "name": repo,
@@ -171,7 +181,8 @@ for repo_info in repositories:
                 "critical": 0
             },
             "lastUpdate": "Unknown",
-            "status": "warning"
+            "lastUpdateTimestamp": None,
+            "workflowStatus": "unknown"  # Only include workflow status
         })
 
 # Calculate overall statistics
@@ -182,7 +193,7 @@ total_failed = sum(repo["stats"]["failed"] for repo in repo_data)
 total_critical = sum(repo["stats"]["critical"] for repo in repo_data)
 pass_rate = 0 if total_tests == 0 else round((total_passed / total_tests) * 100)
 
-# Get current time in London timezone with ISO format for JavaScript compatibility
+# Get current time in timezone with ISO format for JavaScript compatibility
 london_tz = pytz.timezone('Europe/London')
 now = datetime.datetime.now(london_tz)
 # ISO format for JS parsing
@@ -191,7 +202,7 @@ current_time_iso = now.strftime('%Y-%m-%dT%H:%M:%S%z')
 current_time_display = now.strftime('%Y-%m-%d %H:%M:%S')
 
 # Update config.js
-print("Updating config.js...")
+logger.info("Updating config.js...")
 
 # Create new config.js content
 config_content = f"""// Configuration for the Sanity Test Reports Hub
@@ -218,4 +229,4 @@ const OVERALL_STATS = calculateOverallStats();
 with open("config.js", "w") as f:
     f.write(config_content)
 
-print("config.js updated successfully") 
+logger.info("config.js updated successfully")

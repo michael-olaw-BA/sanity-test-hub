@@ -16,7 +16,7 @@
             <!-- Logo section with fixed sizes -->
             <div class="logo" style="height: 60px; display: flex; align-items: flex-end; position: relative;">
                 <div style="display: flex; flex-direction: column; margin-bottom: 0;">
-                    <span class="logo-text text-fade-in" style="margin: 0; line-height: 1.2;">Test Report Hub</span>
+                    <span class="logo-text text-fade-in" style="margin: 0; line-height: 1.2;">The Monitor</span>
                     <span class="subtitle-fade-in" style="font-size: 12px; font-weight: normal; font-family: 'Raleway', sans-serif; margin-top: -2px; margin-bottom: 0; letter-spacing: 0.5px;">by COE</span>
                 </div>
                 <img src="images/ba-tailFinn.png" alt="British Airways Tail Fin" 
@@ -34,51 +34,51 @@
     </header>
     
     <div class="main-content">
-        <div class="container">
-            <div class="dashboard-stats">
-                <div class="stat-card">
-                    <div class="stat-label">Total Repositories</div>
-                    <div class="stat-value">5</div>
-                    <div>Monitored repositories</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">Overall Pass Rate</div>
-                    <div class="stat-value">80%</div>
-                    <div>Across all repositories</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">Critical Tests</div>
-                    <div class="stat-value">12</div>
-                    <div>High priority tests</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">Last Updated</div>
-                    <div class="stat-value">Today, 14:30</div>
-                    <div>Automatic daily updates</div>
-                </div>
+    <div class="container">
+        <div class="dashboard-stats">
+            <div class="stat-card">
+                <div class="stat-label">Total Repositories</div>
+                <div class="stat-value">5</div>
+                <div>Monitored repositories</div>
             </div>
-            
-            <div class="dashboard-controls">
-                <div class="search-box">
-                    <i class="fas fa-search"></i>
-                    <input type="text" id="searchInput" placeholder="Search repositories...">
-                </div>
+            <div class="stat-card">
+                <div class="stat-label">Overall Pass Rate</div>
+                <div class="stat-value">80%</div>
+                <div>Across all repositories</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Critical Tests</div>
+                <div class="stat-value">12</div>
+                <div>High priority tests</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Last Updated</div>
+                <div class="stat-value">Today, 14:30</div>
+                <div>Automatic daily updates</div>
+            </div>
+        </div>
+        
+        <div class="dashboard-controls">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Search repositories...">
+            </div>
                 <div class="view-toggle">
                     <button id="gridViewBtn" class="toggle-btn active">
                         <i class="fas fa-th-large"></i>
-                    </button>
+                </button>
                     <button id="listViewBtn" class="toggle-btn">
                         <i class="fas fa-list"></i>
-                    </button>
-                </div>
+                </button>
             </div>
-            
-            <div id="gridView" class="repositories-grid">
-                <!-- Repository cards will be dynamically added here -->
-            </div>
-            
-            <div id="listView" class="repositories-list">
-                <!-- Repository list items will be dynamically added here -->
+        </div>
+        
+        <div id="gridView" class="repositories-grid">
+            <!-- Repository cards will be dynamically added here -->
+        </div>
+        
+        <div id="listView" class="repositories-list">
+            <!-- Repository list items will be dynamically added here -->
             </div>
         </div>
     </div>
