@@ -5,11 +5,14 @@ on:
     - cron: '0 0 * * *'  # Run daily at midnight
   workflow_dispatch:  # Allow manual triggering
   push:
-    branches:
-      - main  # Run on pushes to main branch
+    branches: [ main ]
     paths-ignore:
       - 'config.js'  # Ignore pushes that only change config.js to avoid infinite loops
-
+  pull_request:
+    branches: [ main ]
+    paths-ignore:
+      - 'config.js'
+    
 jobs:
   update-stats:
     runs-on: ubuntu-latest

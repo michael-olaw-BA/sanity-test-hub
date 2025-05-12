@@ -177,7 +177,7 @@ function createGridCard(repo) {
     const status = getStatusFromRepository(repo);
     
     const card = document.createElement('div');
-    card.className = `repository-card status-${status}`;
+    card.className = 'repository-card';
     
     // Add from=hub parameter to URL
     const reportUrl = addHubParameter(repo.url);
@@ -229,7 +229,7 @@ function createListItem(repo) {
     const status = getStatusFromRepository(repo);
     
     const item = document.createElement('div');
-    item.className = `repository-list-item status-${status}`;
+    item.className = 'repository-list-item';
     
     // Add from=hub parameter to URL
     const reportUrl = addHubParameter(repo.url);
