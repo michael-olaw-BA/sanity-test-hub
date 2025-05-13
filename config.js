@@ -1,5 +1,5 @@
 // Configuration for the Sanity Test Reports Hub
-// Automatically updated by GitHub Actions on 2025-05-13 12:26:15
+// Automatically updated by GitHub Actions on 2025-05-13 12:31:52
 
 const REPOSITORIES = [
     {
@@ -30,9 +30,9 @@ const REPOSITORIES = [
             "failed": 0,
             "critical": 3
         },
-        "lastUpdate": "0 minutes ago",
-        "lastUpdateTimestamp": "2025-05-13T11:26:12Z",
-        "workflowStatus": "cancelled",
+        "lastUpdate": "5 minutes ago",
+        "lastUpdateTimestamp": "2025-05-13T11:26:36Z",
+        "workflowStatus": "success",
         "lastCommit": {
             "message": "Add manual triggering to workflow file",
             "author": "Michael Olawuwo"
@@ -48,11 +48,11 @@ const REPOSITORIES = [
             "failed": 0,
             "critical": 2
         },
-        "lastUpdate": "3 days ago",
-        "lastUpdateTimestamp": "2025-05-09T17:25:43Z",
-        "workflowStatus": "success",
+        "lastUpdate": "0 minutes ago",
+        "lastUpdateTimestamp": "2025-05-13T11:31:47Z",
+        "workflowStatus": "cancelled",
         "lastCommit": {
-            "message": "Update workflow to push xml for hub",
+            "message": "Add manual trigger to workflow",
             "author": "Michael Olawuwo"
         }
     },
@@ -85,7 +85,7 @@ function calculateOverallStats() {
         failed: 0,
         critical: 7,
         passRate: 100,
-        lastUpdated: "2025-05-13T12:26:15+0100"
+        lastUpdated: "2025-05-13T12:31:52+0100"
     };
 }
 
