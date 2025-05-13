@@ -150,7 +150,7 @@ jobs:
           du -h data/history/* || echo "No files found"
 
       - name: Upload build history as artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v2
         with:
           name: build-history-data
           path: data/history/
@@ -176,7 +176,7 @@ jobs:
         uses: actions/configure-pages@v4
       
       - name: Download build history data
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v2
         with:
           name: build-history-data
           path: data/history/
