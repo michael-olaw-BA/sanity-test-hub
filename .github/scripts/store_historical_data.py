@@ -134,9 +134,20 @@ def store_build_history(token, repo_name):
                 
             # Get commit message safely
             commit_message = "No message"
-            if run.head_commit and hasattr(run.head_commit, 'message'):
-                commit_message = run.head_commit.message
+            commit_author = "Unknown"
+            
+            # Get the commit author (not the workflow actor)
+            if run.head_commit:
+                if hasattr(run.head_commit, 'message'):
+                    commit_message = run.head_commit.message
                 
+                # Extract actual commit author 
+                if hasattr(run.head_commit, 'author') and run.head_commit.author:
+                    if hasattr(run.head_commit.author, 'name') and run.head_commit.author.name:
+                        commit_author = run.head_commit.author.name
+                    elif hasattr(run.head_commit.author, 'login') and run.head_commit.author.login:
+                        commit_author = run.head_commit.author.login
+            
             history_data.append({
                 'run_id': run.id,
                 'repository': repo_name,
@@ -148,7 +159,7 @@ def store_build_history(token, repo_name):
                 'commit_id': run.head_sha,
                 'commit_message': commit_message,
                 'duration': duration,
-                'author': run.actor.login if run.actor else "Unknown"
+                'author': commit_author  # Using actual commit author name, not workflow actor
             })
         except Exception as e:
             logger.error(f"Error processing run {run.id}: {str(e)}")

@@ -105,7 +105,6 @@
             border-top: none;
             border-radius: 0 0 4px 4px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            z-index: 100;
             display: none;
         }
         
@@ -183,7 +182,6 @@
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
         
-        /* Update heading styles to match repository selector style */
         h2 {
             font-weight: 600;
             font-size: 18px;
@@ -193,12 +191,12 @@
             margin-bottom: 15px;
         }
         
-        /* Add section wrappers for consistent spacing */
+        /* Added section wrappers for consistent spacing */
         .chart-section {
             margin-bottom: 30px;
         }
         
-        /* Adjust spacing between sections */
+        /* For adjust spacing between sections */
         .metrics-dashboard {
             margin-bottom: 30px;
         }
@@ -231,7 +229,7 @@
     </style>
 </head>
 <body>
-    <header style="height: 90px; padding: 0; overflow: visible;">
+    <header style="height: 90px; padding: 0; overflow: visible; position: fixed; top: 0; left: 0; right: 0; z-index: 100;">
         <div class="container" style="height: 100%; padding-top: 20px; padding-bottom: 10px; display: flex; justify-content: space-between; align-items: flex-end;">
             <!-- Logo section with fixed sizes -->
             <div class="logo" style="height: 60px; display: flex; align-items: flex-end; position: relative;">
@@ -244,7 +242,7 @@
                      style="height: 65px; width: auto; display: block; position: absolute; bottom: -10px; left: 220px;">
             </div>
             
-            <!-- Navigation menu restored -->
+            <!-- Navigation menu -->
             <div class="nav-links" style="position: absolute; top: 10px; right: 20px; font-family: 'Raleway', sans-serif; font-size: 14px;">
                 <a href="index.html" class="nav-link" style="color: white; text-decoration: none; margin: 0 5px;">Dashboard</a> |
                 <a href="trends.html" class="nav-link" style="color: white; text-decoration: none; margin: 0 5px;">Trends</a> |
@@ -254,7 +252,7 @@
     </header>
     
     <!-- Add main-content wrapper -->
-    <div class="main-content">
+    <div class="main-content" style="padding-top: 90px;">
         <div class="container">
             <div class="repo-selector">
                 <label for="repository-search">Select Repository:</label>

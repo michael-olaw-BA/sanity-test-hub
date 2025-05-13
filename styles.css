@@ -3,7 +3,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@500;600&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600&display=swap');
 
-/* Styles extracted from trends.html */
 :root {
     --primary-color: #3498db;
     --secondary-color: #2c3e50;
@@ -128,7 +127,6 @@ header .container {
 }
 
 
-
 .logo {
     font-size: 25px;
 }
@@ -159,21 +157,32 @@ header .container {
 }
 
 .chart-container {
-    background: white;
-    border-radius: 8px;
-    padding: 15px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    flex: 1;
+    min-width: 300px;
+    background-color: white;
+    border-radius: var(--border-radius);
+    padding: 20px;
+    box-shadow: var(--box-shadow);
+}
+
+.chart-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: var(--secondary-color);
+}
+
+.repositories-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 20px;
 }
 
-.half {
-    flex: 1 1 calc(50% - 20px);
-    min-width: 300px;
-}
-
-.third {
-    flex: 1 1 calc(33% - 20px);
-    min-width: 250px;
+.toggle-btn.active {
+    background-color: #2980b9;
+    color: white;
+    z-index: 1; /* Ensure active button is on top */
 }
 
 /* Animations for logo */
@@ -661,7 +670,6 @@ footer * {
 .toggle-btn.active {
     background-color: #2980b9;
     color: white;
-    z-index: 1; /* Ensure active button is on top */
 }
 
 .toggle-btn:first-child {

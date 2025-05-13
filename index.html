@@ -11,7 +11,8 @@
 
 </head>
 <body>
-    <header style="height: 100px; padding: 0; overflow: visible;">
+    <!-- Updated header with fixed position -->
+    <header style="height: 90px; padding: 0; overflow: visible; position: fixed; top: 0; left: 0; right: 0; z-index: 100; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
         <div class="container" style="height: 100%; padding-top: 20px; padding-bottom: 10px; display: flex; justify-content: space-between; align-items: flex-end;">
             <!-- Logo section with fixed sizes -->
             <div class="logo" style="height: 60px; display: flex; align-items: flex-end; position: relative;">
@@ -33,7 +34,8 @@
         </div>
     </header>
     
-    <div class="main-content">
+    <!-- Main content with padding to accommodate fixed header -->
+    <div class="main-content" style="padding-top: 90px;">
     <div class="container">
         <div class="dashboard-stats">
             <div class="stat-card">
@@ -79,7 +81,6 @@
         
         <div id="listView" class="repositories-list">
             <!-- Repository list items will be dynamically added here -->
-            </div>
         </div>
     </div>
     
