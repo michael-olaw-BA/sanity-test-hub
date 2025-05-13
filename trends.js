@@ -332,4 +332,41 @@ function updateBuildStatusChart(timeRange) {
         .catch(error => {
             console.error('Error fetching build history:', error);
         });
-} 
+}
+
+// Add this near the top of the file, before any chart creation
+function debugBuildHistory() {
+    console.log("Debugging build history visualization");
+    
+    // Check if the data file exists
+    fetch('data/history/build_history_combined.json')
+        .then(response => {
+            if (!response.ok) {
+                console.error("Failed to load build history data:", response.status, response.statusText);
+                document.getElementById('build-history-debug').innerHTML = 
+                    'Error: Could not load build history data. Status: ' + response.status;
+                return null;
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data) {
+                console.log("Build history data loaded successfully:", data.length, "records");
+                document.getElementById('build-history-debug').innerHTML = 
+                    'Data loaded: ' + data.length + ' build records found';
+                
+                // Inspect the first record
+                if (data.length > 0) {
+                    console.log("Sample record:", data[0]);
+                }
+            }
+        })
+        .catch(error => {
+            console.error("Error loading build history:", error);
+            document.getElementById('build-history-debug').innerHTML = 
+                'Error: ' + error.message;
+        });
+}
+
+// Call this function when the page loads
+document.addEventListener('DOMContentLoaded', debugBuildHistory); 

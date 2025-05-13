@@ -139,8 +139,11 @@ def store_build_history(token, repo_name):
                 
             history_data.append({
                 'run_id': run.id,
+                'repository': repo_name,
+                'repo_owner': repo_name.split('/')[0],
+                'repo_name': repo_name.split('/')[1],
                 'timestamp': run.created_at.isoformat(),
-                'status': run.conclusion,  # success, failure, cancelled, etc.
+                'status': run.conclusion,
                 'branch': run.head_branch,
                 'commit_id': run.head_sha,
                 'commit_message': commit_message,
@@ -199,7 +202,7 @@ def should_exclude_build(run):
     except:
         pass
     
-    # If we have workflow name information, use it for filtering
+    # Use workflow name information for filtering
     if workflow_name:
         # Exclude pages deployment workflows
         if "pages" in workflow_name and "deploy" in workflow_name:
@@ -222,6 +225,23 @@ def main():
     if not token:
         logger.error("GITHUB_TOKEN not provided")
         sys.exit(1)
+    
+    # Get repository owner from environment or use the current repo's owner
+    repo_owner = os.environ.get('GITHUB_REPOSITORY_OWNER')
+    if not repo_owner:
+        try:
+            # Try to extract from GITHUB_REPOSITORY (owner/repo format)
+            github_repo = os.environ.get('GITHUB_REPOSITORY', '').split('/')
+            if len(github_repo) > 1:
+                repo_owner = github_repo[0]
+            else:
+                # Fallback to current directory name as a last resort
+                repo_owner = os.path.basename(os.path.abspath(os.path.join(os.getcwd(), '..')))
+        except:
+            logger.error("Could not determine repository owner")
+            sys.exit(1)
+    
+    logger.info(f"Using repository owner: {repo_owner}")
         
     # Read repositories from config.js
     with open('config.js', 'r') as f:
@@ -237,7 +257,7 @@ def main():
             if '"name":' in block:
                 name = block.split('"name":')[1].split(',')[0].strip().strip('"')
                 if name:
-                    repos.append(f"michael-iag/{name}")
+                    repos.append(f"{repo_owner}/{name}")
     except Exception as e:
         logger.error(f"Failed to parse config.js: {e}")
         
