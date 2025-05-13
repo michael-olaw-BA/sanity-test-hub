@@ -10,7 +10,7 @@
     "commit_id": "f80cd165d8b59cfa76c7b9709cb04a59e2d210b7",
     "commit_message": "Add manual trigger to workflow",
     "duration": 82.0,
-    "author": "michael-iag"
+    "author": "Michael Olawuwo"
   },
   {
     "run_id": 14934305347,
@@ -23,7 +23,7 @@
     "commit_id": "c6f16aa398744f762a50dd32dd4977d3015b101f",
     "commit_message": "Update workflow to push xml for hub",
     "duration": 53.0,
-    "author": "michael-iag"
+    "author": "Michael Olawuwo"
   },
   {
     "run_id": 14864984066,
@@ -36,7 +36,7 @@
     "commit_id": "de483d0ed11ff8962dc09496d788663959a650ca",
     "commit_message": "Clean up workflow stage",
     "duration": 8454.0,
-    "author": "michael-iag"
+    "author": "Michael Olawuwo"
   },
   {
     "run_id": 14750595200,
@@ -49,7 +49,7 @@
     "commit_id": "4be4ac91eb6258c8cbf2f917f3765f03bc411aee",
     "commit_message": "Fix f-string syntax error",
     "duration": 57.0,
-    "author": "michael-iag"
+    "author": "Michael Olawuwo"
   },
   {
     "run_id": 14737429754,
@@ -62,7 +62,7 @@
     "commit_id": "d531dbf41e73f91f2cfd918fff595f0187aafa52",
     "commit_message": "Fix Allure report generation failure",
     "duration": 6542.0,
-    "author": "michael-iag"
+    "author": "Michael Olawuwo"
   },
   {
     "run_id": 14737227002,
@@ -75,7 +75,7 @@
     "commit_id": "5ba78e80776042a9270baf0bfb7089b2f91e9cc9",
     "commit_message": "Update feature file with statsD",
     "duration": 58.0,
-    "author": "michael-iag"
+    "author": "Michael Olawuwo"
   },
   {
     "run_id": 14736992313,
@@ -88,7 +88,7 @@
     "commit_id": "c2507ce7a396e2c158539e28f6f18af1c2506792",
     "commit_message": "Update datadog config stage with API Key",
     "duration": 46.0,
-    "author": "michael-iag"
+    "author": "Michael Olawuwo"
   },
   {
     "run_id": 14736040762,
@@ -101,7 +101,7 @@
     "commit_id": "7a4d5ad91a0cc3bcd23d6a7dbd6d12b8b4c16a7b",
     "commit_message": "Add datadog config stage",
     "duration": 52.0,
-    "author": "michael-iag"
+    "author": "Michael Olawuwo"
   },
   {
     "run_id": 14732661207,
@@ -114,7 +114,7 @@
     "commit_id": "c8057414ff13e9759a1e531f05bedd3e237f6802",
     "commit_message": "Update dependencies for ddtrace latest version",
     "duration": 33.0,
-    "author": "michael-iag"
+    "author": "Michael Olawuwo"
   },
   {
     "run_id": 14731250198,
@@ -127,7 +127,7 @@
     "commit_id": "a579045729fa3aba1436bf885d7ae929839eb6aa",
     "commit_message": "Update dependencies for ddtrace",
     "duration": 43.0,
-    "author": "michael-iag"
+    "author": "Michael Olawuwo"
   },
   {
     "run_id": 14730962619,
@@ -140,7 +140,7 @@
     "commit_id": "84b6a296e7317eb52d4f83bb1feab61379f94b9a",
     "commit_message": "Update workflow to add Datadog feature",
     "duration": 24.0,
-    "author": "michael-iag"
+    "author": "Michael Olawuwo"
   },
   {
     "run_id": 14712567916,
@@ -153,7 +153,7 @@
     "commit_id": "5a9cbc9419e16d7d113550c6c827fb631ede6438",
     "commit_message": "Update and define all test steps",
     "duration": 23.0,
-    "author": "michael-iag"
+    "author": "Michael Olawuwo"
   },
   {
     "run_id": 14711567784,
@@ -166,6 +166,6 @@
     "commit_id": "a460fb6f17568926744350def1aa987e8309a11a",
     "commit_message": "Initial commit",
     "duration": 13.0,
-    "author": "michael-iag"
+    "author": "Michael Olawuwo"
   }
 ]

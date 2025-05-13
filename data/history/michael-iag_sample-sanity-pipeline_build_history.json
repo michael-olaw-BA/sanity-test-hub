@@ -10,7 +10,7 @@
     "commit_id": "0270761fe5db7509f7a8d416fdef30aa10c225ce",
     "commit_message": "Update Back to Hub button",
     "duration": 41.0,
-    "author": "michael-iag"
+    "author": "Michael Olawuwo"
   },
   {
     "run_id": 14714866797,
@@ -36,7 +36,7 @@
     "commit_id": "c4bc32420c2b8f735b8cfd60a55dd939ffc56b3e",
     "commit_message": "Update requirements file",
     "duration": 16.0,
-    "author": "michael-iag"
+    "author": "Michael Olawuwo"
   },
   {
     "run_id": 14624595911,
@@ -49,7 +49,7 @@
     "commit_id": "77065267ffe6b12651017ef7e9ded87e62da10c4",
     "commit_message": "Automate hub workflow trigger",
     "duration": 21.0,
-    "author": "michael-iag"
+    "author": "Michael Olawuwo"
   },
   {
     "run_id": 14623090220,
@@ -62,7 +62,7 @@
     "commit_id": "f262a0f28e757ba289ed66e650076c91f7d524f2",
     "commit_message": "Trigger change in test metric",
     "duration": 23.0,
-    "author": "michael-iag"
+    "author": "Michael Olawuwo"
   },
   {
     "run_id": 14616397912,
@@ -75,7 +75,7 @@
     "commit_id": "c1699a5e85a19a848ec14f213e3e74874f1d6319",
     "commit_message": "Enable github pages deployment on manual trigger",
     "duration": 14.0,
-    "author": "michael-iag"
+    "author": "Michael Olawuwo"
   },
   {
     "run_id": 14616149740,
@@ -88,7 +88,7 @@
     "commit_id": "0b5593b5f2751265088f839375464a1a0e22848c",
     "commit_message": "Remove confluence integration html",
     "duration": 471.0,
-    "author": "michael-iag"
+    "author": "Michael Olawuwo"
   },
   {
     "run_id": 14616125187,
@@ -101,7 +101,7 @@
     "commit_id": "0b5593b5f2751265088f839375464a1a0e22848c",
     "commit_message": "Remove confluence integration html",
     "duration": 15.0,
-    "author": "michael-iag"
+    "author": "Michael Olawuwo"
   },
   {
     "run_id": 14615916166,
@@ -114,7 +114,7 @@
     "commit_id": "2d7a85869fe1880bfecb8a9f661245e94d955315",
     "commit_message": "Self-contained dashboard fix",
     "duration": 21.0,
-    "author": "michael-iag"
+    "author": "Michael Olawuwo"
   },
   {
     "run_id": 14615047224,
@@ -127,6 +127,6 @@
     "commit_id": "1d3de2f2a2e29e127a9d4fa8205deb2e4a749bbf",
     "commit_message": "Add manual workflow trigger",
     "duration": 21.0,
-    "author": "michael-iag"
+    "author": "Michael Olawuwo"
   }
 ]
