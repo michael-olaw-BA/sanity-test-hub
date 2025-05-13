@@ -187,17 +187,28 @@ def should_exclude_build(run):
     if run.actor and run.actor.login in ["github-pages[bot]", "github-actions[bot]"]:
         return True
         
-    # Exclude based on workflow name
-    if run.workflow and "pages" in run.workflow.name.lower():
-        # Only exclude if it's the pages deployment workflow, not test workflows
-        if "deploy" in run.workflow.name.lower():
-            return True
+    # Check workflow name if available - using workflow_id instead of workflow
+    # The previous code tried to use run.workflow.name which doesn't exist
+    workflow_name = ""
+    try:
+        if hasattr(run, 'name') and run.name:
+            workflow_name = run.name.lower()
+        elif hasattr(run, 'event') and run.event:
+            workflow_name = run.event.lower()
+    except:
+        pass
     
-    # Exclude any build that isn't testing or building code
-    if run.workflow and any(term in run.workflow.name.lower() for term in ["deploy", "publish", "release"]):
-        # But keep if it also includes testing terms
-        if not any(term in run.workflow.name.lower() for term in ["test", "lint", "check"]):
+    # If we have workflow name information, use it for filtering
+    if workflow_name:
+        # Exclude pages deployment workflows
+        if "pages" in workflow_name and "deploy" in workflow_name:
             return True
+        
+        # Exclude non-testing deployment workflows
+        if any(term in workflow_name for term in ["deploy", "publish", "release"]):
+            # But keep if it also includes testing terms
+            if not any(term in workflow_name for term in ["test", "lint", "check"]):
+                return True
     
     return False
 
