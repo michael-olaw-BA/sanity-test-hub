@@ -4,6 +4,7 @@ from datetime import datetime
 import json
 import logging
 from github import Github
+import sys
 
 # Set up logging
 logging.basicConfig(
@@ -199,3 +200,51 @@ def should_exclude_build(run):
             return True
     
     return False
+
+def main():
+    # Setup logging
+    logging.basicConfig(level=logging.INFO)
+    logger = logging.getLogger('build_history')
+    
+    token = os.environ.get('GITHUB_TOKEN')
+    if not token:
+        logger.error("GITHUB_TOKEN not provided")
+        sys.exit(1)
+        
+    # Read repositories from config.js
+    with open('config.js', 'r') as f:
+        config_content = f.read()
+        
+    # Parse repositories list from config.js
+    repos = []
+    # Simple parsing to extract repository names
+    try:
+        repos_section = config_content.split('REPOSITORIES = [')[1].split('];')[0]
+        repo_blocks = repos_section.split('{')
+        for block in repo_blocks:
+            if '"name":' in block:
+                name = block.split('"name":')[1].split(',')[0].strip().strip('"')
+                if name:
+                    repos.append(f"michael-iag/{name}")
+    except Exception as e:
+        logger.error(f"Failed to parse config.js: {e}")
+        
+    if not repos:
+        logger.error("No repositories found in config.js")
+        sys.exit(1)
+        
+    # Process each repository
+    all_history = []
+    for repo_name in repos:
+        logger.info(f"Processing repository: {repo_name}")
+        history = store_build_history(token, repo_name)
+        all_history.extend(history)
+    
+    # Save combined history
+    history_dir = 'data/history'
+    os.makedirs(history_dir, exist_ok=True)
+    combined_file = f"{history_dir}/build_history_combined.json"
+    
+    logger.info(f"Saving combined history to {combined_file}")
+    with open(combined_file, 'w') as f:
+        json.dump(all_history, f, indent=2)

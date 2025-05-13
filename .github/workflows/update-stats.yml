@@ -155,7 +155,11 @@ jobs:
           git rm -rf .
           
           # Copy necessary files from main branch
-          git checkout main -- index.html config.js app.js styles.css || echo "Failed to checkout some files"
+          git checkout main -- index.html config.js app.js styles.css trends.html trends.js repository-analytics.html repository-analytics.js images || echo "Failed to checkout some files"
+          
+          # Also copy data directory if it exists
+          mkdir -p data/history
+          git checkout main -- data/history/ || echo "No history data found"
           
           # Create a simple .nojekyll file to bypass Jekyll processing
           touch .nojekyll
