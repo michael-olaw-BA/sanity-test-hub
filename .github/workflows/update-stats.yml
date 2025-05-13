@@ -94,10 +94,37 @@ jobs:
     outputs:
       changes_pushed: ${{ steps.push.outputs.changes_pushed }}
 
-  # This job runs if changes were pushed OR if workflow was manually triggered.
-  deploy-pages:
+  # Job to collect build history
+  collect-build-history:
+    runs-on: ubuntu-latest
     needs: update-stats
     if: needs.update-stats.outputs.changes_pushed == 'true' || github.event_name == 'workflow_dispatch'
+    outputs:
+      changes_pushed: ${{ needs.update-stats.outputs.changes_pushed }}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: main
+          
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+          
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install PyGithub
+          
+      - name: Collect build history
+        run: python .github/scripts/store_historical_data.py
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  # This job runs if changes were pushed OR if workflow was manually triggered.
+  deploy-pages:
+    needs: collect-build-history
+    if: needs.collect-build-history.outputs.changes_pushed == 'true' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     permissions:
       pages: write
@@ -137,28 +164,3 @@ jobs:
           git add --all
           git commit -m "Update GitHub Pages content" || echo "No changes to commit"
           git push -f origin gh-pages
-
-  # Job to collect build history
-  collect-build-history:
-    runs-on: ubuntu-latest
-    needs: update-stats
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          ref: main
-          
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.10'
-          
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install PyGithub
-          
-      - name: Collect build history
-        run: python .github/scripts/store_historical_data.py
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-

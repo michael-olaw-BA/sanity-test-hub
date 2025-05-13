@@ -253,7 +253,7 @@ for repo_info in repositories:
             }
         })
         
-        logger.info(f"Successfully processed {repo}")
+        logger.info(f"Finished processing {repo}")
         
     except Exception as e:
         logger.error(f"Error processing {repo}: {e}")
