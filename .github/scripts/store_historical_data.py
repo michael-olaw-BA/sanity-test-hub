@@ -248,3 +248,6 @@ def main():
     logger.info(f"Saving combined history to {combined_file}")
     with open(combined_file, 'w') as f:
         json.dump(all_history, f, indent=2)
+
+if __name__ == "__main__":
+    main()

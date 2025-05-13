@@ -116,10 +116,27 @@ jobs:
           python -m pip install --upgrade pip
           pip install PyGithub
           
+      - name: Ensure data directory exists
+        run: mkdir -p data/history
+        
       - name: Collect build history
         run: python .github/scripts/store_historical_data.py
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        
+      - name: Commit history data
+        run: |
+          # Check if data was generated
+          if [ -f data/history/build_history_combined.json ]; then
+            git config --global user.name "GitHub Actions"
+            git config --global user.email "actions@github.com"
+            git add data/history/
+            git commit -m "Update build history data" || echo "No changes to commit"
+            git push
+            echo "History data committed"
+          else
+            echo "No history data generated"
+          fi
 
   # This job runs if changes were pushed OR if workflow was manually triggered.
   deploy-pages:
