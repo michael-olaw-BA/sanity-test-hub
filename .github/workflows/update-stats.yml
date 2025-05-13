@@ -150,7 +150,7 @@ jobs:
           du -h data/history/* || echo "No files found"
 
       - name: Upload build history as artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: build-history-data
           path: data/history/
@@ -171,15 +171,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          ref: main
       
       - name: Setup Pages
         uses: actions/configure-pages@v4
-      
-      - name: Download build history data
-        uses: actions/download-artifact@v2
-        with:
-          name: build-history-data
-          path: data/history/
       
       - name: Deploy to GitHub Pages
         run: |
@@ -196,7 +192,7 @@ jobs:
           git rm -rf .
           
           # Copy necessary files from main branch
-          git checkout main -- index.html config.js app.js styles.css trends.html trends.js repository-analytics.html repository-analytics.js images || echo "Failed to checkout some files"
+          git checkout main -- index.html config.js app.js styles.css trends.html trends.js repository-analytics.html repository-analytics.js images data/history/ || echo "Failed to checkout some files"
           
           # Create a simple .nojekyll file to bypass Jekyll processing
           touch .nojekyll
