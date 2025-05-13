@@ -214,10 +214,12 @@
     <div class="main-container" style="margin-top: 120px; background-color: #fff; border-radius: 10px 10px 0 0; box-shadow: 0 1px 3px rgba(0,0,0,0.1); padding: 20px;">
     <!-- Header with timeline selector moved right -->
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 35px;">
-      <h3 style="margin: 0; font-family: 'Raleway', sans-serif;">Build Analytics</h3>
-      <div class="dropdown-row" style="margin-bottom: 0; font-family: 'Raleway', sans-serif;">
-        <label for="time-range" style="font-family: 'Raleway', sans-serif;">Data Timeline:</label>
-        <select id="time-range" style="font-family: 'Raleway', sans-serif;">
+      <h3 style="margin: 0; font-family: 'Raleway', sans-serif;"><i class="fa fa-cogs"></i> Build Analytics</h3>
+      
+      <!-- New time range selector using the styles you provided -->
+      <div class="time-filter">
+        <label for="time-range">Data Timeline:</label>
+        <select id="time-range">
           <option value="24h">Last 24 Hours</option>
           <option value="7d" selected>Last 7 Days</option>
           <option value="30d">Last 30 Days</option>
@@ -229,7 +231,7 @@
     <!-- Success rate trend section with enhanced styling -->
     <div class="chart-section">
       <div class="chart-section-header">
-        <h3 style="font-family: 'Raleway', sans-serif;">Build Rate Overview</h3>
+        <h3 style="font-family: 'Raleway', sans-serif;"><i class="fa fa-chart-area"></i> Build Rate Overview</h3>
       </div>
       <div class="chart-section-body">
         <canvas id="successRateTrend" height="80"></canvas>
@@ -239,7 +241,7 @@
     <!-- Build status overview section with enhanced styling -->
     <div class="chart-section">
       <div class="chart-section-header">
-        <h3 style="font-family: 'Raleway', sans-serif;">Build Status Overview</h3>
+        <h3 style="font-family: 'Raleway', sans-serif;"><i class="fa fa-chart-bar"></i> Build Status Overview</h3>
       </div>
       <div class="chart-section-body">
         <canvas id="stackedBarChart" height="80"></canvas>
@@ -247,7 +249,7 @@
     </div>
 
     <!-- Detailed metrics section title -->
-    <h3 class="section-title" style="font-family: 'Raleway', sans-serif;">Detailed Repository Metrics</h3>
+    <h3 class="section-title" style="font-family: 'Raleway', sans-serif;"><i class="fa fa-pie-chart"></i> Detailed Repository Metrics</h3>
     
     <!-- Three-column charts grid -->
     <div class="charts-grid">
