@@ -148,7 +148,7 @@ def store_build_history(token, repo_name):
                 'commit_id': run.head_sha,
                 'commit_message': commit_message,
                 'duration': duration,
-                'actor': run.actor.login if run.actor else "Unknown"
+                'author': run.actor.login if run.actor else "Unknown"
             })
         except Exception as e:
             logger.error(f"Error processing run {run.id}: {str(e)}")

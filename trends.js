@@ -178,124 +178,154 @@ function initDurationChart(labels, data) {
     });
 }
 
-// Add this function to create the build status chart
-function createBuildStatusChart(historyData, timeRange) {
-    // Filter data by time range
+// Function to create the build status chart
+function createBuildStatusChart(buildData, timeRange) {
+    console.log("Creating build status chart with", buildData.length, "records");
+    
+    // Filter data based on time range
     const now = new Date();
-    let startDate;
+    let startDate = new Date();
     
     switch(timeRange) {
-        case 'day':
-            startDate = new Date(now.setDate(now.getDate() - 1));
-            break;
-        case 'week':
-            startDate = new Date(now.setDate(now.getDate() - 7));
-            break;
-        case 'month':
-            startDate = new Date(now.setMonth(now.getMonth() - 1));
-            break;
-        case 'quarter':
-            startDate = new Date(now.setDate(now.getDate() - 90));
-            break;
-        default:
-            startDate = new Date(now.setDate(now.getDate() - 30)); // Default 30 days
+        case '7d': startDate.setDate(now.getDate() - 7); break;
+        case '30d': startDate.setDate(now.getDate() - 30); break;
+        case '90d': startDate.setDate(now.getDate() - 90); break;
+        default: startDate.setDate(now.getDate() - 30); // Default to 30 days
     }
     
-    // Filter data
-    const filteredData = historyData.filter(run => new Date(run.timestamp) >= startDate);
+    const filteredData = buildData.filter(build => 
+        new Date(build.timestamp) >= startDate);
     
-    // Group by day
-    const groupedByDay = {};
-    filteredData.forEach(run => {
-        const day = new Date(run.timestamp).toISOString().split('T')[0];
-        if (!groupedByDay[day]) {
-            groupedByDay[day] = { success: 0, failure: 0, cancelled: 0, total: 0 };
+    console.log("Filtered to", filteredData.length, "records for time range", timeRange);
+    
+    // Group by repository
+    const repoData = {};
+    
+    filteredData.forEach(build => {
+        const repoName = build.repo_name || "unknown";
+        
+        if (!repoData[repoName]) {
+            repoData[repoName] = [];
         }
         
-        // Increment the appropriate counter
-        if (run.status === 'success') {
-            groupedByDay[day].success++;
-        } else if (run.status === 'failure') {
-            groupedByDay[day].failure++;
-        } else if (run.status === 'cancelled') {
-            groupedByDay[day].cancelled++;
-        }
-        
-        groupedByDay[day].total++;
+        repoData[repoName].push(build);
     });
     
-    // Prepare data for the chart
-    const labels = Object.keys(groupedByDay).sort();
-    const successData = labels.map(day => groupedByDay[day].success);
-    const failureData = labels.map(day => groupedByDay[day].failure);
-    const cancelledData = labels.map(day => groupedByDay[day].cancelled);
+    // Count builds by status for each repository
+    const repos = Object.keys(repoData);
+    const successCounts = repos.map(repo => 
+        repoData[repo].filter(build => build.status === 'success').length);
+    const failureCounts = repos.map(repo => 
+        repoData[repo].filter(build => build.status === 'failure').length);
+    const otherCounts = repos.map(repo => 
+        repoData[repo].filter(build => 
+            build.status !== 'success' && build.status !== 'failure').length);
     
-    // Create the chart
+    // Create chart
     const ctx = document.getElementById('buildStatusChart').getContext('2d');
     return new Chart(ctx, {
-        type: 'line',
+        type: 'bar',
         data: {
-            labels: labels,
+            labels: repos,
             datasets: [
                 {
-                    label: 'Successful Builds',
-                    data: successData,
-                    backgroundColor: 'rgba(46, 204, 113, 0.2)',
-                    borderColor: 'rgba(46, 204, 113, 1)',
-                    borderWidth: 2,
-                    tension: 0.4
+                    label: 'Success',
+                    data: successCounts,
+                    backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
                 },
                 {
-                    label: 'Failed Builds',
-                    data: failureData,
-                    backgroundColor: 'rgba(231, 76, 60, 0.2)',
-                    borderColor: 'rgba(231, 76, 60, 1)',
-                    borderWidth: 2,
-                    tension: 0.4
+                    label: 'Failure',
+                    data: failureCounts,
+                    backgroundColor: 'rgba(255, 99, 132, 0.6)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 1
                 },
                 {
-                    label: 'Cancelled Builds',
-                    data: cancelledData,
-                    backgroundColor: 'rgba(149, 165, 166, 0.2)',
-                    borderColor: 'rgba(149, 165, 166, 1)',
-                    borderWidth: 2,
-                    tension: 0.4
+                    label: 'Other',
+                    data: otherCounts,
+                    backgroundColor: 'rgba(153, 102, 255, 0.6)',
+                    borderColor: 'rgba(153, 102, 255, 1)',
+                    borderWidth: 1
                 }
             ]
         },
         options: {
             responsive: true,
-            plugins: {
-                title: {
-                    display: true,
-                    text: 'Build Status Trends'
-                },
-                legend: {
-                    position: 'top',
-                },
-                tooltip: {
-                    mode: 'index',
-                    intersect: false,
-                }
-            },
             scales: {
                 x: {
                     title: {
                         display: true,
-                        text: 'Date'
+                        text: 'Repository'
                     }
                 },
                 y: {
+                    beginAtZero: true,
                     title: {
                         display: true,
-                        text: 'Build Count'
-                    },
-                    beginAtZero: true,
-                    suggestedMin: 0
+                        text: 'Number of Builds'
+                    }
+                }
+            },
+            plugins: {
+                title: {
+                    display: true,
+                    text: `Build Results by Repository (${timeRange})`
+                },
+                tooltip: {
+                    callbacks: {
+                        afterTitle: function(tooltipItems) {
+                            const repoName = tooltipItems[0].label;
+                            const totalBuilds = repoData[repoName].length;
+                            return `Total Builds: ${totalBuilds}`;
+                        }
+                    }
                 }
             }
         }
     });
+}
+
+// Function to update the build status chart
+function updateBuildStatusChart(timeRange) {
+    console.log("Updating build status chart for time range:", timeRange);
+    
+    // Update debug message
+    const debugDiv = document.getElementById('build-history-debug');
+    if (debugDiv) {
+        debugDiv.textContent = "Loading build history data...";
+    }
+    
+    // Fetch the data
+    fetch('data/history/build_history_combined.json')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Failed to load data: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log(`Loaded ${data.length} build history records`);
+            
+            // Update debug info
+            if (debugDiv) {
+                debugDiv.textContent = `Loaded ${data.length} build history records`;
+            }
+            
+            // Create/update chart
+            if (window.buildStatusChart) {
+                window.buildStatusChart.destroy();
+            }
+            
+            window.buildStatusChart = createBuildStatusChart(data, timeRange);
+        })
+        .catch(error => {
+            console.error("Error loading build history:", error);
+            if (debugDiv) {
+                debugDiv.textContent = `Error: ${error.message}`;
+            }
+        });
 }
 
 // Modify the existing time range event listener
@@ -315,23 +345,6 @@ function updateCharts(timeRange) {
     
     // Update the build status chart
     updateBuildStatusChart(timeRange);
-}
-
-// Function to fetch and update build status chart
-function updateBuildStatusChart(timeRange) {
-    // Fetch the build history data
-    fetch('data/history/build_history_combined.json')
-        .then(response => response.json())
-        .then(data => {
-            // Create or update the chart
-            if (window.buildStatusChart) {
-                window.buildStatusChart.destroy();
-            }
-            window.buildStatusChart = createBuildStatusChart(data, timeRange);
-        })
-        .catch(error => {
-            console.error('Error fetching build history:', error);
-        });
 }
 
 // Add this near the top of the file, before any chart creation
