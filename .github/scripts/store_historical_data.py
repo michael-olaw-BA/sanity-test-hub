@@ -179,7 +179,8 @@ def store_build_history(token, repo_name):
         with open(filename, 'w') as f:
             json.dump(history_data, f, indent=2)
     
-    return len(history_data)
+    # Return the history data instead of just the length
+    return history_data  # <-- CHANGED: Return the actual history data
 
 def should_exclude_build(run):
     """Determine if this build should be excluded from analytics"""
