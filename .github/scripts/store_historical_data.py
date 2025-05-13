@@ -182,8 +182,8 @@ def store_build_history(token, repo_name):
         with open(filename, 'w') as f:
             json.dump(history_data, f, indent=2)
     
-    # Return the history data instead of just the length
-    return history_data  # <-- CHANGED: Return the actual history data
+    # Return the history data
+    return history_data  
 
 def should_exclude_build(run):
     """Determine if this build should be excluded from analytics"""
@@ -265,6 +265,15 @@ def main():
         logger.error("No repositories found in config.js")
         sys.exit(1)
         
+    # Regenerate all data files
+    # First, delete existing files
+    history_dir = 'data/history'
+    if os.path.exists(history_dir):
+        for file in os.listdir(history_dir):
+            if file.endswith('_build_history.json') or file == 'build_history_combined.json':
+                os.remove(os.path.join(history_dir, file))
+                logger.info(f"Deleted existing file: {file}")
+    
     # Process each repository
     all_history = []
     for repo_name in repos:
@@ -273,13 +282,18 @@ def main():
         all_history.extend(history)
     
     # Save combined history
-    history_dir = 'data/history'
     os.makedirs(history_dir, exist_ok=True)
     combined_file = f"{history_dir}/build_history_combined.json"
     
     logger.info(f"Saving combined history to {combined_file}")
     with open(combined_file, 'w') as f:
         json.dump(all_history, f, indent=2)
+    
+    logger.info(f"Sample data structure for verification:")
+    if all_history and len(all_history) > 0:
+        sample = all_history[0]
+        logger.info(f"Fields: {', '.join(sample.keys())}")
+        logger.info(f"Sample record: {json.dumps(sample, indent=2)}")
 
 if __name__ == "__main__":
     main()
