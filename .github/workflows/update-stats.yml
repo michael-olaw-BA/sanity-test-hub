@@ -138,6 +138,24 @@ jobs:
             echo "No history data generated"
           fi
 
+      - name: Debug - List and show contents of history files
+        run: |
+          echo "=== Listing data/history/ directory ==="
+          ls -la data/history/ || echo "Directory not found"
+          
+          echo "=== Contents of combined history file ==="
+          cat data/history/build_history_combined.json || echo "File not found"
+          
+          echo "=== Size of history files ==="
+          du -h data/history/* || echo "No files found"
+
+      - name: Upload build history as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-history-data
+          path: data/history/
+          retention-days: 5
+
   # This job runs if changes were pushed OR if workflow was manually triggered.
   deploy-pages:
     needs: collect-build-history
@@ -157,6 +175,12 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v4
       
+      - name: Download build history data
+        uses: actions/download-artifact@v3
+        with:
+          name: build-history-data
+          path: data/history/
+      
       - name: Deploy to GitHub Pages
         run: |
           # Display the content about to be deployed
@@ -173,10 +197,6 @@ jobs:
           
           # Copy necessary files from main branch
           git checkout main -- index.html config.js app.js styles.css trends.html trends.js repository-analytics.html repository-analytics.js images || echo "Failed to checkout some files"
-          
-          # Also copy data directory if it exists
-          mkdir -p data/history
-          git checkout main -- data/history/ || echo "No history data found"
           
           # Create a simple .nojekyll file to bypass Jekyll processing
           touch .nojekyll
