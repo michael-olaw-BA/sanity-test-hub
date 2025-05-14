@@ -72,7 +72,30 @@ def extract_metrics_from_xml(xml_content):
 
 def fetch_junit_xml(repo_name, owner):
     """Fetch JUnit XML files from GitHub Pages for the given repository"""
-    base_url = f"https://{owner}.github.io/{repo_name}/"
+    # Get the actual GitHub Pages URL from the API
+    try:
+        pages_url = f"https://api.github.com/repos/{owner}/{repo_name}/pages"
+        logger.info(f"Fetching GitHub Pages URL from: {pages_url}")
+        
+        pages_response = requests.get(pages_url, headers=headers, timeout=10)
+        
+        if pages_response.status_code == 200:
+            pages_data = pages_response.json()
+            base_url = pages_data.get("html_url", "")
+            
+            # Make sure the URL ends with a slash
+            if base_url and not base_url.endswith('/'):
+                base_url += '/'
+                
+            logger.info(f"Using GitHub Pages URL: {base_url}")
+        else:
+            logger.warning(f"Failed to get GitHub Pages URL, status: {pages_response.status_code}. Falling back to default URL.")
+            # Fallback to default pattern
+            base_url = f"https://{owner}.github.io/{repo_name}/"
+    except Exception as e:
+        logger.error(f"Error fetching GitHub Pages URL: {e}. Using default URL pattern.")
+        # Fallback to default pattern if API call fails
+        base_url = f"https://{owner}.github.io/{repo_name}/"
     
     # Convert hyphens to underscores for XML filename patterns
     repo_name_underscore = repo_name.replace('-', '_')
