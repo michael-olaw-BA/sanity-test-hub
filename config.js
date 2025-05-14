@@ -4,7 +4,7 @@
 const REPOSITORIES = [
     {
         "name": "sample-sanity-pipeline",
-        "description": null,
+        "description": None,
         "url": "https://michael-iag.github.io/sample-sanity-pipeline/",
         "stats": {
             "total": 0,

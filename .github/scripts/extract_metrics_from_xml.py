@@ -128,7 +128,7 @@ for repo_info in repositories:
                     "critical": 0
                 },
                 "lastUpdate": "Unknown",
-                "lastUpdateTimestamp": null,
+                "lastUpdateTimestamp": None,
                 "workflowStatus": "unknown"
             })
             continue
@@ -269,7 +269,7 @@ for repo_info in repositories:
                 "critical": 0
             },
             "lastUpdate": "Unknown",
-            "lastUpdateTimestamp": null,
+            "lastUpdateTimestamp": None,
             "workflowStatus": "unknown",
             "lastCommit": {
                 "message": "Commit data unavailable",
