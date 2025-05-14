@@ -173,6 +173,8 @@ for repo_info in repositories:
         
         if xml_contents:
             logger.info(f"Found {len(xml_contents)} XML files")
+            logger.info(f"XML content received (first 1000 chars):\n{xml_contents[:1000]}")
+
             
             # Process each XML file
             for xml_content in xml_contents:

@@ -1,5 +1,18 @@
 [
   {
+    "run_id": 15005601009,
+    "repository": "michael-iag/booking-manager",
+    "repo_owner": "michael-iag",
+    "repo_name": "booking-manager",
+    "timestamp": "2025-05-13T20:00:38+00:00",
+    "status": "success",
+    "branch": "main",
+    "commit_id": "f80cd165d8b59cfa76c7b9709cb04a59e2d210b7",
+    "commit_message": "Add manual trigger to workflow",
+    "duration": 64.0,
+    "author": "Michael Olawuwo"
+  },
+  {
     "run_id": 14995472409,
     "repository": "michael-iag/booking-manager",
     "repo_owner": "michael-iag",

@@ -1,5 +1,18 @@
 [
   {
+    "run_id": 15016471648,
+    "repository": "michael-iag/flight-search",
+    "repo_owner": "michael-iag",
+    "repo_name": "flight-search",
+    "timestamp": "2025-05-14T08:53:31+00:00",
+    "status": "success",
+    "branch": "main",
+    "commit_id": "5a6ca69b0dade25b61a654860497bb12904bb803",
+    "commit_message": "Add manual triggering to workflow file",
+    "duration": 70.0,
+    "author": "Michael Olawuwo"
+  },
+  {
     "run_id": 14995370814,
     "repository": "michael-iag/flight-search",
     "repo_owner": "michael-iag",
