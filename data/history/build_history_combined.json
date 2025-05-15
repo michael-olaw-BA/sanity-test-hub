@@ -130,6 +130,19 @@
     "author": "Michael Olawuwo"
   },
   {
+    "run_id": 15051655185,
+    "repository": "michael-iag/flight-search",
+    "repo_owner": "michael-iag",
+    "repo_name": "flight-search",
+    "timestamp": "2025-05-15T17:42:21+00:00",
+    "status": "success",
+    "branch": "main",
+    "commit_id": "397be32eef133d0ff27befcd550f1bb7cc3a93a1",
+    "commit_message": "Failed test simulation",
+    "duration": 63.0,
+    "author": "Michael Olawuwo"
+  },
+  {
     "run_id": 15016471648,
     "repository": "michael-iag/flight-search",
     "repo_owner": "michael-iag",
