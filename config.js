@@ -1,5 +1,5 @@
 // Configuration for the Sanity Test Reports Hub
-// Automatically updated by GitHub Actions on 2025-05-15 18:46:18
+// Automatically updated by GitHub Actions on 2025-05-16 02:15:02
 
 const REPOSITORIES = [
     {
@@ -30,9 +30,9 @@ const REPOSITORIES = [
             "failed": 0,
             "critical": 3
         },
-        "lastUpdate": "0 minutes ago",
-        "lastUpdateTimestamp": "2025-05-15T17:46:11Z",
-        "workflowStatus": "cancelled",
+        "lastUpdate": "7 hours ago",
+        "lastUpdateTimestamp": "2025-05-15T17:46:21Z",
+        "workflowStatus": "success",
         "lastCommit": {
             "message": "Failed test simulations",
             "author": "Michael Olawuwo"
@@ -48,7 +48,7 @@ const REPOSITORIES = [
             "failed": 0,
             "critical": 2
         },
-        "lastUpdate": "1 days ago",
+        "lastUpdate": "2 days ago",
         "lastUpdateTimestamp": "2025-05-13T20:02:05Z",
         "workflowStatus": "success",
         "lastCommit": {
@@ -66,7 +66,7 @@ const REPOSITORIES = [
             "failed": 0,
             "critical": 2
         },
-        "lastUpdate": "5 days ago",
+        "lastUpdate": "6 days ago",
         "lastUpdateTimestamp": "2025-05-09T18:05:07Z",
         "workflowStatus": "success",
         "lastCommit": {
@@ -85,7 +85,7 @@ function calculateOverallStats() {
         failed: 0,
         critical: 7,
         passRate: 100,
-        lastUpdated: "2025-05-15T18:46:18+0100"
+        lastUpdated: "2025-05-16T02:15:02+0100"
     };
 }
 
