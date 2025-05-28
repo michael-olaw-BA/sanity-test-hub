@@ -1,5 +1,5 @@
 // Configuration for the Sanity Test Reports Hub
-// Automatically updated by GitHub Actions on 2025-05-27 02:14:19
+// Automatically updated by GitHub Actions on 2025-05-28 02:15:43
 
 const REPOSITORIES = [
     {
@@ -48,7 +48,7 @@ const REPOSITORIES = [
             "failed": 0,
             "critical": 2
         },
-        "lastUpdate": "1 weeks ago",
+        "lastUpdate": "2 weeks ago",
         "lastUpdateTimestamp": "2025-05-13T20:02:05Z",
         "workflowStatus": "success",
         "lastCommit": {
@@ -85,7 +85,7 @@ function calculateOverallStats() {
         failed: 0,
         critical: 7,
         passRate: 100,
-        lastUpdated: "2025-05-27T02:14:19+0100"
+        lastUpdated: "2025-05-28T02:15:43+0100"
     };
 }
 
