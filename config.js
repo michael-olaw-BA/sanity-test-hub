@@ -1,10 +1,10 @@
 // Configuration for the Sanity Test Reports Hub
-// Automatically updated by GitHub Actions on 2025-06-04 02:16:34
+// Automatically updated by GitHub Actions on 2025-06-05 02:15:37
 
 const REPOSITORIES = [
     {
         "name": "sample-sanity-pipeline",
-        "description": null,
+        "description": "sample-sanity-pipeline sanity tests",
         "url": "https://michael-iag.github.io/sample-sanity-pipeline/",
         "stats": {
             "total": 0,
@@ -12,67 +12,51 @@ const REPOSITORIES = [
             "failed": 0,
             "critical": 0
         },
-        "lastUpdate": "4 weeks ago",
-        "lastUpdateTimestamp": "2025-05-02T11:00:18Z",
-        "workflowStatus": "success",
-        "lastCommit": {
-            "message": "Update Back to Hub button",
-            "author": "Michael Olawuwo"
-        }
+        "lastUpdate": "Unknown",
+        "lastUpdateTimestamp": null,
+        "workflowStatus": "unknown"
     },
     {
         "name": "flight-search",
-        "description": "Flight search",
+        "description": "flight-search sanity tests",
         "url": "https://michael-iag.github.io/flight-search/",
         "stats": {
-            "total": 7,
-            "passed": 7,
+            "total": 0,
+            "passed": 0,
             "failed": 0,
-            "critical": 3
+            "critical": 0
         },
-        "lastUpdate": "2 weeks ago",
-        "lastUpdateTimestamp": "2025-05-15T17:46:21Z",
-        "workflowStatus": "success",
-        "lastCommit": {
-            "message": "Failed test simulations",
-            "author": "Michael Olawuwo"
-        }
+        "lastUpdate": "Unknown",
+        "lastUpdateTimestamp": null,
+        "workflowStatus": "unknown"
     },
     {
         "name": "booking-manager",
-        "description": "Booking Manager Suite",
+        "description": "booking-manager sanity tests",
         "url": "https://michael-iag.github.io/booking-manager/",
         "stats": {
-            "total": 6,
-            "passed": 6,
+            "total": 0,
+            "passed": 0,
             "failed": 0,
-            "critical": 2
+            "critical": 0
         },
-        "lastUpdate": "3 weeks ago",
-        "lastUpdateTimestamp": "2025-05-13T20:02:05Z",
-        "workflowStatus": "success",
-        "lastCommit": {
-            "message": "Add manual trigger to workflow",
-            "author": "Michael Olawuwo"
-        }
+        "lastUpdate": "Unknown",
+        "lastUpdateTimestamp": null,
+        "workflowStatus": "unknown"
     },
     {
         "name": "loyalty-program",
-        "description": "Loyal Program Suite",
+        "description": "loyalty-program sanity tests",
         "url": "https://michael-iag.github.io/loyalty-program/",
         "stats": {
-            "total": 7,
-            "passed": 7,
+            "total": 0,
+            "passed": 0,
             "failed": 0,
-            "critical": 2
+            "critical": 0
         },
-        "lastUpdate": "3 weeks ago",
-        "lastUpdateTimestamp": "2025-05-09T18:05:07Z",
-        "workflowStatus": "success",
-        "lastCommit": {
-            "message": "Add xml upload to workflow",
-            "author": "Michael Olawuwo"
-        }
+        "lastUpdate": "Unknown",
+        "lastUpdateTimestamp": null,
+        "workflowStatus": "unknown"
     }
 ];
 
@@ -80,12 +64,12 @@ const REPOSITORIES = [
 function calculateOverallStats() {
     return {
         repositories: 4,
-        tests: 20,
-        passed: 20,
+        tests: 0,
+        passed: 0,
         failed: 0,
-        critical: 7,
-        passRate: 100,
-        lastUpdated: "2025-06-04T02:16:34+0100"
+        critical: 0,
+        passRate: 0,
+        lastUpdated: "2025-06-05T02:15:37+0100"
     };
 }
 
