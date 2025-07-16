@@ -1,5 +1,5 @@
 // Configuration for the Sanity Test Reports Hub
-// Automatically updated by GitHub Actions on 2025-07-15 02:23:27
+// Automatically updated by GitHub Actions on 2025-07-16 02:20:52
 
 const REPOSITORIES = [
     {
@@ -48,27 +48,31 @@ const REPOSITORIES = [
             "failed": 0,
             "critical": 2
         },
-        "lastUpdate": "Unknown",
-        "lastUpdateTimestamp": null,
-        "workflowStatus": "unknown",
+        "lastUpdate": "9 weeks ago",
+        "lastUpdateTimestamp": "2025-05-13T20:02:05Z",
+        "workflowStatus": "success",
         "lastCommit": {
-            "message": "No commits found",
-            "author": ""
+            "message": "Add manual trigger to workflow",
+            "author": "Michael Olawuwo"
         }
     },
     {
         "name": "loyalty-program",
-        "description": "loyalty-program sanity tests",
+        "description": "Loyal Program Suite",
         "url": "https://michael-iag.github.io/loyalty-program/",
         "stats": {
-            "total": 0,
-            "passed": 0,
+            "total": 7,
+            "passed": 7,
             "failed": 0,
-            "critical": 0
+            "critical": 2
         },
-        "lastUpdate": "Unknown",
-        "lastUpdateTimestamp": null,
-        "workflowStatus": "unknown"
+        "lastUpdate": "9 weeks ago",
+        "lastUpdateTimestamp": "2025-05-09T18:05:07Z",
+        "workflowStatus": "success",
+        "lastCommit": {
+            "message": "Add xml upload to workflow",
+            "author": "Michael Olawuwo"
+        }
     }
 ];
 
@@ -76,12 +80,12 @@ const REPOSITORIES = [
 function calculateOverallStats() {
     return {
         repositories: 4,
-        tests: 13,
-        passed: 13,
+        tests: 20,
+        passed: 20,
         failed: 0,
-        critical: 5,
+        critical: 7,
         passRate: 100,
-        lastUpdated: "2025-07-15T02:23:27+0100"
+        lastUpdated: "2025-07-16T02:20:52+0100"
     };
 }
 
