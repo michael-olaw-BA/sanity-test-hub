@@ -1,5 +1,5 @@
 // Configuration for the Sanity Test Reports Hub
-// Automatically updated by GitHub Actions on 2025-10-08 02:09:03
+// Automatically updated by GitHub Actions on 2025-10-09 02:09:57
 
 const REPOSITORIES = [
     {
@@ -12,8 +12,8 @@ const REPOSITORIES = [
             "failed": 0,
             "critical": 0
         },
-        "lastUpdate": "22 weeks ago",
-        "lastUpdateTimestamp": "2025-05-02T11:00:18Z",
+        "lastUpdate": "15 hours ago",
+        "lastUpdateTimestamp": "2025-10-08T10:08:33Z",
         "workflowStatus": "success",
         "lastCommit": {
             "message": "Update Back to Hub button",
@@ -25,13 +25,13 @@ const REPOSITORIES = [
         "description": "Flight search",
         "url": "https://michael-iag.github.io/flight-search/",
         "stats": {
-            "total": 7,
-            "passed": 7,
+            "total": 0,
+            "passed": 0,
             "failed": 0,
-            "critical": 3
+            "critical": 0
         },
-        "lastUpdate": "20 weeks ago",
-        "lastUpdateTimestamp": "2025-05-15T17:46:21Z",
+        "lastUpdate": "15 hours ago",
+        "lastUpdateTimestamp": "2025-10-08T10:08:36Z",
         "workflowStatus": "success",
         "lastCommit": {
             "message": "Failed test simulations",
@@ -43,13 +43,13 @@ const REPOSITORIES = [
         "description": "Booking Manager Suite",
         "url": "https://michael-iag.github.io/booking-manager/",
         "stats": {
-            "total": 6,
-            "passed": 6,
+            "total": 0,
+            "passed": 0,
             "failed": 0,
-            "critical": 2
+            "critical": 0
         },
-        "lastUpdate": "21 weeks ago",
-        "lastUpdateTimestamp": "2025-05-13T20:02:05Z",
+        "lastUpdate": "15 hours ago",
+        "lastUpdateTimestamp": "2025-10-08T10:08:27Z",
         "workflowStatus": "success",
         "lastCommit": {
             "message": "Add manual trigger to workflow",
@@ -61,14 +61,14 @@ const REPOSITORIES = [
         "description": "Loyal Program Suite",
         "url": "https://michael-iag.github.io/loyalty-program/",
         "stats": {
-            "total": 7,
-            "passed": 7,
+            "total": 0,
+            "passed": 0,
             "failed": 0,
-            "critical": 2
+            "critical": 0
         },
-        "lastUpdate": "21 weeks ago",
-        "lastUpdateTimestamp": "2025-05-09T18:05:07Z",
-        "workflowStatus": "success",
+        "lastUpdate": "Unknown",
+        "lastUpdateTimestamp": null,
+        "workflowStatus": "unknown",
         "lastCommit": {
             "message": "Add xml upload to workflow",
             "author": "Michael Olawuwo"
@@ -80,12 +80,12 @@ const REPOSITORIES = [
 function calculateOverallStats() {
     return {
         repositories: 4,
-        tests: 20,
-        passed: 20,
+        tests: 0,
+        passed: 0,
         failed: 0,
-        critical: 7,
-        passRate: 100,
-        lastUpdated: "2025-10-08T02:09:03+0100"
+        critical: 0,
+        passRate: 0,
+        lastUpdated: "2025-10-09T02:09:57+0100"
     };
 }
 
