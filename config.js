@@ -1,5 +1,5 @@
 // Configuration for the Sanity Test Reports Hub
-// Automatically updated by GitHub Actions on 2025-11-23 01:24:19
+// Automatically updated by GitHub Actions on 2025-11-24 01:19:52
 
 const REPOSITORIES = [
     {
@@ -30,9 +30,9 @@ const REPOSITORIES = [
             "failed": 0,
             "critical": 0
         },
-        "lastUpdate": "Unknown",
-        "lastUpdateTimestamp": null,
-        "workflowStatus": "unknown",
+        "lastUpdate": "6 weeks ago",
+        "lastUpdateTimestamp": "2025-10-08T10:08:36Z",
+        "workflowStatus": "success",
         "lastCommit": {
             "message": "Failed test simulations",
             "author": "Michael Olawuwo"
@@ -40,7 +40,7 @@ const REPOSITORIES = [
     },
     {
         "name": "booking-manager",
-        "description": "booking-manager sanity tests",
+        "description": "Booking Manager Suite",
         "url": "https://michael-iag.github.io/booking-manager/",
         "stats": {
             "total": 0,
@@ -48,13 +48,17 @@ const REPOSITORIES = [
             "failed": 0,
             "critical": 0
         },
-        "lastUpdate": "Unknown",
-        "lastUpdateTimestamp": null,
-        "workflowStatus": "unknown"
+        "lastUpdate": "6 weeks ago",
+        "lastUpdateTimestamp": "2025-10-08T10:08:27Z",
+        "workflowStatus": "success",
+        "lastCommit": {
+            "message": "Add manual trigger to workflow",
+            "author": "Michael Olawuwo"
+        }
     },
     {
         "name": "loyalty-program",
-        "description": "loyalty-program sanity tests",
+        "description": "Loyal Program Suite",
         "url": "https://michael-iag.github.io/loyalty-program/",
         "stats": {
             "total": 0,
@@ -62,9 +66,13 @@ const REPOSITORIES = [
             "failed": 0,
             "critical": 0
         },
-        "lastUpdate": "Unknown",
-        "lastUpdateTimestamp": null,
-        "workflowStatus": "unknown"
+        "lastUpdate": "6 weeks ago",
+        "lastUpdateTimestamp": "2025-10-08T10:08:32Z",
+        "workflowStatus": "success",
+        "lastCommit": {
+            "message": "Add xml upload to workflow",
+            "author": "Michael Olawuwo"
+        }
     }
 ];
 
@@ -77,7 +85,7 @@ function calculateOverallStats() {
         failed: 0,
         critical: 0,
         passRate: 0,
-        lastUpdated: "2025-11-23T01:24:19+0000"
+        lastUpdated: "2025-11-24T01:19:52+0000"
     };
 }
 
