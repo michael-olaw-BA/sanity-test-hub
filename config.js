@@ -1,5 +1,5 @@
 // Configuration for the Sanity Test Reports Hub
-// Automatically updated by GitHub Actions on 2025-11-28 01:13:21
+// Automatically updated by GitHub Actions on 2025-11-29 01:13:33
 
 const REPOSITORIES = [
     {
@@ -48,17 +48,17 @@ const REPOSITORIES = [
             "failed": 0,
             "critical": 0
         },
-        "lastUpdate": "7 weeks ago",
-        "lastUpdateTimestamp": "2025-10-08T10:08:27Z",
-        "workflowStatus": "success",
+        "lastUpdate": "Unknown",
+        "lastUpdateTimestamp": null,
+        "workflowStatus": "unknown",
         "lastCommit": {
-            "message": "Add manual trigger to workflow",
-            "author": "Michael Olawuwo"
+            "message": "No commits found",
+            "author": ""
         }
     },
     {
         "name": "loyalty-program",
-        "description": "Loyal Program Suite",
+        "description": "loyalty-program sanity tests",
         "url": "https://michael-iag.github.io/loyalty-program/",
         "stats": {
             "total": 0,
@@ -66,13 +66,9 @@ const REPOSITORIES = [
             "failed": 0,
             "critical": 0
         },
-        "lastUpdate": "7 weeks ago",
-        "lastUpdateTimestamp": "2025-10-08T10:08:32Z",
-        "workflowStatus": "success",
-        "lastCommit": {
-            "message": "Add xml upload to workflow",
-            "author": "Michael Olawuwo"
-        }
+        "lastUpdate": "Unknown",
+        "lastUpdateTimestamp": null,
+        "workflowStatus": "unknown"
     }
 ];
 
@@ -85,7 +81,7 @@ function calculateOverallStats() {
         failed: 0,
         critical: 0,
         passRate: 0,
-        lastUpdated: "2025-11-28T01:13:21+0000"
+        lastUpdated: "2025-11-29T01:13:33+0000"
     };
 }
 
