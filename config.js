@@ -1,5 +1,5 @@
 // Configuration for the Sanity Test Reports Hub
-// Automatically updated by GitHub Actions on 2025-12-03 01:16:51
+// Automatically updated by GitHub Actions on 2025-12-04 01:16:55
 
 const REPOSITORIES = [
     {
@@ -12,7 +12,7 @@ const REPOSITORIES = [
             "failed": 0,
             "critical": 0
         },
-        "lastUpdate": "7 weeks ago",
+        "lastUpdate": "8 weeks ago",
         "lastUpdateTimestamp": "2025-10-08T10:08:33Z",
         "workflowStatus": "success",
         "lastCommit": {
@@ -30,7 +30,7 @@ const REPOSITORIES = [
             "failed": 0,
             "critical": 0
         },
-        "lastUpdate": "7 weeks ago",
+        "lastUpdate": "8 weeks ago",
         "lastUpdateTimestamp": "2025-10-08T10:08:36Z",
         "workflowStatus": "success",
         "lastCommit": {
@@ -48,9 +48,9 @@ const REPOSITORIES = [
             "failed": 0,
             "critical": 0
         },
-        "lastUpdate": "7 weeks ago",
-        "lastUpdateTimestamp": "2025-10-08T10:08:27Z",
-        "workflowStatus": "success",
+        "lastUpdate": "Unknown",
+        "lastUpdateTimestamp": null,
+        "workflowStatus": "unknown",
         "lastCommit": {
             "message": "Add manual trigger to workflow",
             "author": "Michael Olawuwo"
@@ -58,7 +58,7 @@ const REPOSITORIES = [
     },
     {
         "name": "loyalty-program",
-        "description": "Loyal Program Suite",
+        "description": "loyalty-program sanity tests",
         "url": "https://michael-iag.github.io/loyalty-program/",
         "stats": {
             "total": 0,
@@ -66,13 +66,9 @@ const REPOSITORIES = [
             "failed": 0,
             "critical": 0
         },
-        "lastUpdate": "7 weeks ago",
-        "lastUpdateTimestamp": "2025-10-08T10:08:32Z",
-        "workflowStatus": "success",
-        "lastCommit": {
-            "message": "Add xml upload to workflow",
-            "author": "Michael Olawuwo"
-        }
+        "lastUpdate": "Unknown",
+        "lastUpdateTimestamp": null,
+        "workflowStatus": "unknown"
     }
 ];
 
@@ -85,7 +81,7 @@ function calculateOverallStats() {
         failed: 0,
         critical: 0,
         passRate: 0,
-        lastUpdated: "2025-12-03T01:16:51+0000"
+        lastUpdated: "2025-12-04T01:16:55+0000"
     };
 }
 
