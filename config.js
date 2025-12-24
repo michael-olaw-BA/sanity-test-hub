@@ -1,10 +1,10 @@
 // Configuration for the Sanity Test Reports Hub
-// Automatically updated by GitHub Actions on 2025-12-23 01:20:52
+// Automatically updated by GitHub Actions on 2025-12-24 01:18:43
 
 const REPOSITORIES = [
     {
         "name": "sample-sanity-pipeline",
-        "description": "sample-sanity-pipeline sanity tests",
+        "description": null,
         "url": "https://michael-iag.github.io/sample-sanity-pipeline/",
         "stats": {
             "total": 0,
@@ -12,9 +12,13 @@ const REPOSITORIES = [
             "failed": 0,
             "critical": 0
         },
-        "lastUpdate": "Unknown",
-        "lastUpdateTimestamp": null,
-        "workflowStatus": "unknown"
+        "lastUpdate": "10 weeks ago",
+        "lastUpdateTimestamp": "2025-10-08T10:08:33Z",
+        "workflowStatus": "success",
+        "lastCommit": {
+            "message": "Update Back to Hub button",
+            "author": "Michael Olawuwo"
+        }
     },
     {
         "name": "flight-search",
@@ -48,8 +52,8 @@ const REPOSITORIES = [
         "lastUpdateTimestamp": "2025-10-08T10:08:27Z",
         "workflowStatus": "success",
         "lastCommit": {
-            "message": "No commits found",
-            "author": ""
+            "message": "Add manual trigger to workflow",
+            "author": "Michael Olawuwo"
         }
     },
     {
@@ -81,7 +85,7 @@ function calculateOverallStats() {
         failed: 0,
         critical: 0,
         passRate: 0,
-        lastUpdated: "2025-12-23T01:20:52+0000"
+        lastUpdated: "2025-12-24T01:18:43+0000"
     };
 }
 
