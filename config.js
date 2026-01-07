@@ -1,5 +1,5 @@
 // Configuration for the Sanity Test Reports Hub
-// Automatically updated by GitHub Actions on 2026-01-06 01:21:11
+// Automatically updated by GitHub Actions on 2026-01-07 01:21:39
 
 const REPOSITORIES = [
     {
@@ -58,7 +58,7 @@ const REPOSITORIES = [
     },
     {
         "name": "loyalty-program",
-        "description": "loyalty-program sanity tests",
+        "description": "Loyal Program Suite",
         "url": "https://michael-iag.github.io/loyalty-program/",
         "stats": {
             "total": 0,
@@ -66,9 +66,13 @@ const REPOSITORIES = [
             "failed": 0,
             "critical": 0
         },
-        "lastUpdate": "Unknown",
-        "lastUpdateTimestamp": null,
-        "workflowStatus": "unknown"
+        "lastUpdate": "12 weeks ago",
+        "lastUpdateTimestamp": "2025-10-08T10:08:32Z",
+        "workflowStatus": "success",
+        "lastCommit": {
+            "message": "Add xml upload to workflow",
+            "author": "Michael Olawuwo"
+        }
     }
 ];
 
@@ -81,7 +85,7 @@ function calculateOverallStats() {
         failed: 0,
         critical: 0,
         passRate: 0,
-        lastUpdated: "2026-01-06T01:21:11+0000"
+        lastUpdated: "2026-01-07T01:21:39+0000"
     };
 }
 
