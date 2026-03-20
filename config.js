@@ -1,5 +1,5 @@
 // Configuration for the Sanity Test Reports Hub
-// Automatically updated by GitHub Actions on 2026-03-19 01:54:33
+// Automatically updated by GitHub Actions on 2026-03-20 01:49:12
 
 const REPOSITORIES = [
     {
@@ -40,7 +40,7 @@ const REPOSITORIES = [
     },
     {
         "name": "booking-manager",
-        "description": "booking-manager sanity tests",
+        "description": "Booking Manager Suite",
         "url": "https://michael-iag.github.io/booking-manager/",
         "stats": {
             "total": 0,
@@ -48,9 +48,13 @@ const REPOSITORIES = [
             "failed": 0,
             "critical": 0
         },
-        "lastUpdate": "Unknown",
-        "lastUpdateTimestamp": null,
-        "workflowStatus": "unknown"
+        "lastUpdate": "23 weeks ago",
+        "lastUpdateTimestamp": "2025-10-08T10:08:27Z",
+        "workflowStatus": "success",
+        "lastCommit": {
+            "message": "Add manual trigger to workflow",
+            "author": "Michael Olawuwo"
+        }
     },
     {
         "name": "loyalty-program",
@@ -81,7 +85,7 @@ function calculateOverallStats() {
         failed: 0,
         critical: 0,
         passRate: 0,
-        lastUpdated: "2026-03-19T01:54:33+0000"
+        lastUpdated: "2026-03-20T01:49:12+0000"
     };
 }
 
